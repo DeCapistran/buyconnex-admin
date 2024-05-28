@@ -4,7 +4,7 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mt-0 mb-0">
-                Earnings Reports
+                Bénéfices Estimés
             </h5>
         </mat-card-title>
         <mat-card-subtitle>
@@ -13,16 +13,16 @@
             </button>
             <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
                 <button mat-menu-item>
-                    Last Day
+                    Jour
                 </button>
                 <button mat-menu-item>
-                    Last Week
+                    Semaine
                 </button>
                 <button mat-menu-item>
-                    Last Month
+                    Mois
                 </button>
                 <button mat-menu-item>
-                    Last Year
+                    Année
                 </button>
             </mat-menu>
         </mat-card-subtitle>
@@ -45,7 +45,7 @@
                     <!-- Item Count Column -->
                     <ng-container matColumnDef="itemCount">
                         <th mat-header-cell *matHeaderCellDef>
-                            Item Count
+                            Quantités
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.itemCount}}
@@ -55,7 +55,7 @@
                     <!-- Earnings Column -->
                     <ng-container matColumnDef="earnings">
                         <th mat-header-cell *matHeaderCellDef class="text-end pr-0">
-                            Earnings
+                            Bénéfices
                         </th>
                         <td mat-cell *matCellDef="let element" class="text-primary text-end pr-0">
                             {{element.earnings}}

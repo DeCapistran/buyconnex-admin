@@ -4,7 +4,7 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mt-0 mb-0">
-                Add A Product
+                Ajouter Article
             </h5>
         </mat-card-title>
     </mat-card-header>
@@ -13,82 +13,60 @@
             <div class="row">
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Product Title
+                        Nom Article
                     </label>
                     <mat-form-field>
                         <i-feather name="edit-3"></i-feather>
-                        <mat-label>Enter product title</mat-label>
+                        <mat-label>Enterer le nom de l'article</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Product Description
+                        Description Article
                     </label>
                     <div class="NgxEditor__Wrapper">
                         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                        <ngx-editor [editor]="editor" [ngModel]="html" name="html" [disabled]="false" [placeholder]="'Some demo text...'"></ngx-editor>
+                        <ngx-editor [editor]="editor" [ngModel]="html" name="html" [disabled]="false" [placeholder]="'Aperçu de la forme du texte...'"></ngx-editor>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <label class="label d-block fw-medium mb-10">
-                        Product Price
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="dollar-sign"></i-feather>
-                        <mat-label>Enter price</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-6">
-                    <label class="label d-block fw-medium mb-10">
-                        Publish Schedule
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="calendar"></i-feather>
-                        <mat-label>Enter publish date</mat-label>
-                        <input matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
                 </div>
                 <div class="col-lg-4">
                     <label class="label d-block fw-medium mb-10">
-                        Product In Stocks
+                        Quantité en Stock
                     </label>
                     <mat-form-field>
                         <i-feather name="database"></i-feather>
-                        <mat-label>Number in stock</mat-label>
+                        <mat-label>Quantité</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-4">
                     <label class="label d-block fw-medium mb-10">
-                        Offer / Discount
+                        Réduction
                     </label>
                     <mat-form-field>
                         <i-feather name="percent"></i-feather>
-                        <mat-label>Enter offer price</mat-label>
+                        <mat-label>Entrer le porcentage de réduction</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-4">
                     <label class="label d-block fw-medium mb-10">
-                        Orders
+                        Prix Article
                     </label>
                     <mat-form-field>
-                        <i-feather name="shopping-bag"></i-feather>
-                        <mat-label>Enter number</mat-label>
+                        <i-feather name="dollar-sign"></i-feather>
+                        <mat-label>Entrer le prix de l'article</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Select Category
+                        Catégorie
                     </label>
                     <mat-form-field>
                         <i-feather name="shopping-bag"></i-feather>
-                        <mat-label>Select product category</mat-label>
+                        <mat-label>Sélectionner la catégorie</mat-label>
                         <mat-select>
                             <mat-option value="volvo">Volvo</mat-option>
                             <mat-option value="saab">Saab</mat-option>
@@ -99,11 +77,11 @@
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Select Tags
+                        Tags
                     </label>
                     <mat-form-field>
                         <i-feather name="tag"></i-feather>
-                        <mat-label>Select product tags</mat-label>
+                        <mat-label>Sélectionner le tag</mat-label>
                         <mat-select multiple>
                             <mat-option value="volvo">Volvo</mat-option>
                             <mat-option value="saab">Saab</mat-option>
@@ -114,24 +92,24 @@
                 </div>
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Manufacturer Brand
+                        Marque
                     </label>
                     <mat-form-field>
                         <i-feather name="minimize"></i-feather>
-                        <mat-label>Enter manufacturer brand</mat-label>
+                        <mat-label>Entrer la marque</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Product Images
+                        Images Articles
                     </label>
                     <file-upload class="file-uploader"></file-upload>
                 </div>
             </div>
             <div class="create-product-btn">
                 <button mat-button type="button">
-                    Create Product
+                    Ajouter
                 </button>
             </div>
         </form>

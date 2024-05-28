@@ -4,7 +4,7 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mt-0 mb-0">
-                Items From Order
+                Articles de la commande
             </h5>
         </mat-card-title>
     </mat-card-header>
@@ -16,7 +16,7 @@
                     <!-- Product Column -->
                     <ng-container matColumnDef="product">
                         <th mat-header-cell *matHeaderCellDef class="pl-0">
-                            Product
+                            Articles
                         </th>
                         <td mat-cell *matCellDef="let element" class="pl-0">
                             <div class="product-info d-flex align-items-center">
@@ -38,7 +38,7 @@
                     <!-- Quantity Column -->
                     <ng-container matColumnDef="quantity">
                         <th mat-header-cell *matHeaderCellDef>
-                            Quantity
+                            Quantité
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.quantity}}
@@ -48,7 +48,7 @@
                     <!-- Price Column -->
                     <ng-container matColumnDef="price">
                         <th mat-header-cell *matHeaderCellDef>
-                            Price
+                            Prix
                         </th>
                         <td mat-cell *matCellDef="let element">
                             {{element.price}}

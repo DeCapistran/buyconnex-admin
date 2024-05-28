@@ -6,7 +6,7 @@
         <a routerLink="/" class="d-flex align-items-center">
             <img src="assets/images/logo-icon.svg" alt="logo-icon">
             <span class="fw-extrabold">
-                Trinta
+                Buyconnex
             </span>
         </a>
     </div>
@@ -31,39 +31,6 @@
                         </span>
                     </a>
                     </mat-panel-title>
-                    <a routerLink="/apps" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <i-feather name="file-text"></i-feather>
-                        <span class="title">
-                            To Do List
-                        </span>
-                    </a>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="mail"></i-feather>
-                                <span class="title">
-                                    Email
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/apps/email" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Inbox
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/apps/email/compose" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Compose
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/apps/email/read" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Read
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
                     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -75,248 +42,71 @@
                         </mat-expansion-panel-header>
                         <ul class="sidebar-sub-menu">
                             <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Products Grid
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
                                 <a routerLink="/ecommerce-page/products-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Products List
+                                    Articles Listes
                                 </a>
                             </li>
                             <li class="sidemenu-item">
                                 <a routerLink="/ecommerce-page/product-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Product Details
+                                    Articles Détails
                                 </a>
                             </li>
                             <li class="sidemenu-item">
                                 <a routerLink="/ecommerce-page/create-product" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Create Product
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/cart" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Cart
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/checkout" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Checkout
+                                    Créer Articles
                                 </a>
                             </li>
                             <li class="sidemenu-item">
                                 <a routerLink="/ecommerce-page/orders-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Orders
+                                    Commandes
                                 </a>
                             </li>
                             <li class="sidemenu-item">
                                 <a routerLink="/ecommerce-page/order-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Order Details
+                                    Commandes Details
                                 </a>
                             </li>
                             <li class="sidemenu-item">
                                 <a routerLink="/ecommerce-page/customers-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Customers
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/sellers" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Sellers
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/seller-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Seller Details
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="users"></i-feather>
-                                <span class="title">
-                                    CRM
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/crm-page" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Contacts
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/crm-page/opportunities" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Opportunities
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/crm-page/leads" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Leads
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/crm-page/customers" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Customers
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="briefcase"></i-feather>
-                                <span class="title">
-                                    Project Management
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/project-management-page" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Projects List
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/project-management-page/project-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Project Details
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/project-management-page/create-project" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Create Project
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/project-management-page/clients" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
                                     Clients
                                 </a>
                             </li>
                             <li class="sidemenu-item">
-                                <a routerLink="/project-management-page/teams" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Teams
+                                <a routerLink="/ecommerce-page/customers-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Clients Détails
                                 </a>
                             </li>
                             <li class="sidemenu-item">
-                                <a routerLink="/project-management-page/tasks" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Tasks
+                                <a routerLink="/ecommerce-page/sellers" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Fournisseurs
                                 </a>
                             </li>
                             <li class="sidemenu-item">
-                                <a routerLink="/project-management-page/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Users
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/project-management-page/kanban-board" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Kanban Board
+                                <a routerLink="/ecommerce-page/seller-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Fournisseurs Détails
                                 </a>
                             </li>
                         </ul>
-                    </mat-expansion-panel>
+                    </mat-expansion-panel>                   
+                    <mat-panel-title>
+                        <a routerLink="/invoices" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
+                        <i-feather name="tag"></i-feather>
+                        <span class="title">
+                            Factures
+                        </span>
+                    </a>
+                    </mat-panel-title>
                             <mat-panel-title>
-                                <a routerLink="/invoices" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
-                                <i-feather name="tag"></i-feather>
-                                <span class="title">
-                                    Factures
-                                </span>
-                            </a>
+                                <a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
+                                    <i-feather name="settings"></i-feather>
+                                    <span class="title">
+                                        Paramètres
+                                    </span>
+                                </a>
                             </mat-panel-title>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="users"></i-feather>
-                                <span class="title">
-                                    Users
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/users" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Team Members
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/users/users-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Users List
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/users/add-user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Add User
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="user-plus"></i-feather>
-                                <span class="title">
-                                    Profile
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    User Profile
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/profile/teams" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Teams
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/profile/projects" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Projects
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="settings"></i-feather>
-                                <span class="title">
-                                    Settings
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Account Settings
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings/change-password" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Change Password
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings/connections" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Connections
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings/privacy-policy" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Privacy Policy
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/settings/terms-conditions" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Terms & Conditions
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>
                     <a routerLink="/authentication/logout" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <i-feather name="home"></i-feather>
-                        <span class="title">Logout</span>
+                        <span class="title">Déconnexion</span>
                     </a>
                 </mat-accordion>
             </div>

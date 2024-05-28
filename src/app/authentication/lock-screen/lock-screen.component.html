@@ -6,10 +6,10 @@
             >
                 <div class="title text-center">
                     <h3>
-                        Welcome
+                        Bienvenue
                     </h3>
                     <p class="text-black fs-15">
-                        Good day! Enter your password to unlock the screen
+                        Bonne journée ! Entrez votre mot de passe pour déverrouiller l'écran
                     </p>
                 </div>
                 <div class="user text-center">
@@ -21,11 +21,11 @@
                 <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label class="label d-block fw-medium">
-                            Your Password
+                            Mot de passe
                         </label>
                         <mat-form-field>
                             <i-feather name="lock"></i-feather>
-                            <mat-label>Enter your password</mat-label>
+                            <mat-label>Mot de passe</mat-label>
                             <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password">
                             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <span class="material-symbols-outlined">
@@ -34,14 +34,14 @@
                             </button>
                         </mat-form-field>
                         <div class="error text-danger" *ngIf="authForm.get('password')!.hasError('required') && authForm.get('password')!.touched">
-                            Password is required.
+                            Mot de passe obligatoire.
                         </div>
                         <div class="error text-danger" *ngIf="authForm.get('password')!.hasError('minlength') && authForm.get('password')!.touched">
-                            Password must be at least 8 characters long.
+                            Le mot de passe doit comporter au moins 8 caractères.
                         </div>
                     </div>
                     <button mat-button type="submit" [disabled]="authForm.invalid">
-                        Sign In
+                        Connexion
                     </button>
                 </form>
             </div>

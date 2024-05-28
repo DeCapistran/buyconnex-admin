@@ -5,11 +5,14 @@ import { RouterLink } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { NgIf } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-e-products-list',
     standalone: true,
-    imports: [MatCardModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf],
+    imports: [MatCardModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf, MatMenuModule, MatSelectModule, FormsModule, ReactiveFormsModule],
     templateUrl: './e-products-list.component.html',
     styleUrl: './e-products-list.component.scss'
 })

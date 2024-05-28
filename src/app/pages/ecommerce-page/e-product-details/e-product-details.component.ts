@@ -7,13 +7,12 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgFor } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
-import { OutletsDetailsComponent } from './outlets-details/outlets-details.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 
 @Component({
     selector: 'app-e-product-details',
     standalone: true,
-    imports: [RouterLink, MatCardModule, MatButtonModule, FeathericonsModule, CarouselModule, NgFor, MatProgressBarModule, MatMenuModule, OutletsDetailsComponent, ReviewsComponent],
+    imports: [RouterLink, MatCardModule, MatButtonModule, FeathericonsModule, CarouselModule, NgFor, MatProgressBarModule, MatMenuModule, ReviewsComponent],
     templateUrl: './e-product-details.component.html',
     styleUrl: './e-product-details.component.scss'
 })

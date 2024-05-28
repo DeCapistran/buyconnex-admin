@@ -10,29 +10,16 @@ import { ECustomersListComponent } from './pages/ecommerce-page/e-customers-list
 import { ESellersComponent } from './pages/ecommerce-page/e-sellers/e-sellers.component';
 import { ESellerDetailsComponent } from './pages/ecommerce-page/e-seller-details/e-seller-details.component';
 import { EOrderDetailsComponent } from './pages/ecommerce-page/e-order-details/e-order-details.component';
-import { ECartComponent } from './pages/ecommerce-page/e-cart/e-cart.component';
-import { ECheckoutComponent } from './pages/ecommerce-page/e-checkout/e-checkout.component';
 import { ECreateProductComponent } from './pages/ecommerce-page/e-create-product/e-create-product.component';
 import { CrmPageComponent } from './pages/crm-page/crm-page.component';
 import { CContactsComponent } from './pages/crm-page/c-contacts/c-contacts.component';
 import { CCustomersComponent } from './pages/crm-page/c-customers/c-customers.component';
 import { CLeadsComponent } from './pages/crm-page/c-leads/c-leads.component';
 import { COpportunitiesComponent } from './pages/crm-page/c-opportunities/c-opportunities.component';
-import { ProjectManagementPageComponent } from './pages/project-management-page/project-management-page.component';
-import { PmProjectsListComponent } from './pages/project-management-page/pm-projects-list/pm-projects-list.component';
-import { PmProjectDetailsComponent } from './pages/project-management-page/pm-project-details/pm-project-details.component';
-import { PmCreateProjectComponent } from './pages/project-management-page/pm-create-project/pm-create-project.component';
-import { PmClientsComponent } from './pages/project-management-page/pm-clients/pm-clients.component';
-import { PmTeamsComponent } from './pages/project-management-page/pm-teams/pm-teams.component';
-import { PmTasksComponent } from './pages/project-management-page/pm-tasks/pm-tasks.component';
-import { PmUsersComponent } from './pages/project-management-page/pm-users/pm-users.component';
-import { PmKanbanBoardComponent } from './pages/project-management-page/pm-kanban-board/pm-kanban-board.component';
 import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component';
 import { InvoicesComponent } from './pages/invoices-page/invoices/invoices.component';
 import { InvoiceDetailsComponent } from './pages/invoices-page/invoice-details/invoice-details.component';
 import { AppsComponent } from './apps/apps.component';
-import { KanbanBoardComponent } from './apps/kanban-board/kanban-board.component';
-import { ToDoListComponent } from './apps/to-do-list/to-do-list.component';
 import { ContactsComponent } from './apps/contacts/contacts.component';
 import { NotificationsPageComponent } from './pages/notifications-page/notifications-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
@@ -46,7 +33,6 @@ import { PTeamsComponent } from './pages/profile-page/p-teams/p-teams.component'
 import { SettingsComponent } from './settings/settings.component';
 import { AccountSettingsComponent } from './settings/account-settings/account-settings.component';
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
-import { ConnectionsComponent } from './settings/connections/connections.component';
 import { PrivacyPolicyComponent } from './settings/privacy-policy/privacy-policy.component';
 import { TermsConditionsComponent } from './settings/terms-conditions/terms-conditions.component';
 import { IconsComponent } from './icons/icons.component';
@@ -130,6 +116,7 @@ import { ListboxComponent } from './ui-elements/listbox/listbox.component';
 import { ListComponent } from './ui-elements/list/list.component';
 import { InputComponent } from './ui-elements/input/input.component';
 import { TooltipComponent } from './ui-elements/tooltip/tooltip.component';
+import { ECustomersDetailsComponent } from './pages/ecommerce-page/e-customers-details/e-customers-details.component';
 
 export const routes: Routes = [
     {path: '', component: EcommerceComponent},
@@ -137,8 +124,6 @@ export const routes: Routes = [
         path: 'apps',
         component: AppsComponent,
         children: [
-            {path: '', component: ToDoListComponent},
-            {path: 'kanban-board', component: KanbanBoardComponent},
             {path: 'file-manager', component: FileManagerComponent},
             {path: 'calendar', component: CalendarComponent},
             {path: 'contacts', component: ContactsComponent},
@@ -162,13 +147,12 @@ export const routes: Routes = [
             {path: 'products-list', component: EProductsListComponent},
             {path: 'product-details', component: EProductDetailsComponent},
             {path: 'create-product', component: ECreateProductComponent},
-            {path: 'cart', component: ECartComponent},
-            {path: 'checkout', component: ECheckoutComponent},
             {path: 'orders-list', component: EOrdersListComponent},
             {path: 'order-details', component: EOrderDetailsComponent},
             {path: 'customers-list', component: ECustomersListComponent},
             {path: 'sellers', component: ESellersComponent},
             {path: 'seller-details', component: ESellerDetailsComponent},
+            {path: 'customers-details', component: ECustomersDetailsComponent},
         ]
     },
     {
@@ -179,20 +163,6 @@ export const routes: Routes = [
             {path: 'customers', component: CCustomersComponent},
             {path: 'leads', component: CLeadsComponent},
             {path: 'opportunities', component: COpportunitiesComponent},
-        ]
-    },
-    {
-        path: 'project-management-page',
-        component: ProjectManagementPageComponent,
-        children: [
-            {path: '', component: PmProjectsListComponent},
-            {path: 'project-details', component: PmProjectDetailsComponent},
-            {path: 'create-project', component: PmCreateProjectComponent},
-            {path: 'clients', component: PmClientsComponent},
-            {path: 'teams', component: PmTeamsComponent},
-            {path: 'tasks', component: PmTasksComponent},
-            {path: 'users', component: PmUsersComponent},
-            {path: 'kanban-board', component: PmKanbanBoardComponent},
         ]
     },
     {
@@ -315,7 +285,6 @@ export const routes: Routes = [
         children: [
             {path: '', component: AccountSettingsComponent},
             {path: 'change-password', component: ChangePasswordComponent},
-            {path: 'connections', component: ConnectionsComponent},
             {path: 'privacy-policy', component: PrivacyPolicyComponent},
             {path: 'terms-conditions', component: TermsConditionsComponent}
         ]

@@ -6,63 +6,52 @@
             >
                 <div class="title text-center">
                     <h3>
-                        Register Your Account
+                        Créer votre compte
                     </h3>
                     <p class="text-black fs-15">
-                        Already have an account? <a routerLink="/authentication" class="text-primary fw-medium">Sign in here</a>
+                        Vous avez déjà un compte ? <a routerLink="/authentication" class="text-primary fw-medium">Connexion</a>
                     </p>
-                </div>
-                <div class="signup-with-socials">
-                    <button type="button" mat-button>
-                        <img src="assets/images/icons/google2.svg" alt="google">
-                        Sign Up With Google
-                    </button>
-                    <div class="or text-center position-relative z-1 text-body">
-                        <span class="d-inline-block bg-white">
-                            OR
-                        </span>
-                    </div>
                 </div>
                 <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label class="label d-block fw-medium">
-                            Your Name
+                            Nom
                         </label>
                         <mat-form-field>
                             <i-feather name="user"></i-feather>
-                            <mat-label>Enter your name</mat-label>
+                            <mat-label>Votre nom</mat-label>
                             <input matInput type="text" id="name" formControlName="name">
                         </mat-form-field>
                         <div class="error text-danger" *ngIf="authForm.get('name')!.hasError('required') && authForm.get('name')!.touched">
-                            Name is required.
+                            Nom Obligatoire.
                         </div>
                         <div class="error text-danger" *ngIf="authForm.get('name')!.hasError('name') && authForm.get('name')!.touched">
-                            Please enter a valid name.
+                            Veuillez saisir un nom valide.
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="label d-block fw-medium">
-                            Email Address
+                            Email
                         </label>
                         <mat-form-field>
                             <i-feather name="mail"></i-feather>
-                            <mat-label>Enter email address</mat-label>
+                            <mat-label>Entrer votre email</mat-label>
                             <input matInput type="email" id="email" formControlName="email">
                         </mat-form-field>
                         <div class="error text-danger" *ngIf="authForm.get('email')!.hasError('required') && authForm.get('email')!.touched">
-                            Email is required.
+                            Email Obligatoire.
                         </div>
                         <div class="error text-danger" *ngIf="authForm.get('email')!.hasError('email') && authForm.get('email')!.touched">
-                            Please enter a valid email address.
+                            Veuillez saisir un email valide.
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="label d-block fw-medium">
-                            Your Password
+                            Mot de passe
                         </label>
                         <mat-form-field>
                             <i-feather name="lock"></i-feather>
-                            <mat-label>Enter your password</mat-label>
+                            <mat-label>Mot de passe</mat-label>
                             <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password">
                             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <span class="material-symbols-outlined">
@@ -71,19 +60,19 @@
                             </button>
                         </mat-form-field>
                         <div class="error text-danger" *ngIf="authForm.get('password')!.hasError('required') && authForm.get('password')!.touched">
-                            Password is required.
+                            Mot de passe Obligatoire.
                         </div>
                         <div class="error text-danger" *ngIf="authForm.get('password')!.hasError('minlength') && authForm.get('password')!.touched">
-                            Password must be at least 8 characters long.
+                            Le mot de passe doit comporter au moins 8 caractères.
                         </div>
                     </div>
                     <div class="info">
                         <mat-checkbox color="primary">
-                            I accept the <a href="javascript:void(0);" class="text-primary">Terms & conditions</a>
+                            J'accepte les <a href="javascript:void(0);" class="text-primary">conditions d'utilisation</a>
                         </mat-checkbox>
                     </div>
                     <button mat-button type="submit" [disabled]="authForm.invalid">
-                        Sign Up
+                        S'inscrire
                     </button>
                 </form>
             </div>

@@ -4,25 +4,25 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mt-0 mb-0">
-                Seller Overview
+                Aperçu Fournisseur
             </h5>
         </mat-card-title>
         <mat-card-subtitle>
             <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
-                This Week
+                Jour
             </button>
             <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
                 <button mat-menu-item>
-                    This Day
+                    Jour
                 </button>
                 <button mat-menu-item>
-                    This Week
+                    Semaine
                 </button>
                 <button mat-menu-item>
-                    This Month
+                    Mois
                 </button>
                 <button mat-menu-item>
-                    This Year
+                    Année
                 </button>
             </mat-menu>
         </mat-card-subtitle>
@@ -32,7 +32,7 @@
             <li class="position-relative">
                 <div class="dot new"></div>
                 <span class="d-block text-body">
-                    New Issues
+                    Vendus
                 </span>
                 <h6 class="mt-0 down mb-0 position-relative fw-medium">
                     <i class="ri-arrow-down-line"></i>
@@ -42,7 +42,7 @@
             <li class="position-relative">
                 <div class="dot closed"></div>
                 <span class="d-block text-body">
-                    Closed Issues
+                    En stock
                 </span>
                 <h6 class="mt-0 mb-0 position-relative fw-medium">
                     <i class="ri-arrow-up-line"></i>
@@ -52,7 +52,7 @@
             <li class="position-relative">
                 <div class="dot"></div>
                 <span class="d-block text-body">
-                    Fixed Issues
+                    Retournés
                 </span>
                 <h6 class="mt-0 mb-0 position-relative fw-medium">
                     <i class="ri-arrow-up-line"></i>

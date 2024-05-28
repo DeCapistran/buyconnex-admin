@@ -53,12 +53,12 @@ export class RevenueOverviewComponent {
         this.chartOptions = {
             series: [
                 {
-                    name: "Orders",
+                    name: "Commandes",
                     type: "column",
                     data: [217, 184, 284, 217, 184, 318, 184, 284, 236, 184, 184, 254]
                 },
                 {
-                    name: "Revenue",
+                    name: "Revenues",
                     type: "line",
                     data: [183, 65, 70, 145, 125, 240, 145, 198, 195, 135, 140, 210]
                 }

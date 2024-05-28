@@ -44,15 +44,15 @@ export class SellerOverviewComponent {
         this.chartOptions = {
             series: [
                 {
-                    name: "New Issues",
+                    name: "Vendus",
                     data: [77, 122, 53, 137, 174, 77, 69, 77, 122, 53, 137, 174]
                 },
                 {
-                    name: "Fixed Issues",
+                    name: "En stock",
                     data: [100, 54, 78, 51, 65, 42, 73, 100, 54, 78, 51, 65]
                 },
                 {
-                    name: "Closed Issues",
+                    name: "Retournés",
                     data: [94, 60, 75, 74, 34, 124, 78, 94, 60, 75, 74, 34]
                 }
             ],

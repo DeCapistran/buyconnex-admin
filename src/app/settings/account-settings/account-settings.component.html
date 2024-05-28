@@ -4,7 +4,7 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mt-0 mb-0">
-                Settings
+                Paramètres Compte
             </h5>
         </mat-card-title>
     </mat-card-header>
@@ -13,51 +13,51 @@
             <div class="row">
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        First Name
+                        Nom
                     </label>
                     <mat-form-field>
                         <i-feather name="user"></i-feather>
-                        <mat-label>Enter name</mat-label>
+                        <mat-label>Entrer votre nom</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Last Name
+                        Prénom
                     </label>
                     <mat-form-field>
                         <i-feather name="user"></i-feather>
-                        <mat-label>Enter name</mat-label>
+                        <mat-label>Entrer votre prénom</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Email Address
+                        Email
                     </label>
                     <mat-form-field>
                         <i-feather name="mail"></i-feather>
-                        <mat-label>Enter email address</mat-label>
+                        <mat-label>Entrer votre email</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Contact Number
+                        Téléphone
                     </label>
                     <mat-form-field>
                         <i-feather name="phone"></i-feather>
-                        <mat-label>Enter phone number</mat-label>
+                        <mat-label>Entrer votre numéro</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Date of Birth
+                        Date de naissance
                     </label>
                     <mat-form-field>
                         <i-feather name="calendar"></i-feather>
-                        <mat-label>Enter the date</mat-label>
+                        <mat-label>Date de naissance</mat-label>
                         <input matInput [matDatepicker]="dobPicker">
                         <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
                         <mat-datepicker #dobPicker></mat-datepicker>
@@ -65,35 +65,35 @@
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Gender
+                        Genre
                     </label>
                     <mat-form-field>
                         <i-feather name="meh"></i-feather>
-                        <mat-label>Select</mat-label>
+                        <mat-label>Choisissez</mat-label>
                         <mat-select>
-                            <mat-option value="Male">Male</mat-option>
-                            <mat-option value="Female">Female</mat-option>
-                            <mat-option value="Custom">Custom</mat-option>
+                            <mat-option value="Male">Homme</mat-option>
+                            <mat-option value="Female">Femme</mat-option>
+                            <mat-option value="Custom">Autre</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Address
+                        Addresse
                     </label>
                     <mat-form-field>
                         <i-feather name="map-pin"></i-feather>
-                        <mat-label>Your location</mat-label>
+                        <mat-label>Votre adresse</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Select Country
+                        Choisissez votre pays
                     </label>
                     <mat-form-field>
                         <i-feather name="map-pin"></i-feather>
-                        <mat-label>Select</mat-label>
+                        <mat-label>Pays</mat-label>
                         <mat-select>
                             <mat-option value="Germany">Germany</mat-option>
                             <mat-option value="United States of America">United States of America</mat-option>
@@ -106,69 +106,42 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Town/City
+                        Ville
                     </label>
                     <mat-form-field>
-                        <i-feather name="loader"></i-feather>
-                        <mat-label>City name</mat-label>
+                        <i-feather name="map-pin"></i-feather>
+                        <mat-label>Votre ville</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        State
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="more-vertical"></i-feather>
-                        <mat-label>State name</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-4">
-                    <label class="label d-block fw-medium mb-10">
-                        Zip Code
+                        Code Postal
                     </label>
                     <mat-form-field>
                         <i-feather name="list"></i-feather>
-                        <mat-label>Enter zip code</mat-label>
+                        <mat-label>Code postal</mat-label>
                         <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Your Skills
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="tag"></i-feather>
-                        <mat-label>Select</mat-label>
-                        <mat-select multiple>
-                            <mat-option value="Communication">Communication</mat-option>
-                            <mat-option value="Data Analysis">Data Analysis</mat-option>
-                            <mat-option value="Project Management">Project Management</mat-option>
-                            <mat-option value="Leadership">Leadership</mat-option>
-                            <mat-option value="User Experience">User Experience</mat-option>
-                            <mat-option value="SEO">SEO</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-12">
-                    <label class="label d-block fw-medium mb-10">
-                        About Info
+                        Informations Complémentaires
                     </label>
                     <div class="NgxEditor__Wrapper">
                         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                        <ngx-editor [editor]="editor" [ngModel]="html" name="html" [disabled]="false" [placeholder]="'Some demo text...'"></ngx-editor>
+                        <ngx-editor [editor]="editor" [ngModel]="html" name="html" [disabled]="false" [placeholder]="'Entrer votre commentaire ici...'"></ngx-editor>
                     </div>
                 </div>
             </div>
             <div class="save-profile-btn">
                 <button mat-button type="button">
-                    Cancel
+                    Annuler
                 </button>
                 <button mat-button type="button">
-                    Update Profile
+                    Mettre à jour
                 </button>
             </div>
         </form>

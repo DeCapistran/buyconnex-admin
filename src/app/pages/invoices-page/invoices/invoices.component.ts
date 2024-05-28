@@ -56,7 +56,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -77,7 +77,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -98,7 +98,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -119,7 +119,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -140,7 +140,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -161,7 +161,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -182,7 +182,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -203,7 +203,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -224,7 +224,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -245,7 +245,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -266,7 +266,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -287,7 +287,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -308,7 +308,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -329,7 +329,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -350,7 +350,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -371,7 +371,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -392,7 +392,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     },
     {
@@ -413,7 +413,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         action: {
             download: 'ri-download-2-line',
             edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
+            view: 'ri-eye-line'
         }
     }
 ];
