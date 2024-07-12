@@ -1,0 +1,86 @@
+<mat-card
+    class="trinta-card add-product-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                Ajouter Coupon
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form>
+            <div class="row">
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Libellé Coupon
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="edit-3"></i-feather>
+                        <mat-label>Entrer le libellé du coupon</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Code Coupon
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="edit-3"></i-feather>
+                        <mat-label>Entrer le code du coupon</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Date de début
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Date de début</mat-label>
+                        <input matInput [matDatepicker]="dp1" disabled>
+                        <mat-datepicker-toggle matIconSuffix [for]="dp1"></mat-datepicker-toggle>
+                        <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Date de fin
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Date de fin</mat-label>
+                        <input matInput [matDatepicker]="dp2" disabled>
+                        <mat-datepicker-toggle matIconSuffix [for]="dp2"></mat-datepicker-toggle>
+                        <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Prix Minimum
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="dollar-sign"></i-feather>
+                        <mat-label>Entrer le prix minimum de la commande</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Quantité en Stock
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="database"></i-feather>
+                        <mat-label>Quantité</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="create-product-btn">
+                <button mat-button type="button">
+                    Ajouter
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

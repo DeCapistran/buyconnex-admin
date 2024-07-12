@@ -50,6 +50,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '1 hrs ago',
         location: 'Ethereal Blossom, Grove',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -66,6 +67,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '10 hrs ago',
         location: 'Enchanted Silver Moon, Valley',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -82,6 +84,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '1 month ago',
         location: 'Whispering Willow, Haven',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -98,6 +101,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '6 hrs ago',
         location: 'Sapphire Serenity, Cove',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -114,6 +118,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '2 days ago',
         location: 'Twilight Enigma, Sanctuar',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -130,6 +135,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '7 dys ago',
         location: 'Celestial Harmony, Meadow',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -146,6 +152,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '2 hrs ago',
         location: 'Crimson Horizon, Bluff',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -162,6 +169,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '9 hrs ago',
         location: 'Radiant Cascade, Oasis',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -178,6 +186,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '9 hrs ago',
         location: 'Radiant Cascade, Oasis',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -194,6 +203,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '2 hrs ago',
         location: 'Crimson Horizon, Bluff',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -210,6 +220,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '7 dys ago',
         location: 'Celestial Harmony, Meadow',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -226,6 +237,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '2 days ago',
         location: 'Twilight Enigma, Sanctuar',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -242,6 +254,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '6 hrs ago',
         location: 'Sapphire Serenity, Cove',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -258,6 +271,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '1 month ago',
         location: 'Whispering Willow, Haven',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -274,6 +288,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '10 hrs ago',
         location: 'Enchanted Silver Moon, Valley',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }
@@ -290,6 +305,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
         activeStatus: '1 hrs ago',
         location: 'Ethereal Blossom, Grove',
         action: {
+            view: 'ri-eye-line',
             edit: 'ri-edit-line',
             delete : 'ri-delete-bin-line'
         }

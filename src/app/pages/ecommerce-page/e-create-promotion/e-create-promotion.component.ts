@@ -21,7 +21,7 @@ export interface User {
 }
 
 @Component({
-    selector: 'app-e-create-product',
+    selector: 'app-e-create-promotion',
     standalone: true,
     imports: [RouterLink, 
         MatCardModule, 
@@ -41,15 +41,20 @@ export interface User {
         FeathericonsModule
     ],
     providers: [provideNativeDateAdapter()],
-    templateUrl: './e-create-product.component.html',
-    styleUrl: './e-create-product.component.scss'
+    templateUrl: './e-create-promotion.component.html',
+    styleUrl: './e-create-promotion.component.scss'
 })
-export class ECreateProductComponent {
+export class ECreatePromotionComponent {
 
     // Display Value
     myControl = new FormControl<string | User>('');
     options: User[] = [{name: 'Mary'}, {name: 'Shelley'}, {name: 'Igor'}];
     filteredOptions: Observable<User[]>;
+
+    //Select
+    toppings = new FormControl('');
+    toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
 
     // Text Editor
     editor: Editor;

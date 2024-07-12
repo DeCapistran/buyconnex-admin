@@ -21,7 +21,7 @@ export interface User {
 }
 
 @Component({
-    selector: 'app-e-create-product',
+    selector: 'app-e-create-boutique',
     standalone: true,
     imports: [RouterLink, 
         MatCardModule, 
@@ -41,10 +41,10 @@ export interface User {
         FeathericonsModule
     ],
     providers: [provideNativeDateAdapter()],
-    templateUrl: './e-create-product.component.html',
-    styleUrl: './e-create-product.component.scss'
+    templateUrl: './e-create-boutique.component.html',
+    styleUrl: './e-create-boutique.component.scss'
 })
-export class ECreateProductComponent {
+export class ECreateBoutiqueComponent {
 
     // Display Value
     myControl = new FormControl<string | User>('');

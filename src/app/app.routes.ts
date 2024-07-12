@@ -11,11 +11,7 @@ import { ESellersComponent } from './pages/ecommerce-page/e-sellers/e-sellers.co
 import { ESellerDetailsComponent } from './pages/ecommerce-page/e-seller-details/e-seller-details.component';
 import { EOrderDetailsComponent } from './pages/ecommerce-page/e-order-details/e-order-details.component';
 import { ECreateProductComponent } from './pages/ecommerce-page/e-create-product/e-create-product.component';
-import { CrmPageComponent } from './pages/crm-page/crm-page.component';
-import { CContactsComponent } from './pages/crm-page/c-contacts/c-contacts.component';
-import { CCustomersComponent } from './pages/crm-page/c-customers/c-customers.component';
-import { CLeadsComponent } from './pages/crm-page/c-leads/c-leads.component';
-import { COpportunitiesComponent } from './pages/crm-page/c-opportunities/c-opportunities.component';
+import { ECreateBoutiqueComponent } from './pages/ecommerce-page/e-create-boutique/e-create-boutique.component';
 import { InvoicesPageComponent } from './pages/invoices-page/invoices-page.component';
 import { InvoicesComponent } from './pages/invoices-page/invoices/invoices.component';
 import { InvoiceDetailsComponent } from './pages/invoices-page/invoice-details/invoice-details.component';
@@ -26,10 +22,6 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { TeamMembersComponent } from './pages/users-page/team-members/team-members.component';
 import { UsersListComponent } from './pages/users-page/users-list/users-list.component';
 import { AddUserComponent } from './pages/users-page/add-user/add-user.component';
-import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
-import { PUserProfileComponent } from './pages/profile-page/p-user-profile/p-user-profile.component';
-import { PProjectsComponent } from './pages/profile-page/p-projects/p-projects.component';
-import { PTeamsComponent } from './pages/profile-page/p-teams/p-teams.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AccountSettingsComponent } from './settings/account-settings/account-settings.component';
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
@@ -45,7 +37,6 @@ import { GaugeComponent } from './charts/gauge/gauge.component';
 import { InternalErrorComponent } from './common/internal-error/internal-error.component';
 import { BlankPageComponent } from './blank-page/blank-page.component';
 import { GalleryPageComponent } from './pages/gallery-page/gallery-page.component';
-import { TestimonialsPageComponent } from './pages/testimonials-page/testimonials-page.component';
 import { WidgetsComponent } from './widgets/widgets.component';
 import { FileManagerComponent } from './apps/file-manager/file-manager.component';
 import { CalendarComponent } from './apps/calendar/calendar.component';
@@ -54,7 +45,6 @@ import { EmailComponent } from './apps/email/email.component';
 import { InboxComponent } from './apps/email/inbox/inbox.component';
 import { ComposeComponent } from './apps/email/compose/compose.component';
 import { ReadComponent } from './apps/email/read/read.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
@@ -117,6 +107,12 @@ import { ListComponent } from './ui-elements/list/list.component';
 import { InputComponent } from './ui-elements/input/input.component';
 import { TooltipComponent } from './ui-elements/tooltip/tooltip.component';
 import { ECustomersDetailsComponent } from './pages/ecommerce-page/e-customers-details/e-customers-details.component';
+import { EBoutiqueDetailsComponent } from './pages/ecommerce-page/e-boutique-details/e-boutique-details.component';
+import { ECreateImageComponent } from './pages/ecommerce-page/e-create-image/e-create-image.component';
+import { ECreateCouponComponent } from './pages/ecommerce-page/e-create-coupon/e-create-coupon.component';
+import { ECouponDetailsComponent } from './pages/ecommerce-page/e-coupon-details/e-coupon-details.component';
+import { ECreatePromotionComponent } from './pages/ecommerce-page/e-create-promotion/e-create-promotion.component';
+import { EPromotionListComponent } from './pages/ecommerce-page/e-promotion-list/e-promotion-list.component';
 
 export const routes: Routes = [
     {path: '', component: EcommerceComponent},
@@ -147,22 +143,19 @@ export const routes: Routes = [
             {path: 'products-list', component: EProductsListComponent},
             {path: 'product-details', component: EProductDetailsComponent},
             {path: 'create-product', component: ECreateProductComponent},
+            {path: 'create-boutique', component: ECreateBoutiqueComponent},
             {path: 'orders-list', component: EOrdersListComponent},
             {path: 'order-details', component: EOrderDetailsComponent},
             {path: 'customers-list', component: ECustomersListComponent},
             {path: 'sellers', component: ESellersComponent},
             {path: 'seller-details', component: ESellerDetailsComponent},
             {path: 'customers-details', component: ECustomersDetailsComponent},
-        ]
-    },
-    {
-        path: 'crm-page',
-        component: CrmPageComponent,
-        children: [
-            {path: '', component: CContactsComponent},
-            {path: 'customers', component: CCustomersComponent},
-            {path: 'leads', component: CLeadsComponent},
-            {path: 'opportunities', component: COpportunitiesComponent},
+            {path: 'boutique-details', component: EBoutiqueDetailsComponent},
+            {path: 'create-image', component: ECreateImageComponent},
+            {path: 'create-coupon', component: ECreateCouponComponent},
+            {path: 'coupon-details', component: ECouponDetailsComponent},
+            {path: 'create-promotion', component: ECreatePromotionComponent},
+            {path: 'promotion-list', component: EPromotionListComponent},
         ]
     },
     {
@@ -235,7 +228,6 @@ export const routes: Routes = [
         ]
     },
     {path: 'gallery', component: GalleryPageComponent},
-    {path: 'testimonials', component: TestimonialsPageComponent},
     {path: 'blank-page', component: BlankPageComponent},
     {path: 'internal-error', component: InternalErrorComponent},
     {path: 'widgets', component: WidgetsComponent},
@@ -269,16 +261,6 @@ export const routes: Routes = [
             {path: 'add-user', component: AddUserComponent},
         ]
     },
-    {
-        path: 'profile',
-        component: ProfilePageComponent,
-        children: [
-            {path: '', component: PUserProfileComponent},
-            {path: 'teams', component: PTeamsComponent},
-            {path: 'projects', component: PProjectsComponent},
-        ]
-    },
-    {path: 'my-profile', component: MyProfileComponent},
     {
         path: 'settings',
         component: SettingsComponent,
