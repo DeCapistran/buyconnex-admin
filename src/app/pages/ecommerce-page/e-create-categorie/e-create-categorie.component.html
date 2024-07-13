@@ -1,0 +1,38 @@
+<mat-card
+    class="trinta-card add-product-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                Ajouter Catégorie
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form>
+            <div class="row">
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Nom catégorie
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="edit-3"></i-feather>
+                        <mat-label>Entrer le nom de la catégorie</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Images Catégorie
+                    </label>
+                    <file-upload class="file-uploader"></file-upload>
+                </div>
+            </div>
+            <div class="create-product-btn">
+                <button mat-button type="button">
+                    Ajouter
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

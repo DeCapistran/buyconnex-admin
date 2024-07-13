@@ -113,6 +113,8 @@ import { ECreateCouponComponent } from './pages/ecommerce-page/e-create-coupon/e
 import { ECouponDetailsComponent } from './pages/ecommerce-page/e-coupon-details/e-coupon-details.component';
 import { ECreatePromotionComponent } from './pages/ecommerce-page/e-create-promotion/e-create-promotion.component';
 import { EPromotionListComponent } from './pages/ecommerce-page/e-promotion-list/e-promotion-list.component';
+import { ECreateCategorieComponent } from './pages/ecommerce-page/e-create-categorie/e-create-categorie.component';
+import { ECategorieDetailsComponent } from './pages/ecommerce-page/e-categorie-details/e-categorie-details.component';
 
 export const routes: Routes = [
     {path: '', component: EcommerceComponent},
@@ -151,10 +153,12 @@ export const routes: Routes = [
             {path: 'seller-details', component: ESellerDetailsComponent},
             {path: 'customers-details', component: ECustomersDetailsComponent},
             {path: 'boutique-details', component: EBoutiqueDetailsComponent},
+            {path: 'categorie-details', component: ECategorieDetailsComponent},
             {path: 'create-image', component: ECreateImageComponent},
             {path: 'create-coupon', component: ECreateCouponComponent},
             {path: 'coupon-details', component: ECouponDetailsComponent},
             {path: 'create-promotion', component: ECreatePromotionComponent},
+            {path: 'create-categorie', component: ECreateCategorieComponent},
             {path: 'promotion-list', component: EPromotionListComponent},
         ]
     },

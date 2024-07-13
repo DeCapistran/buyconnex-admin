@@ -23,6 +23,7 @@ export class SignUpComponent {
     ) {
         this.authForm = this.fb.group({
             name: ['', Validators.required],
+            prenom: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(8)]],
         });

@@ -31,6 +31,22 @@
                     </div>
                     <div class="form-group">
                         <label class="label d-block fw-medium">
+                            Prénom
+                        </label>
+                        <mat-form-field>
+                            <i-feather name="user"></i-feather>
+                            <mat-label>Votre prénom</mat-label>
+                            <input matInput type="text" id="prenom" formControlName="prenom">
+                        </mat-form-field>
+                        <div class="error text-danger" *ngIf="authForm.get('prenom')!.hasError('required') && authForm.get('prenom')!.touched">
+                            Prénom Obligatoire.
+                        </div>
+                        <div class="error text-danger" *ngIf="authForm.get('prenom')!.hasError('prenom') && authForm.get('prenom')!.touched">
+                            Veuillez saisir un nom valide.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label d-block fw-medium">
                             Email
                         </label>
                         <mat-form-field>
