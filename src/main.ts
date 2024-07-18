@@ -1,18 +1,23 @@
-import { bootstrapApplication, provideClientHydration } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { routes } from './app/app.routes';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
-bootstrapApplication(AppComponent, {
+const appConfig: ApplicationConfig = {
     providers: [
-        provideHttpClient(),
-        provideRouter(routes), 
-        provideClientHydration(), 
-        provideAnimationsAsync()
-        // Autres providers éventuels
-      ],
-})
+      provideHttpClient(),
+      provideRouter(routes),
+      importProvidersFrom(
+        BrowserAnimationsModule,
+        ToastrModule.forRoot()
+      ),
+      // Autres providers éventuels
+    ],
+  };
+
+bootstrapApplication(AppComponent, appConfig)
     .catch((err) => console.error(err));

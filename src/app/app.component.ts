@@ -8,6 +8,7 @@ import { ToggleService } from '../app/common/header/toggle.service';
 import { SidebarComponent } from './common/sidebar/sidebar.component';
 import { CommonModule, Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { RouterOutlet, Router, NavigationCancel, NavigationEnd, RouterLink } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -27,11 +28,13 @@ export class AppComponent {
     title = 'Trinta -  Angular 17 Material Design Admin Dashboard Template';
     routerSubscription: any;
     location: any;
+    isLoggedin: boolean | undefined;
 
     constructor(
         public router: Router,
         public toggleService: ToggleService,
-        @Inject(PLATFORM_ID) private platformId: Object
+        @Inject(PLATFORM_ID) private platformId: Object,
+        public authService: AuthService
     ) {
         this.toggleService.isToggled$.subscribe(isToggled => {
             this.isToggled = isToggled;
@@ -53,6 +56,17 @@ export class AppComponent {
 
     // ngOnInit
     ngOnInit(){
+        
+        let isloggedin: string;
+        let loggedUser: string;
+        isloggedin = localStorage.getItem('isloggedIn')!;
+        loggedUser = localStorage.getItem('loggedUser')!;
+
+        if (isloggedin != "true" || !loggedUser)
+        this.router.navigate(["/"]);
+        else
+        this.authService.setLoggedUserFromLocalStorage(loggedUser);
+
         if (isPlatformBrowser(this.platformId)) {
             this.recallJsFuntions();
         }

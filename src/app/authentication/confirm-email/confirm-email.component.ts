@@ -8,11 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { Users } from '../../models/users/users-model';
 import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-confirm-email',
     standalone: true,
-    imports: [RouterLink, MatButtonModule, FeathericonsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatCardModule],
+    imports: [RouterLink, MatButtonModule, FeathericonsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatCardModule, FormsModule, NgIf],
     templateUrl: './confirm-email.component.html',
     styleUrl: './confirm-email.component.scss'
 })
@@ -23,7 +25,9 @@ export class ConfirmEmailComponent implements OnInit {
 
     code :string="";
     user :Users = new Users();
-    err="";
+    err!:any;
+    showAlert = false;
+    showAlert2 = false;
 
     constructor(private route:ActivatedRoute,private authService:AuthService,
         private router:Router) {}
@@ -35,17 +39,34 @@ export class ConfirmEmailComponent implements OnInit {
     onValidateEmail() {
         this.authService.validateEmail(this.code).subscribe({
           next: (res) => {
-            alert("Compte créé avec succès !");
-            this.router.navigate(["/pages/login"]);
+            this.showAlert = true;
+            this.err = "Compte créé avec succès !";
+            setTimeout(() => {
+                this.err = null;
+                this.router.navigate(["/authentication"]);
+                this.showAlert = false;
+              }, 1500);
           },
           error: (err: any) => {
-          if ((err.error.errorCode == "INVALID_TOKEN")) 
-              this.err = "Votre code n'est pas valide !";
+          if ((err.error.errorCode == "INVALID_TOKEN")) {
+            this.showAlert2 = true;
+            this.err = "Votre code n'est pas valide !";
+            setTimeout(() => {
+                this.err = null;
+                this.showAlert2 = false;
+            }, 1500);
+        }
       
-          if ((err.error.errorCode == "EXPIRED_TOKEN")) 
-              this.err = "Votre code a expiré !";  
-          },
-        });
+          if ((err.error.errorCode == "EXPIRED_TOKEN")) {
+            this.showAlert2 = true;
+            this.err = "Votre code a expiré !";
+            setTimeout(() => {
+                this.err = null;
+            }, 1500); 
+            this.showAlert2 = false;
+        } 
+        },
+    });
       
     }
 }

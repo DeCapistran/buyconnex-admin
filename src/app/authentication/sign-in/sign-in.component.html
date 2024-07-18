@@ -12,6 +12,12 @@
                         Vous n'avez pas encore de compte ? <a routerLink="/authentication/sign-up" class="text-primary fw-medium">S'inscrire ici</a>
                     </p>
                 </div>
+                <div class="alert alert-danger" *ngIf="showMessage2">
+                    <strong>{{err}}</strong>
+                </div>
+                <div class="alert alert-success" *ngIf="showMessage">
+                    <strong>{{err}}</strong>
+                </div>
                 <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label class="label d-block fw-medium mb-10">
@@ -20,7 +26,7 @@
                         <mat-form-field>
                             <i-feather name="mail"></i-feather>
                             <mat-label>Entrer email</mat-label>
-                            <input matInput type="email" id="email" formControlName="email">
+                            <input matInput type="email" id="email" formControlName="email" [(ngModel)]="users.username">
                         </mat-form-field>
                         <div class="error text-danger" *ngIf="authForm.get('email')!.hasError('required') && authForm.get('email')!.touched">
                             Email Obligatoire.
@@ -36,7 +42,7 @@
                         <mat-form-field>
                             <i-feather name="lock"></i-feather>
                             <mat-label>Mot de passe</mat-label>
-                            <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password">
+                            <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password" [(ngModel)]="users.password">
                             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                                 <span class="material-symbols-outlined">
                                     {{hide ? 'visibility_off' : 'visibility'}}
@@ -59,7 +65,7 @@
                         </a>
                     </div>
                     <button mat-button type="submit" [disabled]="authForm.invalid">
-                        S'inscrire
+                        Connexion
                     </button>
                 </form>
             </div>
