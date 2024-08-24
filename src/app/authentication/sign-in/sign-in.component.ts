@@ -23,11 +23,10 @@ export class SignInComponent implements OnInit{
     hide = true;
     authForm: FormGroup;
     public loggedUser!:string;
-    public isloggedIn: Boolean = false;
+    public loggedIn: boolean = false;
     authRequest: AuthRequest = new AuthRequest();
     currentUser?: AuthResponse = new AuthResponse();
     public users = new Users();
-    message : string ="login ou mot de passe erronés..";
     showMessage = false;
     showMessage2 = false;
     err!:any;
@@ -53,10 +52,10 @@ export class SignInComponent implements OnInit{
               let jwToken = data.headers.get('Authorization')!;
               this.authService.saveToken(jwToken);
               this.loggedUser = this.users.username;
-              this.isloggedIn = true;
+              this.loggedIn = true;
               this.err = "Connexion réussie";
               localStorage.setItem('loggedUser', this.loggedUser);
-              localStorage.setItem('isloggedIn', String(this.isloggedIn));
+              localStorage.setItem('isloggedIn', String(this.loggedIn));
               setTimeout(() => {
                 this.err = null;
                 this.router.navigate(['/']); 
@@ -73,15 +72,16 @@ export class SignInComponent implements OnInit{
                     this.showMessage2 = false;
                   }, 1500);
               }
-              if (err.error.errorCause=="disabled")
+              if (err.error.errorCause=="disabled") {
                 this.showMessage2 = true;
                 this.err = "Utilisateur désactivé";
                 setTimeout(() => {
                     this.err = null;
                     this.showMessage2 = false;
                     }, 1500);
+              }
             }
-            });
+        });
     }
 
 }

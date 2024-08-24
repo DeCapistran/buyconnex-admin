@@ -51,7 +51,6 @@ export class SignUpComponent {
     onSubmit() {
         this.formSubmitted = true;
         if (this.authForm.valid) {
-        console.log(this.users);
         this.loading=true;
         this.authService.registerUser(this.users).subscribe({
             next:(res)=>{

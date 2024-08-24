@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FeathericonsModule } from '../../icons/feathericons/feathericons.module';
 import { RouterLink } from '@angular/router';
 import { ToggleService } from './toggle.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-header',
@@ -20,7 +21,8 @@ export class HeaderComponent {
 
     constructor(
         public toggleService: ToggleService,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private authService: AuthService
     ) {
         this.toggleService.isToggled$.subscribe(isToggled => {
             this.isToggled = isToggled;
@@ -37,6 +39,10 @@ export class HeaderComponent {
     toggleTheme() {
         this.toggleService.toggleTheme();
     }
+
+    onLogout() {
+        this.authService.logOut();
+      }
 
     // Current Date
     currentDate: Date = new Date();

@@ -18,7 +18,7 @@ export class AuthService {
     private helper = new JwtHelperService();
     token!:string;
     public loggedUser!:string;
-    public isloggedIn: Boolean = false;
+    public loggedIn: boolean = false;
     public roles!:string[];
     public regitredUser : Users = new Users();
     public newPassword: NewPassword = new NewPassword();
@@ -41,12 +41,15 @@ export class AuthService {
     saveToken(jwt:string){
         localStorage.setItem('jwt',jwt);
         this.token = jwt;
-        this.isloggedIn = true; 
+        this.loggedIn = true; 
         this.decodeJWT();
     }
   
     getToken():string {
-      return this.token;
+        if (!this.token) {
+            this.token = localStorage.getItem('jwt') || '';
+        }
+        return this.token;
     }
   
     decodeJWT() {   
@@ -68,14 +71,16 @@ export class AuthService {
         this.loggedUser = undefined!;
         this.roles = undefined!;
         this.token= undefined!;
-        this.isloggedIn = false;
+        this.loggedIn = false;
+        localStorage.removeItem('isloggedIn');
+        localStorage.removeItem('loggedUser');
         localStorage.removeItem('jwt');
-        this.router.navigate(["/pages/login"]);
+        this.router.navigate(["/authentication"]);
     }
     
     setLoggedUserFromLocalStorage(login: string) {
         this.loggedUser = login;
-        this.isloggedIn = true;
+        this.loggedIn = true;
     }
 
     loadToken() {
@@ -104,56 +109,8 @@ export class AuthService {
         return this.httpClient.post<NewPassword>(environment.backend_url+'/update-password', newPassword, {headers:httpHeaders});
     }
 
-
-
-
-
-// A MODIFIER //
-    
-
-    /*logOut() {
-        this.router.navigateByUrl('auth/login');
+    isLoggedIn(): boolean {
+        return this.loggedIn;
     }
 
-
-    isUserSignedIn() {
-        let token = localStorage.getItem('token');
-        if(token && !this.tokenExpired(token)) {
-            return true;
-        }
-        return false;
-    }
-
-    getSignedInUser() {
-        return localStorage.getItem('user') as string;
-    }
-
-    private tokenExpired(token: string): boolean {
-        const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
-        return (Math.floor((new Date).getTime() / 1000)) >= expiry;
-    }
-
-    resetPassword(email:string): Observable<any> {
-        const params = new HttpParams().set('email', email);
-        return this.httpClient.post(environment.backend_url + '/api/reset-password', params);
-    }
-
-    checkTokenForResetPassword(token:string): Observable<any> {
-        const params = new HttpParams().set('token', token);
-        return this.httpClient.post(environment.backend_url + '/api/ckeck-token-reset-password', params);
-    }
-
-    updatePassword(newPassword:NewPassword): Observable<any> {
-        return this.httpClient.post<any>(environment.backend_url + '/api/update-password', newPassword, {headers: new HttpHeaders({ 'Content-Type': 'application/json'})}).pipe(map((reps) => {
-            return reps;
-        }));    
-    }
-
-    getUserLang():string {
-        let settings = JSON.parse(localStorage.getItem('userSettings') as string);
-        if(settings.langue) {
-            return settings.langue;
-        }
-        return 'fr-FR';
-    }*/
 }

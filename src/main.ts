@@ -6,6 +6,7 @@ import { routes } from './app/app.routes';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthGuard } from './app/services/auth.guard';
 
 const appConfig: ApplicationConfig = {
     providers: [
@@ -13,6 +14,7 @@ const appConfig: ApplicationConfig = {
       provideRouter(routes),
       importProvidersFrom(
         BrowserAnimationsModule,
+        AuthGuard,
         ToastrModule.forRoot()
       ),
       // Autres providers éventuels

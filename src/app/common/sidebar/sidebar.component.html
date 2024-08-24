@@ -1,7 +1,4 @@
-<div
-    class="sidebar-area bg-white transition"
-    [ngClass]="{'active': isToggled}"
->
+<div class="sidebar-area bg-white transition" [ngClass]="{'active': isToggled}">
     <div class="logo bg-white">
         <a routerLink="/" class="d-flex align-items-center">
             <img src="assets/images/logo-icon.svg" alt="logo-icon">
@@ -10,11 +7,7 @@
             </span>
         </a>
     </div>
-    <div
-        class="burger-menu transition cursor-pointer"
-        [ngClass]="{'active': isToggled}"
-        (click)="toggle()"
-    >
+    <div class="burger-menu transition cursor-pointer" [ngClass]="{'active': isToggled}" (click)="toggle()">
         <span class="top-bar transition bg-dark d-block"></span>
         <span class="middle-bar transition bg-dark d-block"></span>
         <span class="bottom-bar transition bg-dark d-block"></span>
@@ -24,82 +17,107 @@
             <div class="sidebar-menu">
                 <mat-accordion>
                     <mat-panel-title>
-                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
-                        <i-feather name="home"></i-feather>
-                        <span class="title">
-                            Dashboard
-                        </span>
-                    </a>
+                        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                            class="sidebar-menu-link">
+                            <i-feather name="activity"></i-feather>
+                            <span class="title">
+                                Dashboard
+                            </span>
+                        </a>
                     </mat-panel-title>
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <i-feather name="shopping-cart"></i-feather>
-                                <span class="title">
-                                    E-Commerce
-                                </span>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ul class="sidebar-sub-menu">
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/products-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Mes Articles
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/categorie-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Mes Catégories
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/orders-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Mes Commandes
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/customers-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Mes Clients
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/boutique-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Mes Boutiques
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/create-image" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Ajouter Image
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/coupon-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Mes Coupons
-                                </a>
-                            </li>
-                            <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/promotion-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
-                                    Mes Promotions
-                                </a>
-                            </li>
-                        </ul>
-                    </mat-expansion-panel>                   
                     <mat-panel-title>
-                        <a routerLink="/invoices" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
-                        <i-feather name="tag"></i-feather>
-                        <span class="title">
-                            Factures
-                        </span>
-                    </a>
+                        <a routerLink="/ecommerce-page/products-list" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
+                            <i-feather name="shopping-bag"></i-feather>
+                            <span class="title">
+                                Mes Articles
+                            </span>
+                        </a>
                     </mat-panel-title>
-                            <mat-panel-title>
-                                <a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
-                                    <i-feather name="settings"></i-feather>
-                                    <span class="title">
-                                        Paramètres
-                                    </span>
-                                </a>
-                            </mat-panel-title>
-                    <a routerLink="/authentication/logout" class="sidebar-menu-link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <mat-panel-title>
+                        <a routerLink="/ecommerce-page/categorie-details" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
+                            <i-feather name="layers"></i-feather>
+                            <span class="title">
+                                Mes Catégories
+                            </span>
+                        </a>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                        <a routerLink="/ecommerce-page/orders-list" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
+                            <i-feather name="shopping-cart"></i-feather>
+                            <span class="title">
+                                Mes Commandes
+                            </span>
+                        </a>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                        <a routerLink="/ecommerce-page/customers-list" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
+                            <i-feather name="users"></i-feather>
+                            <span class="title">
+                                Mes Clients
+                            </span>
+                        </a>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                        <a routerLink="/ecommerce-page/boutique-details" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
+                            <i-feather name="home"></i-feather>
+                            <span class="title">
+                                Mes Boutiques
+                            </span>
+                        </a>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                        <a routerLink="/ecommerce-page/create-image" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}" class="sidebar-menu-link">
+                            <i-feather name="camera"></i-feather>
+                            <span class="title">
+                                Mes Images
+                            </span>
+                        </a>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                        <a routerLink="/ecommerce-page/coupon-details" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                            class="sidebar-menu-link">
+                            <i-feather name="tag"></i-feather>
+                            <span class="title">
+                                Mes Coupons
+                            </span>
+                        </a>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                        <a routerLink="/ecommerce-page/promotion-list" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                            class="sidebar-menu-link">
+                            <i-feather name="trending-up"></i-feather>
+                            <span class="title">
+                                Mes Promotions
+                            </span>
+                        </a>
+                    </mat-panel-title>
+
+                    <mat-panel-title>
+                        <a routerLink="/invoices" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                            class="sidebar-menu-link">
+                            <i-feather name="file-text"></i-feather>
+                            <span class="title">
+                                Mes Factures
+                            </span>
+                        </a>
+                    </mat-panel-title>
+                    <mat-panel-title>
+                        <a routerLink="/settings" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                            class="sidebar-menu-link">
+                            <i-feather name="settings"></i-feather>
+                            <span class="title">
+                                Paramètres
+                            </span>
+                        </a>
+                    </mat-panel-title>
+                    <a routerLink="/authentication/logout" class="sidebar-menu-link" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
                         <i-feather name="home"></i-feather>
                         <span class="title">Déconnexion</span>
                     </a>

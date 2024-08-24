@@ -57,15 +57,11 @@ export class AppComponent {
     // ngOnInit
     ngOnInit(){
         
-        let isloggedin: string;
-        let loggedUser: string;
-        isloggedin = localStorage.getItem('isloggedIn')!;
-        loggedUser = localStorage.getItem('loggedUser')!;
+        let isloggedin = localStorage.getItem('isloggedIn')!;
+        let loggedUser = localStorage.getItem('loggedUser')!;
 
-        if (isloggedin != "true" || !loggedUser)
-        this.router.navigate(["/"]);
-        else
-        this.authService.setLoggedUserFromLocalStorage(loggedUser);
+        if (isloggedin == "true" && loggedUser)
+            this.authService.setLoggedUserFromLocalStorage(loggedUser);     
 
         if (isPlatformBrowser(this.platformId)) {
             this.recallJsFuntions();

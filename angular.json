@@ -26,8 +26,11 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "src/favicon.ico",
-                            "src/assets"
+                            {
+                                "glob": "**/*",
+                                "input": "src/assets/images",
+                                "output": "/assets/images"
+                            }
                         ],
                         "styles": [
                             "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
@@ -107,6 +110,6 @@
         }
     },
     "cli": {
-      "analytics": "02a27a6f-92c7-4933-97f1-bc84846e35fc"
+        "analytics": "02a27a6f-92c7-4933-97f1-bc84846e35fc"
     }
 }

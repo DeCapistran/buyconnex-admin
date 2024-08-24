@@ -115,6 +115,7 @@ import { ECreatePromotionComponent } from './pages/ecommerce-page/e-create-promo
 import { EPromotionListComponent } from './pages/ecommerce-page/e-promotion-list/e-promotion-list.component';
 import { ECreateCategorieComponent } from './pages/ecommerce-page/e-create-categorie/e-create-categorie.component';
 import { ECategorieDetailsComponent } from './pages/ecommerce-page/e-categorie-details/e-categorie-details.component';
+import { AuthGuard } from './services/auth.guard';
 
 export const routes: Routes = [
     {path: '', component: EcommerceComponent},
@@ -140,12 +141,14 @@ export const routes: Routes = [
     {
         path: 'ecommerce-page',
         component: EcommercePageComponent,
+        canActivate: [AuthGuard],
         children: [
             {path: '', component: EProductsGridComponent},
             {path: 'products-list', component: EProductsListComponent},
             {path: 'product-details', component: EProductDetailsComponent},
             {path: 'create-product', component: ECreateProductComponent},
             {path: 'create-boutique', component: ECreateBoutiqueComponent},
+            {path: 'create-boutique/:id', component: ECreateBoutiqueComponent},
             {path: 'orders-list', component: EOrdersListComponent},
             {path: 'order-details', component: EOrderDetailsComponent},
             {path: 'customers-list', component: ECustomersListComponent},
@@ -284,7 +287,7 @@ export const routes: Routes = [
             {path: 'forgot-password', component: ForgotPasswordComponent},
             {path: 'reset-password', component: ResetPasswordComponent},
             {path: 'lock-screen', component: LockScreenComponent},
-            {path: 'confirm-email', component: ConfirmEmailComponent},
+            {path: 'confirm-email', component: ConfirmEmailComponent, canActivate: [AuthGuard]},
             {path: 'logout', component: LogoutComponent}
         ]
     },
