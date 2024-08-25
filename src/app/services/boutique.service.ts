@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
 import { Boutiques } from "../models/articles/boutiques-model";
 import { environment } from "../../environnments/environment";
 import { Images } from "../models/articles/images-model";
@@ -15,7 +14,7 @@ export class BoutiqueService {
 
     public boutique: Boutiques = new Boutiques();
 
-    constructor(private router: Router, private httpClient: HttpClient, private authService: AuthService) { }
+    constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
     getBoutiques() {
         let jwt = this.authService.getToken();
@@ -101,7 +100,7 @@ export class BoutiqueService {
         let jwt = this.authService.getToken();
         jwt = "Bearer " + jwt;
         let httpHeaders = new HttpHeaders({ "Authorization": jwt });
-        const url = `${environment.backend_url + '/api/images'}/${boutiqueId}`;
+        const url = `${environment.backend_url + '/api/images/delete-boutique'}/${boutiqueId}`;
         return this.httpClient.delete(url, { headers: httpHeaders });
     }
 

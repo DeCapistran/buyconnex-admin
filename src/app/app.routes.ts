@@ -149,6 +149,7 @@ export const routes: Routes = [
             {path: 'create-product', component: ECreateProductComponent},
             {path: 'create-boutique', component: ECreateBoutiqueComponent},
             {path: 'create-boutique/:id', component: ECreateBoutiqueComponent},
+            {path: 'create-categorie/:id', component: ECreateCategorieComponent},
             {path: 'orders-list', component: EOrdersListComponent},
             {path: 'order-details', component: EOrderDetailsComponent},
             {path: 'customers-list', component: ECustomersListComponent},

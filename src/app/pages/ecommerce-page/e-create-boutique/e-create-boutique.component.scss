@@ -1,12 +1,16 @@
 .trinta-card {
     &.add-product-card {
         max-width: 850px;
+
         margin: {
             left: auto;
             right: auto;
-        };
+        }
+
+        ;
     }
 }
+
 ::ng-deep {
     .trinta-card {
         &.add-product-card {
@@ -22,11 +26,14 @@
                     letter-spacing: 0.16px;
                     color: var(--whiteColor);
                     background-color: var(--primaryColor);
+
                     font: {
                         size: 16px;
                         weight: 600;
                         family: var(--headingFontFamily);
-                    };
+                    }
+
+                    ;
                 }
             }
         }
@@ -41,6 +48,7 @@
             max-width: 100%;
         }
     }
+
     ::ng-deep {
         .trinta-card {
             &.add-product-card {
@@ -67,6 +75,7 @@
             max-width: 100%;
         }
     }
+
     ::ng-deep {
         .trinta-card {
             &.add-product-card {
@@ -117,6 +126,6 @@
 
 .error-message {
     color: red;
-    font-size: 14px; /* Vous pouvez ajuster la taille de la police si nécessaire */
-  }
-  
+    font-size: 20px;
+    /* Vous pouvez ajuster la taille de la police si nécessaire */
+}

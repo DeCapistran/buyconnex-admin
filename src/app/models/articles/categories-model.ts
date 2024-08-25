@@ -1,7 +1,7 @@
 import { Images } from "./images-model";
 
 export class Categories {
+    id!: number;
     libelle!: string;
-    img!: string;
-    image!: Images;
+    images!: Images;
 }
