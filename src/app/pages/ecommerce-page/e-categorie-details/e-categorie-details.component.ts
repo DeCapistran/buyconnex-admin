@@ -35,9 +35,7 @@ export class ECategorieDetailsComponent {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private categorieService: CategorieService, public dialog: MatDialog) {
-
-    }
+    constructor(private categorieService: CategorieService, public dialog: MatDialog) {}
 
     ngAfterViewInit() {
         if (this.sort) {

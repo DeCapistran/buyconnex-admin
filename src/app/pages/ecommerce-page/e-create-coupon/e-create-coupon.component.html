@@ -4,12 +4,18 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mt-0 mb-0">
-                Ajouter Coupon
+                {{titre}}
             </h5>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form>
+        <div class="alert alert-danger" *ngIf="showMessage2">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="alert alert-success" *ngIf="showMessage">
+            <strong>{{err}}</strong>
+        </div>
+        <form [formGroup]="couponForm" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
@@ -18,7 +24,11 @@
                     <mat-form-field>
                         <i-feather name="edit-3"></i-feather>
                         <mat-label>Entrer le libellé du coupon</mat-label>
-                        <input matInput>
+                        <input id="libelle" type="text" formControlName="libelle" matInput [(ngModel)]="coupon.libelle">
+                        <div *ngIf="couponForm.get('libelle')?.touched && couponForm.get('libelle')?.invalid" class="error-message">
+                            <small *ngIf="couponForm.get('libelle')?.errors?.['required']">Libelle Obligatoire.</small>
+                            <small *ngIf="couponForm.get('libelle')?.errors?.['pattern']">Libelle Invalide.</small>
+                        </div>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
@@ -28,7 +38,11 @@
                     <mat-form-field>
                         <i-feather name="edit-3"></i-feather>
                         <mat-label>Entrer le code du coupon</mat-label>
-                        <input matInput>
+                        <input input id="codeCoupon" type="text" formControlName="codeCoupon" matInput [(ngModel)]="coupon.codeCoupon">
+                        <div *ngIf="couponForm.get('codeCoupon')?.touched && couponForm.get('codeCoupon')?.invalid" class="error-message">
+                            <small *ngIf="couponForm.get('codeCoupon')?.errors?.['required']">Code Obligatoire.</small>
+                            <small *ngIf="couponForm.get('codeCoupon')?.errors?.['pattern']">Code Invalide.</small>
+                        </div>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
@@ -38,9 +52,12 @@
                     <mat-form-field>
                         <i-feather name="list"></i-feather>
                         <mat-label>Date de début</mat-label>
-                        <input matInput [matDatepicker]="dp1" disabled>
+                        <input input id="dateDebut" type="text" formControlName="dateDebut" matInput [matDatepicker]="dp1" >
                         <mat-datepicker-toggle matIconSuffix [for]="dp1"></mat-datepicker-toggle>
                         <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+                        <div *ngIf="couponForm.get('dateDebut')?.touched && couponForm.get('dateDebut')?.invalid" class="error-message">
+                            <small *ngIf="couponForm.get('dateDebut')?.errors?.['required']">Date de début Obligatoire.</small>
+                        </div>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
@@ -50,9 +67,12 @@
                     <mat-form-field>
                         <i-feather name="list"></i-feather>
                         <mat-label>Date de fin</mat-label>
-                        <input matInput [matDatepicker]="dp2" disabled>
+                        <input id="dateFin" type="text" formControlName="dateFin" matInput [matDatepicker]="dp2">
                         <mat-datepicker-toggle matIconSuffix [for]="dp2"></mat-datepicker-toggle>
                         <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+                        <div *ngIf="couponForm.get('dateFin')?.touched && couponForm.get('dateFin')?.invalid" class="error-message">
+                            <small *ngIf="couponForm.get('dateFin')?.errors?.['required']">Date de fin Obligatoire.</small>
+                        </div>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
@@ -62,23 +82,31 @@
                     <mat-form-field>
                         <i-feather name="dollar-sign"></i-feather>
                         <mat-label>Entrer le prix minimum de la commande</mat-label>
-                        <input matInput>
+                        <input input id="montantMin" type="text" formControlName="montantMin" matInput [(ngModel)]="coupon.montantMinimum">
+                        <div *ngIf="couponForm.get('montantMin')?.touched && couponForm.get('montantMin')?.invalid" class="error-message">
+                            <small *ngIf="couponForm.get('montantMin')?.errors?.['required']">Montant minimum Obligatoire.</small>
+                            <small *ngIf="couponForm.get('montantMin')?.errors?.['pattern']">Montant minimum Invalide.</small>
+                        </div>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Quantité en Stock
+                        Pourcentage de réduction
                     </label>
                     <mat-form-field>
                         <i-feather name="database"></i-feather>
-                        <mat-label>Quantité</mat-label>
-                        <input matInput>
+                        <mat-label>Pourcentage de réduction</mat-label>
+                        <input input id="pourcentage" type="text" formControlName="pourcentage" matInput [(ngModel)]="coupon.pourcentage">
+                        <div *ngIf="couponForm.get('pourcentage')?.touched && couponForm.get('pourcentage')?.invalid" class="error-message">
+                            <small *ngIf="couponForm.get('pourcentage')?.errors?.['required']">Pourcentage Obligatoire.</small>
+                            <small *ngIf="couponForm.get('pourcentage')?.errors?.['pattern']">Pourcentage Invalide.</small>
+                        </div>
                     </mat-form-field>
                 </div>
             </div>
             <div class="create-product-btn">
-                <button mat-button type="button">
-                    Ajouter
+                <button mat-button type="submit">
+                    {{bouton}}
                 </button>
             </div>
         </form>

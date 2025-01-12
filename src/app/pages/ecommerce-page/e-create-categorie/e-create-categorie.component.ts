@@ -25,7 +25,7 @@ export interface User {
 @Component({
     selector: 'app-e-create-categorie',
     standalone: true,
-    imports: [RouterLink,
+    imports: [
         MatCardModule,
         MatButtonModule,
         MatMenuModule,
@@ -39,7 +39,6 @@ export interface User {
         MatSelectModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
-        AsyncPipe,
         FeathericonsModule,
         CommonModule
     ],
@@ -62,6 +61,7 @@ export class ECreateCategorieComponent {
     showMessage2 = false;
     categorieId: string | null = null;
     bouton: string = "Ajouter";
+    titre: string = "Ajouter Catégorie";
 
     // Text Editor
     editor: Editor;
@@ -88,9 +88,13 @@ export class ECreateCategorieComponent {
     ngOnInit(): void {
         // Récupérer l'ID de la categorie à partir de l'URL
         this.categorieId = this.route.snapshot.paramMap.get('id');
-        console.log("ID :" + this.categorieId);
         if (this.categorieId) {
             this.bouton = "Modifier";
+            this.titre = "Modifier Catégorie"
+            this.categorieForm = this.formBuilder.group({
+                libelle: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-']+$/)]],
+                img: [null],
+            });
             // Charger les données de la categorie si un ID est présent
             this.categorieService.getCategorieById(this.categorieId).subscribe((data: Categories) => {
                 this.categorie = data;
@@ -100,12 +104,13 @@ export class ECreateCategorieComponent {
                 });
                 this.imagePath = data.images?.url;
             });
-        }
+        } else {
 
-        this.categorieForm = this.formBuilder.group({
-            libelle: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-']+$/)]],
-            img: [null, Validators.required],
-        });
+            this.categorieForm = this.formBuilder.group({
+                libelle: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-']+$/)]],
+                img: [null, Validators.required],
+            });
+        }
 
         this.editor = new Editor();
         this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -131,50 +136,49 @@ export class ECreateCategorieComponent {
     }
 
     onSubmit(): void {
-        
+
         this.categorieForm.markAllAsTouched();
-        
+
         const formData = new FormData();
         // Si l'utilisateur a sélectionné une nouvelle image
         if (this.uploadedImage) {
             formData.append('img', this.uploadedImage, this.uploadedImage.name);
         }
-    
+
         const libelleControl = this.categorieForm.get('libelle');
-    
+
         if (libelleControl) {
             formData.append('id', this.categorieId || '');
             formData.append('libelle', libelleControl.value || '');
         }
-    
+
         if (this.categorieId) {
-            this.categorieForm = this.formBuilder.group({
-                libelle: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s\-']+$/)]],
-            });
-            // Si une nouvelle image est sélectionnée ou le formulaire est valide
-                // Mise à jour d'une categorie existante
-                this.categorieService.updateImageFSCategorie(this.categorieId, formData).subscribe(
-                    (response: any) => {
-                        this.categorieService.setCategorie(response);
-                        this.showMessage = true;
-                        this.err = "Catégorie mise à jour";
-                        setTimeout(() => {
-                            this.err = null;
-                            this.router.navigate(["/ecommerce-page/categorie-details"]);
-                            this.categorieForm.reset();
-                            this.showMessage = false;
-                        }, 1500);
-                    },
-                    (error) => {
-                        this.showMessage2 = true;
+            this.categorieService.updateImageFSCategorie(this.categorieId, formData).subscribe(
+                (response: any) => {
+                    this.categorieService.setCategorie(response);
+                    this.showMessage = true;
+                    this.err = "Catégorie mise à jour";
+                    setTimeout(() => {
+                        this.err = null;
+                        this.router.navigate(["/ecommerce-page/categorie-details"]);
+                        this.categorieForm.reset();
+                        this.showMessage = false;
+                    }, 1500);
+                },
+                (error) => {
+                    if (error.error.errorCode == "SAME_NAME") {
+                        this.err = "Cette catégorie existe déjà";
+                    } else {
                         this.err = "Echec lors de la mise à jour";
-                        setTimeout(() => {
-                            this.err = null;
-                            this.showMessage2 = false;
-                        }, 1500);
                     }
-                );
-            
+                    this.showMessage2 = true;
+                    setTimeout(() => {
+                        this.err = null;
+                        this.showMessage2 = false;
+                    }, 1500);
+                }
+            );
+
         } else if (this.categorieForm.valid) {
             // Création d'une nouvelle categorie
             this.categorieService.uploadImageFSCategorie(formData).subscribe(
@@ -190,8 +194,13 @@ export class ECreateCategorieComponent {
                     }, 1500);
                 },
                 (error) => {
+
+                    if (error.error.errorCode == "SAME_NAME") {
+                        this.err = "Cette catégorie existe déjà";
+                    } else {
+                        this.err = "Echec lors de l'enregistrement";
+                    }
                     this.showMessage2 = true;
-                    this.err = "Echec de l'enregistrement";
                     setTimeout(() => {
                         this.err = null;
                         this.showMessage2 = false;
@@ -205,17 +214,17 @@ export class ECreateCategorieComponent {
 
     onImageUpload(event: Event): void {
         const input = event.target as HTMLInputElement;
-        
+
         if (input?.files && input.files.length > 0) {
             this.uploadedImage = input.files[0];
-    
+
             const reader = new FileReader();
             reader.readAsDataURL(this.uploadedImage);
-            
+
             reader.onload = () => {
                 this.imagePath = reader.result as string;
             };
-    
+
             reader.onerror = (error) => {
                 console.error('Error reading file:', error);
             };

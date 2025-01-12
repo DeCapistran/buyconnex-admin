@@ -13,20 +13,22 @@ import { CouponService } from '../../../services/coupons.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
 import { CommonModule } from '@angular/common';
+import { Marques } from '../../../models/articles/marques-model';
+import { MarqueService } from '../../../services/marque.service';
 
 @Component({
-    selector: 'app-coupon-details',
+    selector: 'app-marque-details',
     standalone: true,
     imports: [RouterLink, MatCardModule, MatButtonModule, MatMenuModule, MatPaginatorModule, MatTableModule, NgIf, CommonModule],
-    templateUrl: './e-coupon-details.component.html',
-    styleUrl: './e-coupon-details.component.scss'
+    templateUrl: './e-marque-details.component.html',
+    styleUrl: './e-marque-details.component.scss'
 })
-export class ECouponDetailsComponent {
+export class EMarqueDetailsComponent {
 
-    displayedColumns: string[] = ['id', 'dateCreation', 'libelle', 'codeCoupon', 'pourcentage', 'montantMin', 'dateDebut', 'dateFin', 'actions'];
-    dataSource = new MatTableDataSource<ColonneCoupon>();
-    ELEMENT_DATA: ColonneCoupon[] = [];
-    coupons: Coupons | undefined = new Coupons();
+    displayedColumns: string[] = ['id', 'libelle', 'description', 'actions'];
+    dataSource = new MatTableDataSource<ColonneMarque>();
+    ELEMENT_DATA: ColonneMarque[] = [];
+    marque: Marques | undefined = new Marques();
     actions: Actions | undefined = new Actions();
     err!: any;
     showMessage = false;
@@ -35,7 +37,7 @@ export class ECouponDetailsComponent {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private couponService: CouponService, public dialog: MatDialog) {}
+    constructor(private marqueService: MarqueService, public dialog: MatDialog) {}
 
     ngAfterViewInit() {
         if (this.sort) {
@@ -60,19 +62,14 @@ export class ECouponDetailsComponent {
     }
 
     getCoupons(): void {
-        this.couponService.getCoupons().subscribe(
-            (res: Coupons[]) => { // Success callback
+        this.marqueService.getMarques().subscribe(
+            (res: Marques[]) => { // Success callback
                 // Vérifiez si res est un tableau et adaptez les données
                 if (Array.isArray(res)) {
-                    this.ELEMENT_DATA = res.map((item: Coupons) => ({
+                    this.ELEMENT_DATA = res.map((item: Marques) => ({
                         id: item.id,
-                        dateCreation: item.dateCreation,
                         libelle: item.libelle,
-                        codeCoupon: item.codeCoupon,
-                        pourcentage: item.pourcentage,
-                        montantMin: item.montantMinimum,
-                        dateDebut: item.dateDebut,
-                        dateFin: item.dateFin,
+                        description: item.description,
                         actions: this.actions
                     }));
                     this.dataSource.data = this.ELEMENT_DATA;
@@ -86,7 +83,7 @@ export class ECouponDetailsComponent {
         );
     }
 
-    openDeleteDialog(element: ColonneCoupon): void {
+    openDeleteDialog(element: ColonneMarque): void {
         const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
             width: '500px',
             data: { name: element.libelle }, // Nom de la boutique, utilisateur, etc.
@@ -99,11 +96,11 @@ export class ECouponDetailsComponent {
         });
     }
 
-    deleteItem(element: ColonneCoupon): void {
-        this.couponService.deleteCoupon(element.id).subscribe(
+    deleteItem(element: ColonneMarque): void {
+        this.marqueService.deleteMarque(element.id).subscribe(
             (response) => {
                 this.showMessage = true;
-                    this.err = "Coupon supprimé avec succès !";
+                    this.err = "Marque supprimée avec succès !";
                     setTimeout(() => {
                         this.err = null;
                         this.showMessage = false;
@@ -115,7 +112,7 @@ export class ECouponDetailsComponent {
             },
             (err) => {
                 this.showMessage2 = true;
-                    this.err = "Echec lors de la suppression du coupon";
+                    this.err = "Echec lors de la suppression de la marque";
                     setTimeout(() => {
                         this.err = null;
                         this.showMessage2 = false;
@@ -127,14 +124,9 @@ export class ECouponDetailsComponent {
 
 }
 
-export interface ColonneCoupon {
+export interface ColonneMarque {
     
     id: any, 
-    dateCreation: any, 
     libelle: any, 
-    codeCoupon: any, 
-    pourcentage: any, 
-    montantMin: any,
-    dateDebut: any, 
-    dateFin: any
+    description: any
 }

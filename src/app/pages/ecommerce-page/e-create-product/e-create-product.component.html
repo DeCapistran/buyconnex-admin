@@ -4,46 +4,32 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mt-0 mb-0">
-                Ajouter Article
+                {{titre}}
             </h5>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form>
+        <div class="alert alert-danger" *ngIf="showMessage2">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="alert alert-success" *ngIf="showMessage">
+            <strong>{{err}}</strong>
+        </div>
+        <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
                         Nom Article
                     </label>
                     <mat-form-field>
                         <i-feather name="edit-3"></i-feather>
                         <mat-label>Entrer le nom de l'article</mat-label>
-                        <input matInput>
+                        <input id="title" type="text" formControlName="title" matInput [(ngModel)]="article.title">
+                        <div *ngIf="articleForm.get('title')?.touched && articleForm.get('title')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('title')?.errors?.['required']">Libelle Obligatoire.</small>
+                            <small *ngIf="articleForm.get('title')?.errors?.['pattern']">Libelle Invalide.</small>
+                        </div>
                     </mat-form-field>
-                </div>
-                <div class="col-lg-6">
-                    <label class="label d-block fw-medium mb-10">
-                        Boutique
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="list"></i-feather>
-                        <mat-label>Boutique</mat-label>
-                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                            @for (option of filteredOptions | async; track option) {
-                                <mat-option [value]="option">{{option.name}}</mat-option>
-                            }
-                        </mat-autocomplete>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-12">
-                    <label class="label d-block fw-medium mb-10">
-                        Description Article
-                    </label>
-                    <div class="NgxEditor__Wrapper">
-                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                        <ngx-editor [editor]="editor" [ngModel]="html" name="html" [disabled]="false" [placeholder]="'Aperçu de la forme du texte...'"></ngx-editor>
-                    </div>
                 </div>
                 <div class="col-lg-4">
                     <label class="label d-block fw-medium mb-10">
@@ -52,7 +38,11 @@
                     <mat-form-field>
                         <i-feather name="database"></i-feather>
                         <mat-label>Quantité</mat-label>
-                        <input matInput>
+                        <input id="quantite" type="text" formControlName="quantite" matInput [(ngModel)]="article.quantite">
+                        <div *ngIf="articleForm.get('quantite')?.touched && articleForm.get('quantite')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('quantite')?.errors?.['required']">Quantité Obligatoire.</small>
+                            <small *ngIf="articleForm.get('quantite')?.errors?.['pattern']">Quantité Invalide.</small>
+                        </div>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-4">
@@ -62,13 +52,14 @@
                     <mat-form-field>
                         <i-feather name="list"></i-feather>
                         <mat-label>Marque</mat-label>
-                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                            @for (option of filteredOptions | async; track option) {
-                                <mat-option [value]="option">{{option.name}}</mat-option>
-                            }
+                        <input type="text" matInput formControlName="marque" [matAutocomplete]="autoMarque">
+                        <mat-autocomplete #autoMarque="matAutocomplete" [displayWith]="displayLibelle">
+                            <mat-option *ngFor="let marque of filteredMarques | async" [value]="marque">
+                                {{ marque.libelle }}
+                            </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
+                                            
                 </div>
                 <div class="col-lg-4">
                     <label class="label d-block fw-medium mb-10">
@@ -77,7 +68,11 @@
                     <mat-form-field>
                         <i-feather name="dollar-sign"></i-feather>
                         <mat-label>Entrer le prix de l'article</mat-label>
-                        <input matInput>
+                        <input id="prix" type="text" formControlName="prix" matInput [(ngModel)]="article.prix">
+                        <div *ngIf="articleForm.get('prix')?.touched && articleForm.get('prix')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('prix')?.errors?.['required']">Prix Obligatoire.</small>
+                            <small *ngIf="articleForm.get('prix')?.errors?.['pattern']">Prix Invalide.</small>
+                        </div>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-4">
@@ -87,54 +82,70 @@
                     <mat-form-field>
                         <i-feather name="list"></i-feather>
                         <mat-label>Catégorie</mat-label>
-                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                            @for (option of filteredOptions | async; track option) {
-                                <mat-option [value]="option">{{option.name}}</mat-option>
-                            }
+                        <input type="text" matInput formControlName="categorie" [matAutocomplete]="autoCategorie">
+                        <mat-autocomplete #autoCategorie="matAutocomplete" [displayWith]="displayLibelle">
+                            <mat-option *ngFor="let categorie of filteredCategories | async" [value]="categorie">
+                                {{ categorie.libelle }}
+                            </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-4">
                     <label class="label d-block fw-medium mb-10">
-                        Sous-Categorie
+                        Boutique
                     </label>
                     <mat-form-field>
                         <i-feather name="list"></i-feather>
-                        <mat-label>Sous-Categorie</mat-label>
-                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                            @for (option of filteredOptions | async; track option) {
-                                <mat-option [value]="option">{{option.name}}</mat-option>
-                            }
+                        <mat-label>Boutique</mat-label>
+                        <input type="text" matInput formControlName="boutique" [matAutocomplete]="autoBoutique">
+                        <mat-autocomplete #autoBoutique="matAutocomplete" [displayWith]="displayNom">
+                            <mat-option *ngFor="let boutique of filteredBoutiques | async" [value]="boutique">
+                                {{ boutique.nom }}
+                            </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-4">
                     <label class="label d-block fw-medium mb-10">
-                        Tags
+                        Tag
                     </label>
                     <mat-form-field>
                         <i-feather name="list"></i-feather>
                         <mat-label>Tag</mat-label>
-                        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                            @for (option of filteredOptions | async; track option) {
-                                <mat-option [value]="option">{{option.name}}</mat-option>
-                            }
+                        <input type="text" matInput formControlName="tags" [matAutocomplete]="autoTag">
+                        <mat-autocomplete #autoTag="matAutocomplete" [displayWith]="displayNom">
+                            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                                {{ tag.nom }}
+                            </mat-option>
                         </mat-autocomplete>
+                    </mat-form-field>
+                </div> 
+                <div class="col-sm-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Description Article
+                    </label>
+                    <mat-form-field class="textarea">
+                        <i-feather name="file-text"></i-feather>
+                        <mat-label>Description Article</mat-label>
+                        <textarea formControlName="description" name="description" matInput placeholder="Description de l'article" [(ngModel)]="article.description"></textarea>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Images Articles
+                        Images Article
                     </label>
-                    <file-upload class="file-uploader"></file-upload>
+                    <div *ngIf="imagePath" class="mb-3">
+                        <img [src]="imagePath" alt="Image de l'article'" style="max-width: 20px;">
+                    </div>
+                    <input id="img" type="file" formControlName="img" (change)="onImageUpload($event)" class="form-control" >
+                    <div *ngIf="articleForm.get('img')?.touched && articleForm.get('img')?.invalid" class="error-message">
+                        <small *ngIf="articleForm.get('img')?.errors?.['required']">Image Obligatoire.</small>
+                    </div>
                 </div>
             </div>
             <div class="create-product-btn">
-                <button mat-button type="button">
-                    Ajouter
+                <button mat-button type="button" type="submit">
+                    {{bouton}}
                 </button>
             </div>
         </form>

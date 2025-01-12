@@ -116,6 +116,10 @@ import { EPromotionListComponent } from './pages/ecommerce-page/e-promotion-list
 import { ECreateCategorieComponent } from './pages/ecommerce-page/e-create-categorie/e-create-categorie.component';
 import { ECategorieDetailsComponent } from './pages/ecommerce-page/e-categorie-details/e-categorie-details.component';
 import { AuthGuard } from './services/auth.guard';
+import { ECreateMarqueComponent } from './pages/ecommerce-page/e-create-marque/e-create-marque.component';
+import { EMarqueDetailsComponent } from './pages/ecommerce-page/e-marque-details/e-marque-details.component';
+import { ECreateTagComponent } from './pages/ecommerce-page/e-create-tag/e-create-tag.component';
+import { ETagDetailsComponent } from './pages/ecommerce-page/e-tag-details/e-tag-details.component';
 
 export const routes: Routes = [
     {path: '', component: EcommerceComponent},
@@ -148,8 +152,12 @@ export const routes: Routes = [
             {path: 'product-details', component: EProductDetailsComponent},
             {path: 'create-product', component: ECreateProductComponent},
             {path: 'create-boutique', component: ECreateBoutiqueComponent},
+            {path: 'create-tag', component: ECreateTagComponent},
             {path: 'create-boutique/:id', component: ECreateBoutiqueComponent},
             {path: 'create-categorie/:id', component: ECreateCategorieComponent},
+            {path: 'create-marque/:id', component: ECreateMarqueComponent},
+            {path: 'create-coupon/:id', component: ECreateCouponComponent},
+            {path: 'create-tag/:id', component: ECreateTagComponent},
             {path: 'orders-list', component: EOrdersListComponent},
             {path: 'order-details', component: EOrderDetailsComponent},
             {path: 'customers-list', component: ECustomersListComponent},
@@ -161,6 +169,9 @@ export const routes: Routes = [
             {path: 'create-image', component: ECreateImageComponent},
             {path: 'create-coupon', component: ECreateCouponComponent},
             {path: 'coupon-details', component: ECouponDetailsComponent},
+            {path: 'create-marque', component: ECreateMarqueComponent},
+            {path: 'marque-details', component: EMarqueDetailsComponent},
+            {path: 'tag-details', component: ETagDetailsComponent},
             {path: 'create-promotion', component: ECreatePromotionComponent},
             {path: 'create-categorie', component: ECreateCategorieComponent},
             {path: 'promotion-list', component: EPromotionListComponent},

@@ -13,20 +13,22 @@ import { CouponService } from '../../../services/coupons.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
 import { CommonModule } from '@angular/common';
+import { Tags } from '../../../models/articles/tags-model';
+import { TagService } from '../../../services/tag.service';
 
 @Component({
-    selector: 'app-coupon-details',
+    selector: 'app-tag-details',
     standalone: true,
     imports: [RouterLink, MatCardModule, MatButtonModule, MatMenuModule, MatPaginatorModule, MatTableModule, NgIf, CommonModule],
-    templateUrl: './e-coupon-details.component.html',
-    styleUrl: './e-coupon-details.component.scss'
+    templateUrl: './e-tag-details.component.html',
+    styleUrl: './e-tag-details.component.scss'
 })
-export class ECouponDetailsComponent {
+export class ETagDetailsComponent {
 
-    displayedColumns: string[] = ['id', 'dateCreation', 'libelle', 'codeCoupon', 'pourcentage', 'montantMin', 'dateDebut', 'dateFin', 'actions'];
-    dataSource = new MatTableDataSource<ColonneCoupon>();
-    ELEMENT_DATA: ColonneCoupon[] = [];
-    coupons: Coupons | undefined = new Coupons();
+    displayedColumns: string[] = ['id', 'nom', 'description', 'actions'];
+    dataSource = new MatTableDataSource<ColonneTag>();
+    ELEMENT_DATA: ColonneTag[] = [];
+    tag: Tags | undefined = new Tags();
     actions: Actions | undefined = new Actions();
     err!: any;
     showMessage = false;
@@ -35,12 +37,12 @@ export class ECouponDetailsComponent {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private couponService: CouponService, public dialog: MatDialog) {}
+    constructor(private tagService: TagService, public dialog: MatDialog) {}
 
     ngAfterViewInit() {
         if (this.sort) {
             this.dataSource.sort = this.sort;
-            this.dataSource.sort.sort({ id: 'libelle', start: 'asc', disableClear: false }); // Tri initial par nom
+            this.dataSource.sort.sort({ id: 'nom', start: 'asc', disableClear: false }); // Tri initial par nom
         }
         if (this.paginator) {
             this.dataSource.paginator = this.paginator;
@@ -60,19 +62,14 @@ export class ECouponDetailsComponent {
     }
 
     getCoupons(): void {
-        this.couponService.getCoupons().subscribe(
-            (res: Coupons[]) => { // Success callback
+        this.tagService.getTags().subscribe(
+            (res: Tags[]) => { // Success callback
                 // Vérifiez si res est un tableau et adaptez les données
                 if (Array.isArray(res)) {
-                    this.ELEMENT_DATA = res.map((item: Coupons) => ({
+                    this.ELEMENT_DATA = res.map((item: Tags) => ({
                         id: item.id,
-                        dateCreation: item.dateCreation,
-                        libelle: item.libelle,
-                        codeCoupon: item.codeCoupon,
-                        pourcentage: item.pourcentage,
-                        montantMin: item.montantMinimum,
-                        dateDebut: item.dateDebut,
-                        dateFin: item.dateFin,
+                        nom: item.nom,
+                        description: item.description,
                         actions: this.actions
                     }));
                     this.dataSource.data = this.ELEMENT_DATA;
@@ -86,10 +83,10 @@ export class ECouponDetailsComponent {
         );
     }
 
-    openDeleteDialog(element: ColonneCoupon): void {
+    openDeleteDialog(element: ColonneTag): void {
         const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
             width: '500px',
-            data: { name: element.libelle }, // Nom de la boutique, utilisateur, etc.
+            data: { name: element.nom }, // Nom de la boutique, utilisateur, etc.
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -99,11 +96,11 @@ export class ECouponDetailsComponent {
         });
     }
 
-    deleteItem(element: ColonneCoupon): void {
-        this.couponService.deleteCoupon(element.id).subscribe(
+    deleteItem(element: ColonneTag): void {
+        this.tagService.deleteTag(element.id).subscribe(
             (response) => {
                 this.showMessage = true;
-                    this.err = "Coupon supprimé avec succès !";
+                    this.err = "Tag supprimée avec succès !";
                     setTimeout(() => {
                         this.err = null;
                         this.showMessage = false;
@@ -115,7 +112,7 @@ export class ECouponDetailsComponent {
             },
             (err) => {
                 this.showMessage2 = true;
-                    this.err = "Echec lors de la suppression du coupon";
+                    this.err = "Echec lors de la suppression de la tag";
                     setTimeout(() => {
                         this.err = null;
                         this.showMessage2 = false;
@@ -127,14 +124,9 @@ export class ECouponDetailsComponent {
 
 }
 
-export interface ColonneCoupon {
+export interface ColonneTag {
     
     id: any, 
-    dateCreation: any, 
-    libelle: any, 
-    codeCoupon: any, 
-    pourcentage: any, 
-    montantMin: any,
-    dateDebut: any, 
-    dateFin: any
+    nom: any, 
+    description: any
 }

@@ -1,6 +1,8 @@
 export class Coupons {
+    id?: number;
     libelle!: string;
-    logo!: string;
+    codeCoupon!: string;
+    dateCreation!: Date;
     dateDebut!: Date;
     dateFin!: Date;
     pourcentage!: number;

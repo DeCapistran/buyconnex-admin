@@ -13,57 +13,146 @@
         </a>
     </mat-card-subtitle>
     </mat-card-header>
+    <div class="alert alert-danger" *ngIf="showMessage2">
+        <strong>{{err}}</strong>
+    </div>
+    <div class="alert alert-success" *ngIf="showMessage">
+        <strong>{{err}}</strong>
+    </div>
     <mat-card-content>
         <div class="leads-report-table">
             <div class="table-responsive">
-                <table mat-table [dataSource]="dataSource">
+                <table mat-table [dataSource]="dataSource" matSort>
 
                     <!-- Tracking No Column -->
-                    <ng-container matColumnDef="trackingID">
+                    <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef class="text-primary pl-0">
                             No
                         </th>
-                        <td mat-cell *matCellDef="let element" class="text-primary fw-medium pl-0">
-                            {{element.trackingID}}
+                        <td mat-cell *matCellDef="let element; let i = index" class="text-primary fw-medium pl-0">
+                            {{(paginator.pageIndex * paginator.pageSize) + i + 1}}
                         </td>
                     </ng-container>
 
-                    <!-- Product Column -->
-                    <ng-container matColumnDef="product">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Boutique
+                    <ng-container matColumnDef="dateCreation">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Date de création
                         </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="product-info d-flex align-items-center">
-                                <div class="image d-block">
-                                    <img [src]="element.product.img" alt="product-image">
-                                </div>
                                 <div class="info">
                                     <div class="d-block fw-semibold">
-                                        {{element.product.title}}
+                                        {{element.dateCreation | date: 'dd-MM-yyyy'}}
                                     </div>
                                 </div>
                             </div>
                         </td>
                     </ng-container>
 
-                    <!-- Customer Column -->
-                    <ng-container matColumnDef="customer">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Email
+                    <ng-container matColumnDef="libelle">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Coupons
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.customer}}
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block fw-semibold">
+                                        {{element.libelle}}
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </ng-container>
 
-                    <!-- Quantity Column -->
-                    <ng-container matColumnDef="quantity">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Contact
+                    <ng-container matColumnDef="codeCoupon">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Codes
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.quantity}}
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block fw-semibold">
+                                        {{element.codeCoupon}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pourcentage">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Pourcentages
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block fw-semibold">
+                                        {{element.pourcentage}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="montantMin">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Montant minimum
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block fw-semibold">
+                                        {{element.montantMin}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dateDebut">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Date de début
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block fw-semibold">
+                                        {{element.dateDebut | date: 'dd-MM-yyyy'}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dateFin">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Date de fin
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block fw-semibold">
+                                        {{element.dateFin | date: 'dd-MM-yyyy'}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef class="text-end pr-0">
+                            Actions
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-end pr-0">
+                            <div class="action">
+                                <button type="button" [routerLink]="['/ecommerce-page/create-coupon', element.id]" mat-button class="p-0 min-w-auto lh-1 h-auto">
+                                    <i class="{{element.actions.edit}}"></i>
+                                </button>
+                                <button type="button" mat-button class="p-0 min-w-auto lh-1 h-auto" (click)="openDeleteDialog(element)">
+                                    <i class="{{element.actions.delete}}"></i>
+                                </button>
+                            </div>
                         </td>
                     </ng-container>
 

@@ -1,0 +1,52 @@
+<mat-card
+    class="trinta-card add-product-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                {{titre}}
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="alert alert-danger" *ngIf="showMessage2">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="alert alert-success" *ngIf="showMessage">
+            <strong>{{err}}</strong>
+        </div>
+        <form *ngIf="marqueForm" [formGroup]="marqueForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Libellé Marque
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="edit-3"></i-feather>
+                        <mat-label>Entrer le libellé de la marque</mat-label>
+                        <input id="libelle" type="text" formControlName="libelle" matInput [(ngModel)]="marque.libelle">
+                        <div *ngIf="marqueForm.get('libelle')?.touched && marqueForm.get('libelle')?.invalid" class="error-message">
+                            <small *ngIf="marqueForm.get('libelle')?.errors?.['required']">Libelle Obligatoire.</small>
+                            <small *ngIf="marqueForm.get('libelle')?.errors?.['pattern']">Libelle Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Description Marque
+                    </label>
+                    <mat-form-field class="textarea">
+                        <i-feather name="file-text"></i-feather>
+                        <mat-label>Description Marque</mat-label>
+                        <textarea formControlName="description" name="description" matInput placeholder="Description de la marque" [(ngModel)]="marque.description"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="create-product-btn">
+                <button mat-button type="submit">
+                    {{bouton}}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
