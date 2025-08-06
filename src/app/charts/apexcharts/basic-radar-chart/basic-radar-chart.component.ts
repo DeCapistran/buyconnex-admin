@@ -36,7 +36,7 @@ export class BasicRadarChartComponent {
         this.chartOptions = {
             series: [
                 {
-                    name: "Trinta",
+                    name: "BuyConnex",
                     data: [80, 50, 30, 40, 100, 20]
                 }
             ],

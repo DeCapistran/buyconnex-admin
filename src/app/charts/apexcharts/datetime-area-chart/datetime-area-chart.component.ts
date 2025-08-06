@@ -90,7 +90,7 @@ export class DatetimeAreaChartComponent {
         this.chartOptions = {
             series: [
                 {
-                    name: "Trinta",
+                    name: "BuyConnex",
                     data: data
                 }
             ],
