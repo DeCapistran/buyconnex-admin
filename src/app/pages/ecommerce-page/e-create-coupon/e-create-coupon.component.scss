@@ -8,29 +8,46 @@
     }
 }
 ::ng-deep {
-    .trinta-card {
-        &.add-product-card {
-            .create-product-btn {
-                text-align: end;
-                margin-top: 25px;
+  .trinta-card {
+    &.add-product-card {
+      .create-product-btn {
+        margin-top: 25px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
 
-                .mat-mdc-button {
-                    height: auto;
-                    min-width: auto;
-                    border-radius: 6px;
-                    padding: 18px 25px;
-                    letter-spacing: 0.16px;
-                    color: var(--whiteColor);
-                    background-color: var(--primaryColor);
-                    font: {
-                        size: 16px;
-                        weight: 600;
-                        family: var(--headingFontFamily);
-                    };
-                }
-            }
+        /* Base commune aux 2 boutons */
+        .mat-mdc-button {
+          height: auto;
+          min-width: auto;
+          border-radius: 10px;
+          padding: 12px 22px;
+          letter-spacing: 0.16px;
+
+          font: {
+            size: 16px;
+            weight: 600;
+            family: var(--headingFontFamily);
+          }
         }
+
+        /* Annuler = secondaire (soft) */
+        .btn-cancel.mat-mdc-button {
+          background: transparent;
+          color: #4b5563;              /* gris doux */
+          border: 1px solid #d1d5db;   /* contour soft */
+          font-weight: 500;
+        }
+
+        /* Ajouter = principal */
+        .btn-submit.mat-mdc-button {
+          color: var(--whiteColor);
+          background-color: var(--primaryColor);
+        }
+      }
     }
+  }
 }
 
 /* Max width 767px */

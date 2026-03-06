@@ -25,7 +25,7 @@ export interface User {
 @Component({
     selector: 'app-e-create-boutique',
     standalone: true,
-    imports: [RouterLink,
+    imports: [
         MatCardModule,
         MatButtonModule,
         MatMenuModule,
@@ -39,7 +39,6 @@ export interface User {
         MatSelectModule,
         MatAutocompleteModule,
         ReactiveFormsModule,
-        AsyncPipe,
         FeathericonsModule,
         CommonModule
     ],
@@ -246,6 +245,10 @@ export class ECreateBoutiqueComponent {
                 console.error('Error reading file:', error);
             };
         }
+    }
+
+    annuler() {
+        this.router.navigate(["/ecommerce-page/boutique-details"]);
     }
 
 }

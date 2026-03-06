@@ -8,736 +8,134 @@ import { NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSort } from '@angular/material/sort';
+import { Articles } from '../../../models/articles/articles-model';
+import { Actions } from '../../../models/utils/actions-model';
+import { ArticleService } from '../../../services/article.service';
+import { MatDialog } from '@angular/material/dialog';
+import { JsonPipe } from '@angular/common';
+import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
 
 @Component({
     selector: 'app-e-products-list',
     standalone: true,
-    imports: [MatCardModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf, MatMenuModule, MatSelectModule, FormsModule, ReactiveFormsModule],
+    imports: [MatCardModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf, MatMenuModule, MatSelectModule, FormsModule, ReactiveFormsModule, MatSort],
     templateUrl: './e-products-list.component.html',
     styleUrl: './e-products-list.component.scss'
 })
 export class EProductsListComponent {
 
-    displayedColumns: string[] = ['product', 'category', 'price', 'ratings', 'stock', 'totalOrders', 'action'];
-    dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+    displayedColumns: string[] = ['id', 'images', 'title', 'categorie', 'prix', 'quantite', 'status', 'actions'];
+    dataSource = new MatTableDataSource<ColonneArticle>();
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+    ELEMENT_DATA: ColonneArticle[] = [];
+        article: Articles | undefined = new Articles();
+        actions: Actions | undefined = new Actions();
+        err!: any;
+        showMessage = false;
+        showMessage2 = false;
+    
+        @ViewChild(MatPaginator) paginator: MatPaginator;
+        @ViewChild(MatSort) sort: MatSort;
 
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-    }
+        constructor(private articleService: ArticleService, public dialog: MatDialog) {}
+
+        ngAfterViewInit() {
+            if (this.sort) {
+                this.dataSource.sort = this.sort;
+                this.dataSource.sort.sort({ id: 'title', start: 'asc', disableClear: false }); // Tri initial par nom
+            }
+            if (this.paginator) {
+                this.dataSource.paginator = this.paginator;
+            }
+        }
+
+        ngOnInit(): void {
+            this.actions = {
+                delete: '',
+                edit: '',
+                view: ''
+            };
+            this.actions.delete = 'ri-delete-bin-line';
+            this.actions.edit = 'ri-edit-line';
+            this.actions.view = 'ri-eye-line';
+            this.getArticles();
+        }
+
+        getArticles(): void {
+                this.articleService.getArticles().subscribe(
+                    (res: Articles[]) => { // Success callback
+                        if (Array.isArray(res)) {
+                            this.ELEMENT_DATA = res.map((item: Articles) => ({
+                                id: item.id,
+                                title: item.title,
+                                images: item.images,
+                                categorie: item.categories,
+                                prix: item.prix,
+                                quantite: item.quantite,
+                                status: item.statusArticle,
+                                actions: this.actions
+                            }));
+                            this.dataSource.data = this.ELEMENT_DATA;
+                            console.log('Réponse brute API Articles:', res);
+                            console.log('Données transformées:', this.ELEMENT_DATA);
+                        } else {
+                            console.error('Expected array but received non-array data.');
+                        }
+                    },
+                    (err: any) => { // Error callback
+                        console.error('Error fetching articles', err);
+                    }
+                );
+            }
+        
+            openDeleteDialog(element: ColonneArticle): void {
+                const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
+                    width: '500px',
+                    data: { name: element.title }, // Nom de l'article, utilisateur, etc.
+                });
+        
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result) {
+                        this.deleteItem(element);
+                    }
+                });
+            }
+        
+            deleteItem(element: ColonneArticle): void {
+                    this.articleService.deleteArticle(element.id).subscribe(
+                        (response) => {
+                            this.showMessage = true;
+                                this.err = "Article supprimée avec succès !";
+                                setTimeout(() => {
+                                    this.err = null;
+                                    this.showMessage = false;
+                                }, 1500);
+        
+                            // Retirer l'élément supprimé de la liste locale
+                            this.ELEMENT_DATA = this.ELEMENT_DATA.filter(item => item.id !== element.id);
+                            this.dataSource.data = this.ELEMENT_DATA;
+                        },
+                        (err) => {
+                            this.showMessage2 = true;
+                                this.err = "Echec lors de la suppression de l'article";
+                                setTimeout(() => {
+                                    this.err = null;
+                                    this.showMessage2 = false;
+                                }, 1500);
+                        }
+                    );
+            }
 
 }
 
-export interface PeriodicElement {
-    product: any;
-    category: string;
-    price: string;
-    ratings: any;
-    stock: string;
-    totalOrders: string;
-    action: any;
-}
+export interface ColonneArticle {
 
-const ELEMENT_DATA: PeriodicElement[] = [
-    {
-        product: {
-            img: 'assets/images/products/product15.jpg',
-            title: 'Comforta Armchair'
-        },
-        category: 'Furniture',
-        price: '$300',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '3250'
-        },
-        stock: 'Out of Stock',
-        totalOrders: '13k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product16.jpg',
-            title: 'Comforta Sofa EDM'
-        },
-        category: 'Furniture',
-        price: '$550',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '1800'
-        },
-        stock: '2.5k',
-        totalOrders: '32.8k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product17.jpg',
-            title: 'Electric Bicycle'
-        },
-        category: 'Bicycle',
-        price: '$4,000',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '5620'
-        },
-        stock: '401',
-        totalOrders: '14k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product18.jpg',
-            title: 'Sport Shoes'
-        },
-        category: 'Shoe',
-        price: '$220',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '1905'
-        },
-        stock: '1.5k',
-        totalOrders: '0.56k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product19.jpg',
-            title: 'Straw Hat'
-        },
-        category: 'Fashion',
-        price: '$560',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '308'
-        },
-        stock: 'Out of Stock',
-        totalOrders: '1.8k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product20.jpg',
-            title: 'Sofa Sculpt'
-        },
-        category: 'Furniture',
-        price: '$1100',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '660'
-        },
-        stock: '0.8k',
-        totalOrders: '42',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product21.jpg',
-            title: 'Urban Carry'
-        },
-        category: 'Bag',
-        price: '$1390',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '1230'
-        },
-        stock: '3.25k',
-        totalOrders: '4.22k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product22.jpg',
-            title: 'Elegance Steps'
-        },
-        category: 'Shoe',
-        price: '$80',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '780'
-        },
-        stock: '0.66k',
-        totalOrders: '1.05k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product23.jpg',
-            title: 'Urban Chic Pants'
-        },
-        category: 'Fashion',
-        price: '$1950',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '1486'
-        },
-        stock: '12.8k',
-        totalOrders: '2.8k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product24.jpg',
-            title: 'Moda Motion'
-        },
-        category: 'Shoe',
-        price: '$400',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '60'
-        },
-        stock: 'Out of Stock',
-        totalOrders: '120',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product24.jpg',
-            title: 'Moda Motion'
-        },
-        category: 'Shoe',
-        price: '$400',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '60'
-        },
-        stock: 'Out of Stock',
-        totalOrders: '120',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product23.jpg',
-            title: 'Urban Chic Pants'
-        },
-        category: 'Fashion',
-        price: '$1950',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '1486'
-        },
-        stock: '12.8k',
-        totalOrders: '2.8k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product22.jpg',
-            title: 'Elegance Steps'
-        },
-        category: 'Shoe',
-        price: '$80',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '780'
-        },
-        stock: '0.66k',
-        totalOrders: '1.05k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product21.jpg',
-            title: 'Urban Carry'
-        },
-        category: 'Bag',
-        price: '$1390',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '1230'
-        },
-        stock: '3.25k',
-        totalOrders: '4.22k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product20.jpg',
-            title: 'Sofa Sculpt'
-        },
-        category: 'Furniture',
-        price: '$1100',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '660'
-        },
-        stock: '0.8k',
-        totalOrders: '42',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product19.jpg',
-            title: 'Straw Hat'
-        },
-        category: 'Fashion',
-        price: '$560',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '308'
-        },
-        stock: 'Out of Stock',
-        totalOrders: '1.8k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product18.jpg',
-            title: 'Sport Shoes'
-        },
-        category: 'Shoe',
-        price: '$220',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '1905'
-        },
-        stock: '1.5k',
-        totalOrders: '0.56k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product17.jpg',
-            title: 'Electric Bicycle'
-        },
-        category: 'Bicycle',
-        price: '$4,000',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '5620'
-        },
-        stock: '401',
-        totalOrders: '14k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product16.jpg',
-            title: 'Comforta Sofa EDM'
-        },
-        category: 'Furniture',
-        price: '$550',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '1800'
-        },
-        stock: '2.5k',
-        totalOrders: '32.8k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        product: {
-            img: 'assets/images/products/product15.jpg',
-            title: 'Comforta Armchair'
-        },
-        category: 'Furniture',
-        price: '$300',
-        ratings: {
-            star: [
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-fill'
-                },
-                {
-                    star: 'ri-star-half-fill'
-                }
-            ],
-            totalRatings: '3250'
-        },
-        stock: 'Out of Stock',
-        totalOrders: '13k',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    }
-];
+    id: any;
+    images: any;
+    title: any;
+    categorie: any;
+    prix: any;
+    quantite: any;
+    status: any;
+}

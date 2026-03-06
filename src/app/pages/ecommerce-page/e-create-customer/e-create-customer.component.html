@@ -28,7 +28,21 @@
             <div class="row">
                 <div class="col-lg-12">
                     <label class="label d-block fw-medium mb-10">
-                        Nom Article
+                        Nom
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="edit-3"></i-feather>
+                        <mat-label>Entrer le nom de l'article</mat-label>
+                        <input id="title" type="text" formControlName="title" matInput [(ngModel)]="article.title">
+                        <div *ngIf="articleForm.get('title')?.touched && articleForm.get('title')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('title')?.errors?.['required']">Libelle Obligatoire.</small>
+                            <small *ngIf="articleForm.get('title')?.errors?.['pattern']">Libelle Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Prénom
                     </label>
                     <mat-form-field>
                         <i-feather name="edit-3"></i-feather>

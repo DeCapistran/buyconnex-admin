@@ -7,50 +7,35 @@
                 Clients
             </h5>
         </mat-card-title>
-        <mat-card-subtitle>
-            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
-                Jour
-            </button>
-            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
-                <button mat-menu-item>
-                    Jour
-                </button>
-                <button mat-menu-item>
-                    Semaine
-                </button>
-                <button mat-menu-item>
-                    Mois
-                </button>
-                <button mat-menu-item>
-                    Année
-                </button>
-            </mat-menu>
-        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
+        <div class="alert alert-danger" *ngIf="showMessage2">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="alert alert-success" *ngIf="showMessage">
+            <strong>{{err}}</strong>
+        </div>
         <div class="customers-list-table">
             <div class="table-responsive">
                 <table mat-table [dataSource]="dataSource">
 
-                    <!-- User Column -->
-                    <ng-container matColumnDef="user">
-                        <th mat-header-cell *matHeaderCellDef class="pl-0">
-                            Clients
+                    <!-- Tracking No Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef class="text-primary pl-0">
+                            No
                         </th>
-                        <td mat-cell *matCellDef="let element" class="pl-0">
-                            <div class="user-info d-flex align-items-center">
-                                <div class="image">
-                                    <img [src]="element.user.img" alt="user-image">
-                                </div>
-                                <div class="info">
-                                    <h6 class="mt-0">
-                                        {{element.user.name}}
-                                    </h6>
-                                    <span class="d-block text-body">
-                                        {{element.user.number}}
-                                    </span>
-                                </div>
-                            </div>
+                        <td mat-cell *matCellDef="let element; let i = index" class="text-primary fw-medium pl-0">
+                            {{(paginator.pageIndex * paginator.pageSize) + i + 1}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Nom Column -->
+                    <ng-container matColumnDef="firstname">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Nom et prénom
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-primary">
+                            {{element.firstname + ' ' + element.lastname}}
                         </td>
                     </ng-container>
 
@@ -60,69 +45,56 @@
                             Email
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.email}}
+                            {{element.user.email}}
                         </td>
                     </ng-container>
 
-                    <!-- Wallet Balance Column -->
-                    <ng-container matColumnDef="walletBalance">
+                    <!-- Contact Column -->
+                    <ng-container matColumnDef="telephone1">
                         <th mat-header-cell *matHeaderCellDef>
-                            Solde
-                        </th>
-                        <td mat-cell *matCellDef="let element" class="text-primary">
-                            {{element.walletBalance}}
-                        </td>
-                    </ng-container>
-
-                    <!-- Total Orders Column -->
-                    <ng-container matColumnDef="totalOrders">
-                        <th mat-header-cell *matHeaderCellDef>
-                            Total Commande
+                            Contact
                         </th>
                         <td mat-cell *matCellDef="let element">
-                            {{element.totalOrders}}
+                            {{element.telephone1}}
                         </td>
                     </ng-container>
 
-                    <!-- Active Status Column -->
-                    <ng-container matColumnDef="activeStatus">
+                    <!-- Genre Column -->
+                    <ng-container matColumnDef="genre">
                         <th mat-header-cell *matHeaderCellDef>
-                            Ancienneté
+                            Genre
                         </th>
                         <td mat-cell *matCellDef="let element">
                             <span class="trinta-badge fw-medium d-inline-block">
-                                {{element.activeStatus}}
+                                {{element.genre}}
                             </span>
                         </td>
                     </ng-container>
 
-                    <!-- Location Column -->
-                    <ng-container matColumnDef="location">
+                    <!-- Adresse Column -->
+                    <ng-container matColumnDef="adresse">
                         <th mat-header-cell *matHeaderCellDef>
-                            Ville
+                            Adresse
                         </th>
                         <td mat-cell *matCellDef="let element">
                             <span class="location d-block">
-                                {{element.location}}
+                                {{element.adresse.adresse1 + ' ' + element.adresse.codePostal + ', ' + element.adresse.villes.ville}}
                             </span>
                         </td>
                     </ng-container>
 
                     <!-- Action Column -->
-                    <ng-container matColumnDef="action">
+                    <ng-container matColumnDef="actions">
                         <th mat-header-cell *matHeaderCellDef class="text-end pr-0">
                             Actions
                         </th>
                         <td mat-cell *matCellDef="let element" class="text-end pr-0">
                             <div class="action">
                                 <button type="button" routerLink="/ecommerce-page/customers-details" mat-button class="p-0 min-w-auto lh-1 h-auto">
-                                    <i class="{{element.action.view}}"></i>
-                                </button>
-                                <button type="button" mat-button class="p-0 min-w-auto lh-1 h-auto">
-                                    <i class="{{element.action.edit}}"></i>
-                                </button>
-                                <button type="button" mat-button class="p-0 min-w-auto lh-1 h-auto">
-                                    <i class="{{element.action.delete}}"></i>
+                                    <i class="{{element.actions.view}}"></i>
+                                </button> 
+                                <button type="button" mat-button class="p-0 min-w-auto lh-1 h-auto" (click)="openDeleteDialog(element)">
+                                    <i class="{{element.actions.delete}}"></i>
                                 </button>
                             </div>
                         </td>

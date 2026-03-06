@@ -187,6 +187,44 @@ input {
 
 }
 
+/* 1) Neutralise le container (pré-MDC et MDC) */
+.mat-snack-bar-container,
+.mat-mdc-snack-bar-container {
+    width: auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+/* 2) Cible la “surface” interne du SnackBar MDC */
+.mdc-snackbar__surface {
+    width: auto !important;
+    display: inline-block !important;
+    padding: 0 !important;
+    background: transparent !important; /* on remet le transparent pour laisser passer ton orange */
+  }
+
+/* 3) Cible aussi l’élément MatSnackBar classique (sans MDC) */
+.mat-simple-snackbar {
+    width: auto !important;
+    display: inline-block !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+/* 4) Si tu utilises panelClass, cible en plus */
+.custom-snackbar-container.mat-snack-bar-container,
+.custom-snackbar-container.mat-mdc-snack-bar-container {
+  background: transparent !important;
+}
+
+.custom-snackbar-container .custom-snackbar {
+  /* ta div interne orange, si besoin de doublon */
+  background-color: transparent !important;
+}
+
+
 /* Min width 576px to Max width 767px */
 @media only screen and (min-width : 576px) and (max-width : 767px) {}
 

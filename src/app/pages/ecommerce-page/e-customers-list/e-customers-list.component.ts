@@ -1,313 +1,140 @@
-import { NgIf } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { NgIf } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSort } from '@angular/material/sort';
+import { Clients } from '../../../models/clients/clients-model';
+import { Actions } from '../../../models/utils/actions-model';
+import { ClientService } from '../../../services/client.service';
+import { MatDialog } from '@angular/material/dialog';
+import { JsonPipe } from '@angular/common';
+import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
 
 @Component({
     selector: 'app-e-customers-list',
     standalone: true,
-    imports: [RouterLink, MatCardModule, MatButtonModule, MatMenuModule, MatPaginatorModule, MatTableModule, NgIf],
+    imports: [MatCardModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf, MatMenuModule, MatSelectModule, FormsModule, ReactiveFormsModule, MatSort],
     templateUrl: './e-customers-list.component.html',
     styleUrl: './e-customers-list.component.scss'
 })
 export class ECustomersListComponent {
 
-    displayedColumns: string[] = ['user', 'email', 'walletBalance', 'totalOrders', 'activeStatus', 'location', 'action'];
-    dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+    displayedColumns: string[] = ['id', 'firstname', 'email', 'genre', 'telephone1', 'adresse', 'actions'];
+    dataSource = new MatTableDataSource<ColonneClient>();
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+    ELEMENT_DATA: ColonneClient[] = [];
+        client: Clients | undefined = new Clients();
+        actions: Actions | undefined = new Actions();
+        err!: any;
+        showMessage = false;
+        showMessage2 = false;
+    
+        @ViewChild(MatPaginator) paginator: MatPaginator;
+        @ViewChild(MatSort) sort: MatSort;
 
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-    }
+        constructor(private clientService: ClientService, public dialog: MatDialog) {}
+
+        ngAfterViewInit() {
+            if (this.sort) {
+                this.dataSource.sort = this.sort;
+                this.dataSource.sort.sort({ id: 'nom', start: 'asc', disableClear: false }); // Tri initial par nom
+            }
+            if (this.paginator) {
+                this.dataSource.paginator = this.paginator;
+            }
+        }
+
+        ngOnInit(): void {
+            this.actions = {
+                delete: '',
+                edit: '',
+                view: ''
+            };
+            this.actions.delete = 'ri-delete-bin-line';
+            this.actions.edit = 'ri-edit-line';
+            this.actions.view = 'ri-eye-line';
+            this.getClients();
+        }
+
+        getClients(): void {
+                this.clientService.getClients().subscribe(
+                    (res: Clients[]) => { // Success callback
+                        if (Array.isArray(res)) {
+                            this.ELEMENT_DATA = res.map((item: Clients) => ({
+                                id: item.id,
+                                firstname: item.firstname,
+                                lastname: item.lastname,
+                                user: item.users,
+                                genre: item.genre,
+                                telephone1: item.telephone1,
+                                adresse: item.adresses,
+                                actions: this.actions
+                            }));
+                            this.dataSource.data = this.ELEMENT_DATA;
+                            console.log('Réponse brute API Clients:', res);
+                            console.log('Données transformées:', this.ELEMENT_DATA);
+                        } else {
+                            console.error('Expected array but received non-array data.');
+                        }
+                    },
+                    (err: any) => { // Error callback
+                        console.error('Error fetching clients', err);
+                    }
+                );
+            }
+        
+            openDeleteDialog(element: ColonneClient): void {
+                const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
+                    width: '500px',
+                    data: { name: element.firstname }, // Nom de l'client, utilisateur, etc.
+                });
+        
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result) {
+                        this.deleteItem(element);
+                    }
+                });
+            }
+        
+            deleteItem(element: ColonneClient): void {
+                    this.clientService.deleteClient(element.id).subscribe(
+                        (response) => {
+                            this.showMessage = true;
+                                this.err = "Client supprimée avec succès !";
+                                setTimeout(() => {
+                                    this.err = null;
+                                    this.showMessage = false;
+                                }, 1500);
+        
+                            // Retirer l'élément supprimé de la liste locale
+                            this.ELEMENT_DATA = this.ELEMENT_DATA.filter(item => item.id !== element.id);
+                            this.dataSource.data = this.ELEMENT_DATA;
+                        },
+                        (err) => {
+                            this.showMessage2 = true;
+                                this.err = "Echec lors de la suppression de l'client";
+                                setTimeout(() => {
+                                    this.err = null;
+                                    this.showMessage2 = false;
+                                }, 1500);
+                        }
+                    );
+            }
 
 }
 
-export interface PeriodicElement {
+export interface ColonneClient {
+
+    id: any;
+    firstname: any;
     user: any;
-    email: string;
-    walletBalance: string;
-    totalOrders: string;
-    activeStatus: string;
-    location: string;
-    action: any;
+    genre: any;
+    telephone1: any;
+    adresse: any;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-    {
-        user: {
-            img: 'assets/images/users/user1.jpg',
-            name: 'Sarah Rodriguez',
-            number: '+03 4567 8900'
-        },
-        email: 'rodriguez@trinta.com',
-        walletBalance: '$100.5k',
-        totalOrders: '1,250',
-        activeStatus: '1 hrs ago',
-        location: 'Ethereal Blossom, Grove',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user2.jpg',
-            name: 'Marcus Davis',
-            number: '+03 4567 8900'
-        },
-        email: 'davis@trinta.com',
-        walletBalance: '$75k',
-        totalOrders: '308',
-        activeStatus: '10 hrs ago',
-        location: 'Enchanted Silver Moon, Valley',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user3.jpg',
-            name: 'Emily Johnson',
-            number: '+03 4567 8900'
-        },
-        email: 'johnson@trinta.com',
-        walletBalance: '$40k',
-        totalOrders: '887',
-        activeStatus: '1 month ago',
-        location: 'Whispering Willow, Haven',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user9.jpg',
-            name: 'William Anderson',
-            number: '+03 4567 8900'
-        },
-        email: 'anderson@trinta.com',
-        walletBalance: '$90k',
-        totalOrders: '539',
-        activeStatus: '6 hrs ago',
-        location: 'Sapphire Serenity, Cove',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user10.jpg',
-            name: 'Charlotte Lee',
-            number: '+03 4567 8900'
-        },
-        email: 'lee@trinta.com',
-        walletBalance: '$120.5k',
-        totalOrders: '60',
-        activeStatus: '2 days ago',
-        location: 'Twilight Enigma, Sanctuar',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user6.jpg',
-            name: 'Xavier Rodriguez',
-            number: '+03 4567 8900'
-        },
-        email: 'rodriguez@trinta.com',
-        walletBalance: '$40k',
-        totalOrders: '205',
-        activeStatus: '7 dys ago',
-        location: 'Celestial Harmony, Meadow',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user9.jpg',
-            name: 'Sophia Nguyen',
-            number: '+03 4567 8900'
-        },
-        email: 'nguyen@trinta.com',
-        walletBalance: '$90k',
-        totalOrders: '107',
-        activeStatus: '2 hrs ago',
-        location: 'Crimson Horizon, Bluff',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user19.jpg',
-            name: 'Elijah Benjamin',
-            number: '+03 4567 8900'
-        },
-        email: 'benjamin@trinta.com',
-        walletBalance: '$120.5k',
-        totalOrders: '100',
-        activeStatus: '9 hrs ago',
-        location: 'Radiant Cascade, Oasis',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user19.jpg',
-            name: 'Elijah Benjamin',
-            number: '+03 4567 8900'
-        },
-        email: 'benjamin@trinta.com',
-        walletBalance: '$120.5k',
-        totalOrders: '100',
-        activeStatus: '9 hrs ago',
-        location: 'Radiant Cascade, Oasis',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user9.jpg',
-            name: 'Sophia Nguyen',
-            number: '+03 4567 8900'
-        },
-        email: 'nguyen@trinta.com',
-        walletBalance: '$90k',
-        totalOrders: '107',
-        activeStatus: '2 hrs ago',
-        location: 'Crimson Horizon, Bluff',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user6.jpg',
-            name: 'Xavier Rodriguez',
-            number: '+03 4567 8900'
-        },
-        email: 'rodriguez@trinta.com',
-        walletBalance: '$40k',
-        totalOrders: '205',
-        activeStatus: '7 dys ago',
-        location: 'Celestial Harmony, Meadow',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user10.jpg',
-            name: 'Charlotte Lee',
-            number: '+03 4567 8900'
-        },
-        email: 'lee@trinta.com',
-        walletBalance: '$120.5k',
-        totalOrders: '60',
-        activeStatus: '2 days ago',
-        location: 'Twilight Enigma, Sanctuar',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user9.jpg',
-            name: 'William Anderson',
-            number: '+03 4567 8900'
-        },
-        email: 'anderson@trinta.com',
-        walletBalance: '$90k',
-        totalOrders: '539',
-        activeStatus: '6 hrs ago',
-        location: 'Sapphire Serenity, Cove',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user3.jpg',
-            name: 'Emily Johnson',
-            number: '+03 4567 8900'
-        },
-        email: 'johnson@trinta.com',
-        walletBalance: '$40k',
-        totalOrders: '887',
-        activeStatus: '1 month ago',
-        location: 'Whispering Willow, Haven',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user2.jpg',
-            name: 'Marcus Davis',
-            number: '+03 4567 8900'
-        },
-        email: 'davis@trinta.com',
-        walletBalance: '$75k',
-        totalOrders: '308',
-        activeStatus: '10 hrs ago',
-        location: 'Enchanted Silver Moon, Valley',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        user: {
-            img: 'assets/images/users/user1.jpg',
-            name: 'Sarah Rodriguez',
-            number: '+03 4567 8900'
-        },
-        email: 'rodriguez@trinta.com',
-        walletBalance: '$100.5k',
-        totalOrders: '1,250',
-        activeStatus: '1 hrs ago',
-        location: 'Ethereal Blossom, Grove',
-        action: {
-            view: 'ri-eye-line',
-            edit: 'ri-edit-line',
-            delete : 'ri-delete-bin-line'
-        }
-    }
-];

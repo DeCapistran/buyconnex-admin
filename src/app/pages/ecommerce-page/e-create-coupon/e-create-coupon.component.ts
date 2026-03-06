@@ -247,4 +247,7 @@ export class ECreateCouponComponent {
     }
 }
 
+annuler() {
+        this.router.navigate(["/ecommerce-page/coupon-details"]);
+    }
 }

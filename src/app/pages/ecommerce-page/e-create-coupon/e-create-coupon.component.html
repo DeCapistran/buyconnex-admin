@@ -105,8 +105,12 @@
                 </div>
             </div>
             <div class="create-product-btn">
-                <button mat-button type="submit">
-                    {{bouton}}
+                <button mat-button type="button" class="btn-cancel" (click)="annuler()">
+                    Annuler
+                </button>
+
+                <button mat-button type="submit" class="btn-submit">
+                    {{ bouton }}
                 </button>
             </div>
         </form>

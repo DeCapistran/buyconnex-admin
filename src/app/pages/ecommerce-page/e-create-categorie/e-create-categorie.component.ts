@@ -231,4 +231,8 @@ export class ECreateCategorieComponent {
         }
     }
 
+    annuler() {
+        this.router.navigate(["/ecommerce-page/categorie-details"]);
+    }
+
 }

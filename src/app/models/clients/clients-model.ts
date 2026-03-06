@@ -2,6 +2,7 @@ import { Users } from "../users/users-model";
 import { Adresses } from "./adresses-model";
 
 export class Clients {
+    id!: number;
     firstname!: string;
     lastname!: string;
     entreprise!: string;
@@ -11,6 +12,5 @@ export class Clients {
     telephone1!: string;
     telephone2!: string;
     adresses!: Adresses;
-    adresse!: Adresses;
-    user!: Users;
+    users!: Users;
 }

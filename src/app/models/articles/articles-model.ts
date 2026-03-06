@@ -13,9 +13,10 @@ export class Articles {
     quantite!: number;
     description!: string;
     composition!: string;
-    boutique!: Boutiques;
-    categorie!: Categories;
-    marque!: Marques;
+    boutiques!: Boutiques;
+    categories!: Categories;
+    marques!: Marques;
     statusArticle!: StatusArticles;
     images!: Images;
+    tags!: string;
 }

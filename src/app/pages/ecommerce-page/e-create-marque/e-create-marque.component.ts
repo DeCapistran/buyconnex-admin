@@ -180,4 +180,8 @@ export class ECreateMarqueComponent {
             );
         }
     }
+
+    annuler() {
+        this.router.navigate(["/ecommerce-page/marque-details"]);
+    }
 }

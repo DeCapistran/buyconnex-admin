@@ -35,7 +35,7 @@ export interface User {
 }
 
 @Component({
-    selector: 'app-e-create-product',
+    selector: 'app-e-create-customer',
     standalone: true,
     imports: [ 
         MatCardModule, 
@@ -58,10 +58,10 @@ export interface User {
         MatProgressSpinnerModule
     ],
     providers: [provideNativeDateAdapter()],
-    templateUrl: './e-create-product.component.html',
-    styleUrl: './e-create-product.component.scss'
+    templateUrl: './e-create-customer.component.html',
+    styleUrl: './e-create-customer.component.scss'
 })
-export class ECreateProductComponent {
+export class ECreateCustomerComponent {
 
     // Display Value
     myControl = new FormControl<string | User>('');

@@ -180,4 +180,8 @@ export class ECreateTagComponent {
             );
         }
     }
+
+    annuler() {
+        this.router.navigate(["/ecommerce-page/tag-details"]);
+    }
 }

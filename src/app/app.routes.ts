@@ -110,6 +110,7 @@ import { ECustomersDetailsComponent } from './pages/ecommerce-page/e-customers-d
 import { EBoutiqueDetailsComponent } from './pages/ecommerce-page/e-boutique-details/e-boutique-details.component';
 import { ECreateImageComponent } from './pages/ecommerce-page/e-create-image/e-create-image.component';
 import { ECreateCouponComponent } from './pages/ecommerce-page/e-create-coupon/e-create-coupon.component';
+import { ECreateCustomerComponent } from './pages/ecommerce-page/e-create-customer/e-create-customer.component';
 import { ECouponDetailsComponent } from './pages/ecommerce-page/e-coupon-details/e-coupon-details.component';
 import { ECreatePromotionComponent } from './pages/ecommerce-page/e-create-promotion/e-create-promotion.component';
 import { EPromotionListComponent } from './pages/ecommerce-page/e-promotion-list/e-promotion-list.component';
@@ -151,6 +152,7 @@ export const routes: Routes = [
             {path: 'products-list', component: EProductsListComponent},
             {path: 'product-details', component: EProductDetailsComponent},
             {path: 'create-product', component: ECreateProductComponent},
+            {path: 'create-customer', component: ECreateCustomerComponent},
             {path: 'create-boutique', component: ECreateBoutiqueComponent},
             {path: 'create-tag', component: ECreateTagComponent},
             {path: 'create-boutique/:id', component: ECreateBoutiqueComponent},
@@ -158,6 +160,9 @@ export const routes: Routes = [
             {path: 'create-marque/:id', component: ECreateMarqueComponent},
             {path: 'create-coupon/:id', component: ECreateCouponComponent},
             {path: 'create-tag/:id', component: ECreateTagComponent},
+            {path: 'create-product/:id', component: ECreateProductComponent},
+            {path: 'create-customer/:id', component: ECreateCustomerComponent},
+            {path: 'product-details/:id', component: EProductDetailsComponent},
             {path: 'orders-list', component: EOrdersListComponent},
             {path: 'order-details', component: EOrderDetailsComponent},
             {path: 'customers-list', component: ECustomersListComponent},
