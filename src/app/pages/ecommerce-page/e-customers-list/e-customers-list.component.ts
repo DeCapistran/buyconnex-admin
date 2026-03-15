@@ -43,7 +43,7 @@ export class ECustomersListComponent {
         ngAfterViewInit() {
             if (this.sort) {
                 this.dataSource.sort = this.sort;
-                this.dataSource.sort.sort({ id: 'nom', start: 'asc', disableClear: false }); // Tri initial par nom
+                this.dataSource.sort.sort({ id: 'firstname', start: 'asc', disableClear: false }); // Tri initial par nom
             }
             if (this.paginator) {
                 this.dataSource.paginator = this.paginator;

@@ -6,5 +6,5 @@ export class Avis {
     etoile!: number;
     commentaire!: string;
     articles!: Articles;
-    user!: Users;
+    users!: Users;
 }

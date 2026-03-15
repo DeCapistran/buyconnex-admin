@@ -71,4 +71,5 @@ export class ArticleService {
         const url = `${environment.backend_url + '/api/images/delete-article'}/${articleId}`;
         return this.httpClient.delete(url, { headers: httpHeaders });
     }
+   
 }

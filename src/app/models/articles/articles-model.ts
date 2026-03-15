@@ -1,8 +1,10 @@
+import { Avis } from "./avis-model";
 import { Boutiques } from "./boutiques-model";
 import { Categories } from "./categories-model";
 import { Images } from "./images-model";
 import { Marques } from "./marques-model";
 import { StatusArticles } from "./statusArticles-model";
+import { Tags } from "./tags-model";
 
 export class Articles {
     id!: number;
@@ -16,7 +18,8 @@ export class Articles {
     boutiques!: Boutiques;
     categories!: Categories;
     marques!: Marques;
-    statusArticle!: StatusArticles;
+    statusArticles!: StatusArticles;
     images!: Images;
-    tags!: string;
+    tags!: Tags;
+    avis!: Avis[];
 }

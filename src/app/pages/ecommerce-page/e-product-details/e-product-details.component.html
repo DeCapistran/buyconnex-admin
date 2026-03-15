@@ -1,16 +1,15 @@
 <!-- Product Details Card -->
-<mat-card
-    class="trinta-card product-details-card mb-25 bg-white border-none d-block"
->
+<mat-card class="trinta-card product-details-card mb-25 bg-white border-none d-block">
     <mat-card-content>
         <div class="row align-items-center">
             <div class="col-xxxl-5 col-lg-6 col-md-12">
                 <div class="product-details-image">
                     <div class="product-gallery__featured">
-                        <owl-carousel-o [options]="{items: 1, dots: false, animateIn: 'fadeIn', animateOut: 'fadeOut'}" #owlCar>
+                        <owl-carousel-o [options]="{items: 1, dots: false, animateIn: 'fadeIn', animateOut: 'fadeOut'}"
+                            #owlCar>
                             <ng-container *ngFor="let image of productImages">
                                 <ng-template carouselSlide [id]="image.url">
-                                    <img [src]="image.url" [alt]="image.url" class="border-radius">
+                                    <img [src]="image.url" [alt]="article.title || image.url" class="border-radius">
                                 </ng-template>
                             </ng-container>
                         </owl-carousel-o>
@@ -20,7 +19,7 @@
                             <ng-container *ngFor="let image of productImages; let i = index">
                                 <ng-template carouselSlide [id]="image.url+i" [width]="100">
                                     <a (click)="owlCar.to(image.url); changeimage(image.url+i)" class="border-radius">
-                                        <img [src]="image.url" [alt]="image.url" class="border-radius">
+                                        <img [src]="image.url" [alt]="article.title || image.url" class="border-radius">
                                     </a>
                                 </ng-template>
                             </ng-container>
@@ -32,36 +31,34 @@
                 <div class="product-details-content">
                     <div class="title d-flex align-items-center justify-content-between">
                         <h3 class="mb-0">
-                            Comforta Armchair
+                            {{ article.title }}
                         </h3>
                         <div class="action d-flex align-items-center">
-                            <a routerLink="/ecommerce-page/product-details" class="d-inline-block">
+                            <a [routerLink]="['/ecommerce-page/create-product', article.id]" class="d-inline-block">
                                 <i-feather name="edit-3"></i-feather>
                             </a>
-                            <a routerLink="/ecommerce-page/product-details" class="d-inline-block">
+                            <a class="d-inline-block" (click)="openDeleteDialog()">
                                 <i-feather name="trash-2"></i-feather>
                             </a>
                         </div>
                     </div>
                     <span class="category text-body d-block">
-                        Furniture
+                        {{ article.categories.libelle }}
                     </span>
                     <div class="ratings lh-1 d-flex align-items-center">
-                        <i class="ri-star-fill"></i>
-                        <i class="ri-star-fill"></i>
-                        <i class="ri-star-fill"></i>
-                        <i class="ri-star-fill"></i>
-                        <i class="ri-star-line"></i>
+                        <div class="all-ratings d-flex align-items-center justify-content-center">
+                            @for (content of overallStars; track content) {
+                            <i class="{{content.star}}"></i>
+                            }
+                        </div>
                         <span class="d-block fs-14 text-primary">
-                            (3250 commentaires)
+                            {{ totalReviews || 0 }} Commentaires
                         </span>
                     </div>
                     <span class="sub-title d-block fs-14 fw-medium">
                         Description :
                     </span>
-                    <p class="fs-15 text-black">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adlino minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
+                    <p class="fs-15 text-black" [innerHTML]="article.description"></p>
                     <ul class="list p-0 list-unstyled">
                         <li class="d-flex align-items-center fs-14">
                             <span class="d-block fw-medium">
@@ -75,8 +72,14 @@
                             <span class="d-block fw-medium">
                                 Quantité :
                             </span>
-                            <span class="d-block availability">
-                                en stock <span class="fw-semibold fs-15">2 508</span> Pièce(s) 
+                            <span class="trinta-badge fw-medium" [ngClass]="getArticleStock(article.quantite).class">
+
+                                {{ getArticleStock(article.quantite).label }}
+
+                                <span class="fw-semibold fs-15">
+                                    ({{ article.quantite || 0 }})
+                                </span>
+
                             </span>
                         </li>
                         <li class="d-flex align-items-center fs-14">
@@ -84,7 +87,7 @@
                                 Catégorie :
                             </span>
                             <span class="text-black">
-                                Furniture
+                                {{ article.categories.libelle }}
                             </span>
                         </li>
                         <li class="d-flex align-items-center fs-14">
@@ -92,7 +95,7 @@
                                 SKU :
                             </span>
                             <span class="d-block text-black">
-                                Demo Model-12
+                                {{ article.sku }}
                             </span>
                         </li>
                         <li class="d-flex align-items-center fs-14">
@@ -100,34 +103,52 @@
                                 Vendeur :
                             </span>
                             <span class="d-block text-black">
-                                Lereve Mad
+                                {{ article.boutiques.nom }}
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                Marque :
+                            </span>
+                            <span class="d-block text-black">
+                                {{ article.marques.libelle }}
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                Tag :
+                            </span>
+                            <span class="d-block text-black">
+                                {{ article.tags.nom }}
                             </span>
                         </li>
                     </ul>
                     <div class="d-md-flex align-items-center">
                         <div class="box d-flex align-items-center">
-                            <div class="icon d-flex align-items-center justify-content-center rounded-circle text-white">
+                            <div
+                                class="icon d-flex align-items-center justify-content-center rounded-circle text-white">
                                 <i-feather name="dollar-sign"></i-feather>
                             </div>
                             <div>
                                 <span class="d-block text-gray">
-                                    Montant vendu
+                                    Prix
                                 </span>
                                 <h4 class="mb-0 fw-medium">
-                                    $80.5k
+                                    {{ article.prix }}
                                 </h4>
                             </div>
                         </div>
                         <div class="box d-flex align-items-center">
-                            <div class="icon d-flex align-items-center justify-content-center rounded-circle text-white">
+                            <div
+                                class="icon d-flex align-items-center justify-content-center rounded-circle text-white">
                                 <i-feather name="check-circle"></i-feather>
                             </div>
                             <div>
                                 <span class="d-block text-gray">
-                                    Quantité vendu
+                                    Quantité
                                 </span>
                                 <h4 class="mb-0 fw-medium">
-                                    20.9k
+                                    {{ article.quantite }}
                                 </h4>
                             </div>
                         </div>

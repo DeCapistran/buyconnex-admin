@@ -150,7 +150,6 @@ export const routes: Routes = [
         children: [
             {path: '', component: EProductsGridComponent},
             {path: 'products-list', component: EProductsListComponent},
-            {path: 'product-details', component: EProductDetailsComponent},
             {path: 'create-product', component: ECreateProductComponent},
             {path: 'create-customer', component: ECreateCustomerComponent},
             {path: 'create-boutique', component: ECreateBoutiqueComponent},

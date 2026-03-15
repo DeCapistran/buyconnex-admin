@@ -329,22 +329,52 @@ export class ECreateProductComponent {
     }
 
     onImageUpload(event: Event): void {
-        const input = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement;
 
-        if (input?.files && input.files.length > 0) {
-            this.uploadedImage = input.files[0];
+    if (input?.files && input.files.length > 0) {
+        const file = input.files[0];
 
-            const reader = new FileReader();
-            reader.readAsDataURL(this.uploadedImage);
+        const reader = new FileReader();
 
-            reader.onload = () => {
-                this.imagePath = reader.result as string;
+        reader.onload = () => {
+            const img = new Image();
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                if (!ctx) {
+                    return;
+                }
+
+                canvas.width = 605;
+                canvas.height = 640;
+
+                ctx.drawImage(img, 0, 0, 605, 640);
+
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        this.uploadedImage = new File(
+                            [blob],
+                            file.name,
+                            { type: file.type || 'image/jpeg' }
+                        );
+
+                        this.imagePath = URL.createObjectURL(this.uploadedImage);
+                    }
+                }, file.type || 'image/jpeg', 0.95);
             };
 
-            reader.onerror = (error) => {
-            };
-        }
+            img.src = reader.result as string;
+        };
+
+        reader.onerror = (error) => {
+            console.error(error);
+        };
+
+        reader.readAsDataURL(file);
     }
+}
 
     loadMarques(): Promise<void> {
         return new Promise((resolve, reject) => {

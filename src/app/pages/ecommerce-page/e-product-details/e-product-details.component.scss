@@ -129,6 +129,27 @@
     }
 }
 
+.trinta-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.trinta-badge.published {
+    background: #d4f8e8;
+    color: #00a651;
+}
+
+.trinta-badge.pending {
+    background: #fff3cd;
+    color: #ff9800;
+}
+
+.trinta-badge.rejected {
+    background: #fde2e1;
+    color: #e53935;
+}
+
 /* Max width 767px */
 @media only screen and (max-width : 767px) {
 

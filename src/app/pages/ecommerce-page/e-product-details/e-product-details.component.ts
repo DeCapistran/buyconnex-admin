@@ -1,41 +1,199 @@
-import { Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { RouterLink } from '@angular/router';
+import { Articles } from '../../../models/articles/articles-model';
+import { ArticleService } from '../../../services/article.service';
 import { FeathericonsModule } from '../../../icons/feathericons/feathericons.module';
-import { CarouselModule } from 'ngx-owl-carousel-o';
-import { NgFor } from '@angular/common';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatMenuModule } from '@angular/material/menu';
+import { CarouselModule, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
 import { ReviewsComponent } from './reviews/reviews.component';
+import { AvisService } from '../../../services/avis.service';
+import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
+import { ColonneArticle } from '../e-products-list/e-products-list.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-e-product-details',
     standalone: true,
-    imports: [RouterLink, MatCardModule, MatButtonModule, FeathericonsModule, CarouselModule, NgFor, MatProgressBarModule, MatMenuModule, ReviewsComponent],
+    imports: [
+        CommonModule,
+        RouterLink,
+        MatCardModule,
+        FeathericonsModule,
+        CarouselModule,
+        ReviewsComponent
+    ],
     templateUrl: './e-product-details.component.html',
     styleUrl: './e-product-details.component.scss'
 })
 export class EProductDetailsComponent {
 
-    // Product Images
-    productImages = [
-        {
-            url: 'assets/images/products/product-details1.jpg'
-        },
-        {
-            url: 'assets/images/products/product-details2.jpg'
-        },
-        {
-            url: 'assets/images/products/product-details3.jpg'
-        },
-        {
-            url: 'assets/images/products/product-details4.jpg'
+    articleId: string | null = null;
+    article: Articles = new Articles();
+
+    timestamp: number = Date.now();
+    err: any;
+
+    productImages: { url: string }[] = [];
+    selectedImage: string | null = null;
+
+    showMessage = false;
+    showMessage2 = false;
+
+    customOptions: OwlOptions = {
+        loop: false,
+        mouseDrag: true,
+        touchDrag: true,
+        pullDrag: false,
+        dots: false,
+        navSpeed: 700,
+        nav: false,
+        items: 1
+    };
+
+    totalReviews: number = 0;
+    averageRating: number = 0;
+    overallStars: { star: string }[] = [];
+    ratingCount: { [key: number]: number } = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+    thumbnailOptions: OwlOptions = {
+        loop: false,
+        mouseDrag: true,
+        touchDrag: true,
+        pullDrag: false,
+        dots: false,
+        navSpeed: 700,
+        nav: false,
+        autoWidth: true,
+        margin: 10
+    };
+
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private articleService: ArticleService,
+        private avisService: AvisService,
+        private dialog: MatDialog
+    ) { }
+
+    ngOnInit(): void {
+        this.articleId = this.route.snapshot.paramMap.get('id');
+
+        if (this.articleId) {
+            this.loadArticleDetails(this.articleId);
         }
-    ]
-    selectedImage: string;
-    changeimage(image: string){
+    }
+
+    loadArticleDetails(id: string): void {
+        this.articleService.getArticleById(id).subscribe({
+            next: (data: Articles) => {
+                this.article = data;
+
+                if (data.images?.url) {
+                    const imageUrl = data.images.url + '?t=' + this.timestamp;
+                    this.productImages = [{ url: imageUrl }];
+                    this.selectedImage = imageUrl;
+                } else {
+                    this.productImages = [];
+                    this.selectedImage = null;
+                }
+                this.loadAvisByArticle(id);
+            },
+            error: (error) => {
+                this.err = error;
+                console.error('Erreur lors du chargement du produit :', error);
+            }
+        });
+    }
+
+    loadAvisByArticle(articleId: string): void {
+        this.avisService.getAvisByArticleId(articleId).subscribe({
+            next: (avisList) => {
+                const ratingResult = this.avisService.computeRatings(avisList || []);
+                this.totalReviews = ratingResult.totalReviews;
+                this.averageRating = ratingResult.averageRating;
+                this.overallStars = ratingResult.overallStars;
+                this.ratingCount = ratingResult.ratingCount;
+            },
+            error: (error) => {
+                console.error('Erreur lors du chargement des avis :', error);
+                this.totalReviews = 0;
+                this.averageRating = 0;
+                this.overallStars = [];
+                this.ratingCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+            }
+        });
+    }
+
+    changeimage(image: string): void {
         this.selectedImage = image;
     }
 
+    retourListe(): void {
+        this.router.navigate(['/ecommerce-page/products-list']);
+    }
+
+    openDeleteDialog(): void {
+        const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
+            width: '500px',
+            data: { name: this.article?.title }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.deleteItem();
+            }
+        });
+    }
+
+    deleteItem(): void {
+        if (!this.article?.id) {
+            return;
+        }
+
+        this.articleService.deleteArticle(this.article.id.toString()).subscribe(
+            (response) => {
+                this.showMessage = true;
+                this.err = "Article supprimée avec succès !";
+
+                setTimeout(() => {
+                    this.err = null;
+                    this.showMessage = false;
+                }, 1500);
+
+                this.router.navigate(['/ecommerce-page/products-list']);
+            },
+            (err) => {
+                this.showMessage2 = true;
+                this.err = "Echec lors de la suppression de l'article";
+
+                setTimeout(() => {
+                    this.err = null;
+                    this.showMessage2 = false;
+                }, 1500);
+            }
+        );
+    }
+
+    getArticleStock(quantite: number) {
+
+    if (quantite <= 0) {
+        return {
+            label: 'En Rupture',
+            class: 'rejected'
+        };
+    }
+
+    if (quantite <= 10) {
+        return {
+            label: 'En Limite',
+            class: 'pending'
+        };
+    }
+
+    return {
+        label: 'En stock',
+        class: 'published'
+    };
+}
 }
