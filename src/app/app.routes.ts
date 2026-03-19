@@ -171,6 +171,7 @@ export const routes: Routes = [
             {path: 'boutique-details', component: EBoutiqueDetailsComponent},
             {path: 'categorie-details', component: ECategorieDetailsComponent},
             {path: 'create-image', component: ECreateImageComponent},
+            {path: 'create-image/:id', component: ECreateImageComponent},
             {path: 'create-coupon', component: ECreateCouponComponent},
             {path: 'coupon-details', component: ECouponDetailsComponent},
             {path: 'create-marque', component: ECreateMarqueComponent},

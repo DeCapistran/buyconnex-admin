@@ -71,5 +71,21 @@ export class ArticleService {
         const url = `${environment.backend_url + '/api/images/delete-article'}/${articleId}`;
         return this.httpClient.delete(url, { headers: httpHeaders });
     }
+
+    uploadImageAvecCouleur(formatData: FormData): Observable<any> {
+        let jwt = this.authService.getToken();
+        jwt = "Bearer " + jwt;
+        let httpHeaders = new HttpHeaders({ "Authorization": jwt });
+        const url = `${environment.backend_url + '/api/images/uploadfs-article-couleur'}`;
+        return this.httpClient.post(url, formatData, { headers: httpHeaders });
+    }
+
+    updateImageAvecCouleur(imageId: string, formatData: FormData): Observable<any> {
+        let jwt = this.authService.getToken();
+        jwt = "Bearer " + jwt;
+        let httpHeaders = new HttpHeaders({ "Authorization": jwt });
+        const url = `${environment.backend_url + '/api/images/updatefs-article-couleur'}/${imageId}`;
+        return this.httpClient.post(url, formatData, { headers: httpHeaders });
+    }
    
 }

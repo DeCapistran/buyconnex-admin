@@ -7,6 +7,45 @@
         };
     }
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-text {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.color-swatch {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
 ::ng-deep {
     .trinta-card {
         &.add-product-card {
@@ -27,11 +66,17 @@
                         weight: 600;
                         family: var(--headingFontFamily);
                     };
+
+                    &.btn-cancel {
+                        background-color: var(--dangerColor, #ee368c);
+                        margin-right: 10px;
+                    }
                 }
             }
         }
     }
 }
+
 
 /* Max width 767px */
 @media only screen and (max-width : 767px) {

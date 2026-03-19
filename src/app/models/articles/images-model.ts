@@ -6,4 +6,5 @@ export class Images {
     type!: string;
     url!: string;
     image!: number[];
+    couleurs?: Couleurs;
 }
