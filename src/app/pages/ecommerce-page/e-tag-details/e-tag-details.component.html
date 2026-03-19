@@ -1,0 +1,92 @@
+<mat-card
+    class="trinta-card leads-report-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                Tags
+            </h5>
+        </mat-card-title>     
+    <mat-card-subtitle>
+        <a routerLink="/ecommerce-page/create-tag" class="default-btn" mat-button>
+            <i class="ri-add-line"></i> Ajouter
+        </a>
+    </mat-card-subtitle>
+    </mat-card-header>
+    <div class="alert alert-danger" *ngIf="showMessage2">
+        <strong>{{err}}</strong>
+    </div>
+    <div class="alert alert-success" *ngIf="showMessage">
+        <strong>{{err}}</strong>
+    </div>
+    <mat-card-content>
+        <div class="leads-report-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- Tracking No Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef class="text-primary pl-0">
+                            No
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" class="text-primary fw-medium pl-0">
+                            {{(paginator.pageIndex * paginator.pageSize) + i + 1}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nom">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Tags
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block fw-semibold">
+                                        {{element.nom}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Description
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block fw-semibold" [innerHTML]="element.description">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef class="text-end pr-0">
+                            Actions
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-end pr-0">
+                            <div class="action">
+                                <button type="button" [routerLink]="['/ecommerce-page/create-tag', element.id]" mat-button class="p-0 min-w-auto lh-1 h-auto">
+                                    <i class="{{element.actions.edit}}"></i>
+                                </button>
+                                <button type="button" mat-button class="p-0 min-w-auto lh-1 h-auto" (click)="openDeleteDialog(element)">
+                                    <i class="{{element.actions.delete}}"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 20, 30]"></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,182 @@
+<!-- OVERLAY LOADING SPINNER -->
+<div *ngIf="isLoading" class="overlay">
+    <div class="spinner-container">
+      <mat-spinner diameter="200"></mat-spinner>
+      <div class="loading-text">En cours d'enregistrement</div>
+    </div>
+  </div>  
+  
+  
+<mat-card
+    class="trinta-card add-product-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                {{titre}}
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="alert alert-danger" *ngIf="showMessage2">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="alert alert-success" *ngIf="showMessage">
+            <strong>{{err}}</strong>
+        </div>
+        <form *ngIf="articleForm" [formGroup]="articleForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Nom Article
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="edit-3"></i-feather>
+                        <mat-label>Entrer le nom de l'article</mat-label>
+                        <input id="title" type="text" formControlName="title" matInput [(ngModel)]="article.title">
+                        <div *ngIf="articleForm.get('title')?.touched && articleForm.get('title')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('title')?.errors?.['required']">Libelle Obligatoire.</small>
+                            <small *ngIf="articleForm.get('title')?.errors?.['pattern']">Libelle Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <label class="label d-block fw-medium mb-10">
+                        Quantité en Stock
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="database"></i-feather>
+                        <mat-label>Quantité</mat-label>
+                        <input id="quantite" type="text" formControlName="quantite" matInput [(ngModel)]="article.quantite">
+                        <div *ngIf="articleForm.get('quantite')?.touched && articleForm.get('quantite')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('quantite')?.errors?.['required']">Quantité Obligatoire.</small>
+                            <small *ngIf="articleForm.get('quantite')?.errors?.['pattern']">Quantité Invalide.</small>
+                        </div>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-lg-4">
+                    <label class="label d-block fw-medium mb-10">
+                        Marque
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Marque</mat-label>
+                        <input type="text" matInput formControlName="marque" [matAutocomplete]="autoMarque">
+                        <mat-autocomplete #autoMarque="matAutocomplete" [displayWith]="displayLibelle">
+                            <mat-option *ngFor="let marque of filteredMarques | async" [value]="marque">
+                                {{ marque.libelle }}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div *ngIf="articleForm.get('marque')?.touched && articleForm.get('marque')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('marque')?.errors?.['required']">Marque Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                                            
+                </div>
+                <div class="col-lg-4">
+                    <label class="label d-block fw-medium mb-10">
+                        Prix Article
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="dollar-sign"></i-feather>
+                        <mat-label>Entrer le prix de l'article</mat-label>
+                        <input id="prix" type="text" formControlName="prix" matInput [(ngModel)]="article.prix">
+                        <div *ngIf="articleForm.get('prix')?.touched && articleForm.get('prix')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('prix')?.errors?.['required']">Prix Obligatoire.</small>
+                            <small *ngIf="articleForm.get('prix')?.errors?.['pattern']">Prix Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <label class="label d-block fw-medium mb-10">
+                        Catégorie
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Catégorie</mat-label>
+                        <input type="text" matInput formControlName="categorie" [matAutocomplete]="autoCategorie">
+                        <mat-autocomplete #autoCategorie="matAutocomplete" [displayWith]="displayLibelle">
+                            <mat-option *ngFor="let categorie of filteredCategories | async" [value]="categorie">
+                                {{ categorie.libelle }}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div *ngIf="articleForm.get('categorie')?.touched && articleForm.get('categorie')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('categorie')?.errors?.['required']">Catégorie Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <label class="label d-block fw-medium mb-10">
+                        Boutique
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Boutique</mat-label>
+                        <input type="text" matInput formControlName="boutique" [matAutocomplete]="autoBoutique">
+                        <mat-autocomplete #autoBoutique="matAutocomplete" [displayWith]="displayNom">
+                            <mat-option *ngFor="let boutique of filteredBoutiques | async" [value]="boutique">
+                                {{ boutique.nom }}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div *ngIf="articleForm.get('boutique')?.touched && articleForm.get('boutique')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('boutique')?.errors?.['required']">Boutique Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <label class="label d-block fw-medium mb-10">
+                        Tag
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Tag</mat-label>
+                        <input type="text" matInput formControlName="tags" [matAutocomplete]="autoTag">
+                        <mat-autocomplete #autoTag="matAutocomplete" [displayWith]="displayNom">
+                            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                                {{ tag.nom }}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div *ngIf="articleForm.get('tags')?.touched && articleForm.get('tags')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('tags')?.errors?.['required']">Tag Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                </div> 
+                <div class="col-sm-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Description Article
+                    </label>
+                    <mat-form-field class="textarea">
+                        <i-feather name="file-text"></i-feather>
+                        <mat-label>Description Article</mat-label>
+                        <textarea id="description" formControlName="description" name="description" matInput placeholder="Description de l'article" [(ngModel)]="article.description"></textarea>
+                        <div *ngIf="articleForm.get('description')?.touched && articleForm.get('description')?.invalid" class="error-message">
+                            <small *ngIf="articleForm.get('description')?.errors?.['required']">Description Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Images Article
+                    </label>
+                    <div *ngIf="imagePath" class="mb-3">
+                        <img [src]="imagePath" alt="Image de l'article'" style="max-width: 20px;">
+                    </div>
+                    <input id="img" type="file" formControlName="img" (change)="onImageUpload($event)" class="form-control" >
+                    <div *ngIf="articleForm.get('img')?.touched && articleForm.get('img')?.invalid" class="error-message">
+                        <small *ngIf="articleForm.get('img')?.errors?.['required']">Image Obligatoire.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="create-product-btn">
+                <button mat-button type="button" class="btn-cancel" (click)="annuler()">
+                    Annuler
+                </button>
+
+                <button mat-button type="submit" class="btn-submit">
+                    {{ bouton }}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

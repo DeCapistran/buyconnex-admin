@@ -1,0 +1,85 @@
+<mat-card class="trinta-card add-product-card mb-25 bg-white border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                {{titre}}
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="alert alert-danger" *ngIf="showMessage2">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="alert alert-success" *ngIf="showMessage">
+            <strong>{{err}}</strong>
+        </div>
+        <form [formGroup]="boutiqueForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Nom Boutique
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="edit-3"></i-feather>
+                        <mat-label>Entrer le nom de la boutique</mat-label>
+                        <input id="name" type="text" formControlName="name" matInput [(ngModel)]="boutique.nom">
+                        <div *ngIf="boutiqueForm.get('name')?.touched && boutiqueForm.get('name')?.invalid" class="error-message">
+                            <small *ngIf="boutiqueForm.get('name')?.errors?.['required']">Nom Obligatoire.</small>
+                            <small *ngIf="boutiqueForm.get('name')?.errors?.['pattern']">Nom Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Email
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="at-sign"></i-feather>
+                        <mat-label>Email</mat-label>
+                        <input id="email" type="text" formControlName="email" matInput [(ngModel)]="boutique.email">
+                        <div *ngIf="boutiqueForm.get('email')?.touched && boutiqueForm.get('email')?.invalid" class="error-message">
+                            <small *ngIf="boutiqueForm.get('email')?.errors?.['required']">Email Obligatoire.</small>
+                            <small *ngIf="boutiqueForm.get('email')?.errors?.['pattern']">Email Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Contact
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="phone"></i-feather>
+                        <mat-label>Entrer le numéro</mat-label>
+                        <input id="contact" type="text" formControlName="contact" matInput
+                            [(ngModel)]="boutique.telephone">
+                        <div *ngIf="boutiqueForm.get('contact')?.touched && boutiqueForm.get('contact')?.invalid" class="error-message">
+                            <small *ngIf="boutiqueForm.get('contact')?.errors?.['required']">Contact Obligatoire.</small>
+                            <small *ngIf="boutiqueForm.get('contact')?.errors?.['pattern']">Contact Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Images Boutique
+                    </label>
+                    <div *ngIf="imagePath" class="mb-3">
+                        <img [src]="imagePath" alt="Image de la boutique" style="max-width: 20px;">
+                    </div>
+                    <input id="img" type="file" formControlName="img" (change)="onImageUpload($event)" class="form-control" >
+                    <div *ngIf="boutiqueForm.get('img')?.touched && boutiqueForm.get('img')?.invalid" class="error-message">
+                        <small *ngIf="boutiqueForm.get('img')?.errors?.['required']">Image Obligatoire.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="create-product-btn">
+                <button mat-button type="button" class="btn-cancel" (click)="annuler()">
+                    Annuler
+                </button>
+
+                <button mat-button type="submit" class="btn-submit">
+                    {{ bouton }}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,41 @@
+<div class="confirm-email-area">
+    <div class="d-table">
+        <div class="d-table-cell"> 
+            <div class="trinta-form text-center ml-auto mr-auto bg-white border-radius">
+                <h3>
+                    Cliquez ici si vous n'avez pas reçu de code <span><a routerLink="/authentication">Connectez vous</a></span>
+                </h3>
+                <div class="alert alert-danger" *ngIf="showAlert2">
+                    <strong>{{err}}</strong>
+                </div> 
+                <div class="alert alert-success" *ngIf="showAlert">
+                    <strong>{{err}}</strong>
+                </div>
+                <div class="icon text-primary ml-auto mr-auto d-flex align-items-center justify-content-center rounded-circle">
+                    <i-feather name="mail"></i-feather>
+                </div>
+                <mat-card class="trinta-card mb-25 bg-white border-none d-block">
+                    <mat-card-header>
+                        <mat-card-title>
+                            <h5 class="mt-0 mb-0">
+                                Code de validation
+                            </h5>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <mat-form-field class="mb-25">
+                            <i-feather name="lock"></i-feather>
+                            <mat-label>Entrer le code de validation</mat-label>
+                            <input name="code" [(ngModel)]="code" matInput [type]="hide ? 'password' : 'text'">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                        
+                    </mat-card-content>
+                    <button mat-raised-button class="d-block w-100 text-center" color="primary" (click)="onValidateEmail()">Valider</button>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

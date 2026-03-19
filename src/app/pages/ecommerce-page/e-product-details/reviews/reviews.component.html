@@ -1,0 +1,230 @@
+<!-- Overall Reviews -->
+<mat-card
+    class="trinta-card overall-reviews-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-content>
+        <div class="row align-items-center">
+            <div class="col-lg-2">
+                <div class="product">
+                    <img [src]="articleImage || 'assets/images/products/reviews.jpg'" alt="product-image">
+                    <h5 class="mb-0" style="text-align: center;">
+                        {{ articleTitle || 'Produit' }}
+                    </h5>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="rating-item position-relative">
+                    <div class="ratings d-flex align-items-center">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                    </div>
+                    <mat-progress-bar mode="determinate" [value]="ratingPercent(5)"></mat-progress-bar>
+                    <span class="number text-black d-block">
+                        {{ ratingCount[5] || 0 }}
+                    </span>
+                </div>
+                <div class="rating-item position-relative">
+                    <div class="ratings d-flex align-items-center">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-line"></i>
+                    </div>
+                    <mat-progress-bar mode="determinate" [value]="ratingPercent(4)"></mat-progress-bar>
+                    <span class="number text-black d-block">
+                        {{ ratingCount[4] || 0 }}
+                    </span>
+                </div>
+                <div class="rating-item position-relative">
+                    <div class="ratings d-flex align-items-center">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-line"></i>
+                        <i class="ri-star-line"></i>
+                    </div>
+                    <mat-progress-bar mode="determinate" [value]="ratingPercent(3)"></mat-progress-bar>
+                    <span class="number text-black d-block">
+                        {{ ratingCount[3] || 0 }}
+                    </span>
+                </div>
+                <div class="rating-item position-relative">
+                    <div class="ratings d-flex align-items-center">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-line"></i>
+                        <i class="ri-star-line"></i>
+                        <i class="ri-star-line"></i>
+                    </div>
+                    <mat-progress-bar mode="determinate" [value]="ratingPercent(2)"></mat-progress-bar>
+                    <span class="number text-black d-block">
+                        {{ ratingCount[2] || 0 }}
+                    </span>
+                </div>
+                <div class="rating-item position-relative">
+                    <div class="ratings d-flex align-items-center">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-line"></i>
+                        <i class="ri-star-line"></i>
+                        <i class="ri-star-line"></i>
+                        <i class="ri-star-line"></i>
+                    </div>
+                    <mat-progress-bar mode="determinate" [value]="ratingPercent(1)"></mat-progress-bar>
+                    <span class="number text-black d-block">
+                        {{ ratingCount[1] || 0 }}
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="overall-reviews text-center">
+                    <h3 class="lh-1 fw-bold">
+                        {{ averageRating || 0 }}
+                    </h3>
+                    <div class="all-ratings d-flex align-items-center justify-content-center">
+                        @for (content of overallStars; track content) {
+                            <i class="{{content.star}}"></i>
+                        }
+                    </div>
+                    <span class="d-block text-black fw-medium fs-15">
+                        {{ totalReviews || 0 }} Commentaires
+                    </span>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- Manage Reviews -->
+<mat-card
+    class="trinta-card manage-reviews-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                Commentaires
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                Jour
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Jour
+                </button>
+                <button mat-menu-item>
+                    Semaine
+                </button>
+                <button mat-menu-item>
+                    Mois
+                </button>
+                <button mat-menu-item>
+                    Année
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="manage-reviews-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Reviewer Column -->
+                    <ng-container matColumnDef="reviewer">
+                        <th mat-header-cell *matHeaderCellDef class="pl-0">
+                            Clients
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="pl-0">
+                            <div class="reviewer-info d-flex align-items-center">
+                                <div class="info position-relative">
+                                    <h6 class="mt-0">
+                                        {{element.reviewer.name}}
+                                    </h6>
+                                    <span class="d-block text-primary">
+                                        {{element.reviewer.email}}
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Review Column -->
+                    <ng-container matColumnDef="ratings">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Commentaires
+                        </th>
+                        <td mat-cell *matCellDef="let element" style="white-space: normal;">
+                            <div class="review">
+                                <div class="ratings lh-1">
+                                    @for (content of element.ratings.stars; track content) {
+                                        <i class="{{content.star}}"></i>
+                                    }
+                                </div>
+                                <p class="fs-15 text-black fw-medium">
+                                    {{element.ratings.review}}
+                                </p>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Date Column -->
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Date
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="d-block text-body">{{element.date.date}}</span>
+                            <span class="d-block text-body">{{element.date.time}}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="trinta-badge fw-medium pending d-inline-block" *ngIf="element.status.pending">
+                                {{element.status.pending}}
+                            </span>
+                            <span class="trinta-badge fw-medium published d-inline-block" *ngIf="element.status.published">
+                                {{element.status.published}}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">
+                            Actions
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-center">
+                            <div class="action">
+                                <button type="button" mat-button class="border-radius-0 p-0" [matMenuTriggerFor]="actionMenu">
+                                    <i class="{{element.action}}"></i>
+                                </button>
+                                <mat-menu #actionMenu="matMenu" xPosition="before">
+                                    <button mat-menu-item>
+                                        Répondre
+                                    </button>
+                                    <button mat-menu-item>
+                                        Supprimer
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 15]"></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

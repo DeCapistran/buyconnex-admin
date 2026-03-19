@@ -1,0 +1,45 @@
+<mat-card
+    class="trinta-card organic-sessions-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                Articles
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button type="button" mat-button class="card-header-menu-btn" [matMenuTriggerFor]="cardHeaderMenu">
+                 Jour
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <button mat-menu-item>
+                    Jour
+                </button>
+                <button mat-menu-item>
+                    Semaine
+                </button>
+                <button mat-menu-item>
+                    Mois
+                </button>
+                <button mat-menu-item>
+                    Année
+                </button>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="chart">
+            <apx-chart
+                [series]="chartOptions.series!"
+                [chart]="chartOptions.chart!"
+                [colors]="chartOptions.colors!"
+                [labels]="chartOptions.labels!"
+                [stroke]="chartOptions.stroke!"
+                [legend]="chartOptions.legend!"
+                [fill]="chartOptions.fill!"
+                [tooltip]="chartOptions.tooltip!"
+                [dataLabels]="chartOptions.dataLabels!"
+            ></apx-chart>
+        </div>
+    </mat-card-content>
+</mat-card>

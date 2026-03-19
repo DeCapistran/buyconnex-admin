@@ -1,0 +1,103 @@
+<div class="sign-up-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div
+                class="trinta-form ml-auto mr-auto bg-white border-radius"
+            >
+                <div class="title text-center">
+                    <h3>
+                        Créer votre compte
+                    </h3>
+                    <p class="text-black fs-15">
+                        Vous avez déjà un compte ? <a routerLink="/authentication" class="text-primary fw-medium">Connexion</a>
+                    </p>
+                </div>
+                <div class="alert alert-danger" *ngIf="showMessage2">
+                    <strong>{{err}}</strong>
+                </div>
+                <div class="alert alert-success" *ngIf="showMessage">
+                    <strong>{{err}}</strong>
+                </div>
+                <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label class="label d-block fw-medium">
+                            Nom
+                        </label>
+                        <mat-form-field>
+                            <i-feather name="user"></i-feather>
+                            <mat-label>Votre nom</mat-label>
+                            <input matInput type="text" id="name" formControlName="name" [(ngModel)]="users.lastname">
+                        </mat-form-field>
+                        <div class="error text-danger" *ngIf="authForm.get('name')!.hasError('required') && authForm.get('name')!.touched">
+                            Nom Obligatoire.
+                        </div>
+                        <div class="error text-danger" *ngIf="authForm.get('name')!.hasError('name') && authForm.get('name')!.touched">
+                            Veuillez saisir un nom valide.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label d-block fw-medium">
+                            Prénom
+                        </label>
+                        <mat-form-field>
+                            <i-feather name="user"></i-feather>
+                            <mat-label>Votre prénom</mat-label>
+                            <input matInput type="text" id="prenom" formControlName="prenom" [(ngModel)]="users.firstname">
+                        </mat-form-field>
+                        <div class="error text-danger" *ngIf="authForm.get('prenom')!.hasError('required') && authForm.get('prenom')!.touched">
+                            Prénom Obligatoire.
+                        </div>
+                        <div class="error text-danger" *ngIf="authForm.get('prenom')!.hasError('prenom') && authForm.get('prenom')!.touched">
+                            Veuillez saisir un nom valide.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label d-block fw-medium">
+                            Email
+                        </label>
+                        <mat-form-field>
+                            <i-feather name="mail"></i-feather>
+                            <mat-label>Entrer votre email</mat-label>
+                            <input matInput type="email" id="email" formControlName="email" [(ngModel)]="users.email">
+                        </mat-form-field>
+                        <div class="error text-danger" *ngIf="authForm.get('email')!.hasError('required') && authForm.get('email')!.touched">
+                            Email Obligatoire.
+                        </div>
+                        <div class="error text-danger" *ngIf="authForm.get('email')!.hasError('email') && authForm.get('email')!.touched">
+                            Veuillez saisir un email valide.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label d-block fw-medium">
+                            Mot de passe
+                        </label>
+                        <mat-form-field>
+                            <i-feather name="lock"></i-feather>
+                            <mat-label>Mot de passe</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" id="password" formControlName="password" [(ngModel)]="users.password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <span class="material-symbols-outlined">
+                                    {{hide ? 'visibility_off' : 'visibility'}}
+                                </span>
+                            </button>
+                        </mat-form-field>
+                        <div class="error text-danger" *ngIf="authForm.get('password')!.hasError('required') && authForm.get('password')!.touched">
+                            Mot de passe Obligatoire.
+                        </div>
+                        <div class="error text-danger" *ngIf="authForm.get('password')!.hasError('minlength') && authForm.get('password')!.touched">
+                            Le mot de passe doit comporter au moins 8 caractères.
+                        </div>
+                    </div>
+                    <div class="info">
+                        <mat-checkbox color="primary">
+                            J'accepte les <a href="javascript:void(0);" class="text-primary">conditions d'utilisation</a>
+                        </mat-checkbox>
+                    </div>
+                    <button mat-button type="submit" [disabled]="authForm.invalid">
+                        S'inscrire
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
