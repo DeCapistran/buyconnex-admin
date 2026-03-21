@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
-import { ColorPickerDirective } from 'ngx-color-picker';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @Component({
     selector: 'app-color-picker',
     standalone: true,
-    imports: [RouterLink, MatCardModule, ColorPickerDirective],
+    imports: [RouterLink, MatCardModule, ColorPickerModule],
     templateUrl: './color-picker.component.html',
     styleUrl: './color-picker.component.scss'
 })
