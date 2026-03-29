@@ -5,592 +5,125 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { NgIf } from '@angular/common';
+import { MatSort } from '@angular/material/sort';
+import { NgIf, CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogContentExampleDialog } from '../../../ui-elements/dialog/dialog-scrollable-content/dialog-scrollable-content.component';
+import { Promotions } from '../../../models/achats/promotions-model';
+import { Actions } from '../../../models/utils/actions-model';
+import { PromotionsService } from '../../../services/promotions.service';
+import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
 
 @Component({
     selector: 'app-e-promotion-list',
     standalone: true,
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf],
+    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf, CommonModule],
     templateUrl: './e-promotion-list.component.html',
     styleUrl: './e-promotion-list.component.scss'
 })
 export class EPromotionListComponent {
 
-    displayedColumns: string[] = ['trackingID', 'product', 'customer', 'paymentStatus', 'price', 'quantity', 'vendor', 'status', 'action'];
-    dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
-    constructor(
-        public dialog: MatDialog
-    ) {}
+    displayedColumns: string[] = ['id', 'dateCreation', 'libelle', 'pourcentage', 'dateDebut', 'dateFin', 'actions'];
+    dataSource = new MatTableDataSource<ColonnePromotion>();
+    ELEMENT_DATA: ColonnePromotion[] = [];
+    promotion: Promotions | undefined = new Promotions();
+    actions: Actions | undefined = new Actions();
+    err!: any;
+    showMessage = false;
+    showMessage2 = false;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+
+    constructor(private promotionsService: PromotionsService, public dialog: MatDialog) {}
 
     ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
+        if (this.sort) {
+            this.dataSource.sort = this.sort;
+            this.dataSource.sort.sort({ id: 'libelle', start: 'asc', disableClear: false });
+        }
+        if (this.paginator) {
+            this.dataSource.paginator = this.paginator;
+        }
     }
 
-    openDialog() {
-        const dialogRef = this.dialog.open(DialogContentExampleDialog);
+    ngOnInit(): void {
+        this.actions = {
+            delete: '',
+            edit: '',
+            view: ''
+        };
+        this.actions.delete = 'ri-delete-bin-line';
+        this.actions.edit = 'ri-edit-line';
+        this.actions.view = 'ri-eye-line';
+        this.getPromotions();
+    }
+
+    getPromotions(): void {
+        this.promotionsService.getPromotions().subscribe(
+            (res: Promotions[]) => {
+                if (Array.isArray(res)) {
+                    this.ELEMENT_DATA = res.map((item: Promotions) => ({
+                        id: item.id,
+                        dateCreation: item.dateCreation,
+                        libelle: item.libelle,
+                        pourcentage: item.pourcentage,
+                        dateDebut: item.dateDebut,
+                        dateFin: item.dateFin,
+                        actions: this.actions
+                    }));
+                    this.dataSource.data = this.ELEMENT_DATA;
+                } else {
+                    console.error('Expected array but received non-array data.');
+                }
+            },
+            (err: any) => {
+                console.error('Error fetching promotions', err);
+            }
+        );
+    }
+
+    openDeleteDialog(element: ColonnePromotion): void {
+        const dialogRef = this.dialog.open(DialogAnimationsExampleDialog, {
+            width: '500px',
+            data: { name: element.libelle },
+        });
+
         dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.deleteItem(element);
+            }
         });
     }
 
-}
-
-
-export interface PeriodicElement {
-    trackingID: string;
-    product: any;
-    customer: string;
-    paymentStatus: any;
-    price: string;
-    quantity: string;
-    vendor: string;
-    status: any;
-    action: any;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-    {
-        trackingID: 'A3651',
-        product: {
-            img: 'assets/images/products/product15.jpg',
-            title: 'Comforta Armchair',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'William White',
-        paymentStatus: {
-            unpaid: 'Unpaid',
-            // paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$14,000',
-        quantity: '04 items',
-        vendor: 'Jekob Fashion',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3652',
-        product: {
-            img: 'assets/images/products/product16.jpg',
-            title: 'Comforta Sofa EDM',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Isabella Anderson',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$3,000',
-        quantity: '01 items',
-        vendor: 'Novartix LTD',
-        status: {
-            // pending: 'Pending',
-            delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3653',
-        product: {
-            img: 'assets/images/products/product17.jpg',
-            title: 'Electric Bicycle',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Mason Martinez',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$450',
-        quantity: '08 items',
-        vendor: 'Forv Motor',
-        status: {
-            // pending: 'Pending',
-            delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3654',
-        product: {
-            img: 'assets/images/products/product18.jpg',
-            title: 'Sport Shoes',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Sophia Jones',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            // paid : 'Paid',
-            awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$28,000',
-        quantity: '06 items',
-        vendor: 'Northrop LTD',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3655',
-        product: {
-            img: 'assets/images/products/product19.jpg',
-            title: 'Straw Hat',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Thomas Moser',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$17,000',
-        quantity: '12 items',
-        vendor: 'Goldman',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3656',
-        product: {
-            img: 'assets/images/products/product20.jpg',
-            title: 'Sofa Sculpt',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'William White',
-        paymentStatus: {
-            unpaid: 'Unpaid',
-            // paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$14,000',
-        quantity: '03 items',
-        vendor: 'Jekob Fashion',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3657',
-        product: {
-            img: 'assets/images/products/product21.jpg',
-            title: 'Urban Carry',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Isabella Anderson',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            // paid : 'Paid',
-            // awaiting : 'Awaiting',
-            failed : 'Failed',
-        },
-        price: '$3,000',
-        quantity: '07 items',
-        vendor: 'Novartix LTD',
-        status: {
-            // pending: 'Pending',
-            // delivered : 'Delivered',
-            canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3658',
-        product: {
-            img: 'assets/images/products/product22.jpg',
-            title: 'Elegance Steps',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Mason Martinez',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$450',
-        quantity: '06 items',
-        vendor: 'Forv Motor',
-        status: {
-            // pending: 'Pending',
-            delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3659',
-        product: {
-            img: 'assets/images/products/product23.jpg',
-            title: 'Urban Chic Pants',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Sophia Jones',
-        paymentStatus: {
-            unpaid: 'Unpaid',
-            // paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$28,000',
-        quantity: '04 items',
-        vendor: 'Northrop LTD',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3660',
-        product: {
-            img: 'assets/images/products/product24.jpg',
-            title: 'Moda Motion',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Thomas Moser',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$17,000',
-        quantity: '01 items',
-        vendor: 'Goldman',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3660',
-        product: {
-            img: 'assets/images/products/product24.jpg',
-            title: 'Moda Motion',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Thomas Moser',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$17,000',
-        quantity: '01 items',
-        vendor: 'Goldman',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3659',
-        product: {
-            img: 'assets/images/products/product23.jpg',
-            title: 'Urban Chic Pants',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Sophia Jones',
-        paymentStatus: {
-            unpaid: 'Unpaid',
-            // paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$28,000',
-        quantity: '04 items',
-        vendor: 'Northrop LTD',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3658',
-        product: {
-            img: 'assets/images/products/product22.jpg',
-            title: 'Elegance Steps',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Mason Martinez',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$450',
-        quantity: '06 items',
-        vendor: 'Forv Motor',
-        status: {
-            // pending: 'Pending',
-            delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3657',
-        product: {
-            img: 'assets/images/products/product21.jpg',
-            title: 'Urban Carry',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Isabella Anderson',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            // paid : 'Paid',
-            // awaiting : 'Awaiting',
-            failed : 'Failed',
-        },
-        price: '$3,000',
-        quantity: '07 items',
-        vendor: 'Novartix LTD',
-        status: {
-            // pending: 'Pending',
-            // delivered : 'Delivered',
-            canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3656',
-        product: {
-            img: 'assets/images/products/product20.jpg',
-            title: 'Sofa Sculpt',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'William White',
-        paymentStatus: {
-            unpaid: 'Unpaid',
-            // paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$14,000',
-        quantity: '03 items',
-        vendor: 'Jekob Fashion',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3655',
-        product: {
-            img: 'assets/images/products/product19.jpg',
-            title: 'Straw Hat',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Thomas Moser',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$17,000',
-        quantity: '12 items',
-        vendor: 'Goldman',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3654',
-        product: {
-            img: 'assets/images/products/product18.jpg',
-            title: 'Sport Shoes',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Sophia Jones',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            // paid : 'Paid',
-            awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$28,000',
-        quantity: '06 items',
-        vendor: 'Northrop LTD',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3653',
-        product: {
-            img: 'assets/images/products/product17.jpg',
-            title: 'Electric Bicycle',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Mason Martinez',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$450',
-        quantity: '08 items',
-        vendor: 'Forv Motor',
-        status: {
-            // pending: 'Pending',
-            delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3652',
-        product: {
-            img: 'assets/images/products/product16.jpg',
-            title: 'Comforta Sofa EDM',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'Isabella Anderson',
-        paymentStatus: {
-            // unpaid: 'Unpaid',
-            paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$3,000',
-        quantity: '01 items',
-        vendor: 'Novartix LTD',
-        status: {
-            // pending: 'Pending',
-            delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
-    },
-    {
-        trackingID: 'A3651',
-        product: {
-            img: 'assets/images/products/product15.jpg',
-            title: 'Comforta Armchair',
-            date: 'Dec 16, 08:30 PM'
-        },
-        customer: 'William White',
-        paymentStatus: {
-            unpaid: 'Unpaid',
-            // paid : 'Paid',
-            // awaiting : 'Awaiting',
-            // failed : 'Failed',
-        },
-        price: '$14,000',
-        quantity: '04 items',
-        vendor: 'Jekob Fashion',
-        status: {
-            pending: 'Pending',
-            // delivered : 'Delivered',
-            // canceled : 'Canceled',
-        },
-        action: {
-            view: 'ri-eye-line',
-            delete : 'ri-delete-bin-line'
-        }
+    deleteItem(element: ColonnePromotion): void {
+        this.promotionsService.deletePromotion(element.id).subscribe(
+            () => {
+                this.showMessage = true;
+                this.err = "Promotion supprimée avec succès !";
+                setTimeout(() => {
+                    this.err = null;
+                    this.showMessage = false;
+                }, 1500);
+                this.ELEMENT_DATA = this.ELEMENT_DATA.filter(item => item.id !== element.id);
+                this.dataSource.data = this.ELEMENT_DATA;
+            },
+            () => {
+                this.showMessage2 = true;
+                this.err = "Echec lors de la suppression de la promotion";
+                setTimeout(() => {
+                    this.err = null;
+                    this.showMessage2 = false;
+                }, 1500);
+            }
+        );
     }
-];
+}
+
+export interface ColonnePromotion {
+    id: any;
+    dateCreation: any;
+    libelle: any;
+    pourcentage: any;
+    dateDebut: any;
+    dateFin: any;
+}
