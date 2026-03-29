@@ -178,6 +178,7 @@ export const routes: Routes = [
             {path: 'marque-details', component: EMarqueDetailsComponent},
             {path: 'tag-details', component: ETagDetailsComponent},
             {path: 'create-promotion', component: ECreatePromotionComponent},
+            {path: 'create-promotion/:id', component: ECreatePromotionComponent},
             {path: 'create-categorie', component: ECreateCategorieComponent},
             {path: 'promotion-list', component: EPromotionListComponent},
         ]
