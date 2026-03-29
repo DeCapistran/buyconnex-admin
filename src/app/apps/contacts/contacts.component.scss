@@ -91,7 +91,7 @@
                     .action {
                         .mat-mdc-button {
                             font-size: 18px;
-                            color: #818093;
+                            color: var(--darkColor);
                             margin-right: 12px;
 
                             &:last-child {

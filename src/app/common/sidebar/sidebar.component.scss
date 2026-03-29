@@ -132,7 +132,7 @@
                                 transform: translateY(-50%);
                                 position: absolute;
                                 margin-top: -.5px;
-                                color: #818093;
+                                color: var(--darkColor);
                                 line-height: 1;
                                 height: 16px;
                                 width: 16px;
@@ -177,7 +177,7 @@
                                 }
                                 &::before {
                                     font-size: 17px;
-                                    color: #818093;
+                                    color: var(--darkColor);
                                     content: "\ea6e";
                                     position: relative;
                                     display: inline-block;
@@ -261,7 +261,7 @@
                                     border-radius: 50%;
                                     position: absolute;
                                     transform: translateY(-50%);
-                                    background-color: #818093;
+                                    background-color: var(--darkColor);
                                 }
                                 .mat-content {
                                     .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
@@ -273,7 +273,7 @@
                                     right: 11px;
 
                                     &::before {
-                                        color: #818093 !important;
+                                        color: var(--darkColor) !important;
                                     }
                                 }
                                 &.mat-expanded, &:hover {
@@ -331,7 +331,7 @@
                                             border-radius: 50%;
                                             position: absolute;
                                             transform: translateY(-50%);
-                                            background-color: #818093;
+                                            background-color: var(--darkColor);
                                         }
                                         &:hover, &.active {
                                             background-color: var(--primaryColor);
@@ -399,7 +399,7 @@
                             transform: translateY(-50%);
                             position: absolute;
                             margin-top: -.5px;
-                            color: #818093;
+                            color: var(--darkColor);
                             line-height: 1;
                             height: 16px;
                             width: 16px;
