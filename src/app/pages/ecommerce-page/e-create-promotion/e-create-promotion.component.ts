@@ -128,7 +128,9 @@ export class ECreatePromotionComponent {
 
         if (libelleControl && pourcentageControl && dateDebutControl && dateFinControl) {
             const formData = new FormData();
-            formData.append('id', this.promotionId || '');
+            if (this.promotionId) {
+                formData.append('id', this.promotionId);
+            }
             formData.append('libelle', libelleControl);
             formData.append('pourcentage', pourcentageControl);
             formData.append('dateDebut', dateDebutControl);
