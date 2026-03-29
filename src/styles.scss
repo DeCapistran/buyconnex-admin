@@ -35,16 +35,16 @@ $trinta-theme: mat.define-light-theme((
 /* You can add global styles to this file, and also import other style files */
 :root {
     --fontFamily: "Poppins", sans-serif;
-    --headingFontFamily: "Inter", sans-serif;
+    --headingFontFamily: "Poppins", sans-serif;
     --primaryColor: #3761ee;
     --dangerColor: #EE368C;
     --infoColor: #2DB6F5;
     --warningColor: #ffb264;
     --successColor: #2ed47e;
     --darkColor: #262626;
-    --blackColor: #5b5b98;
+    --blackColor: #262626;
     --whiteColor: #ffffff;
-    --bodyColor: #a9a9c8;
+    --bodyColor: #262626;
     --transition: .5s;
     --fontSize: 14px;
 }

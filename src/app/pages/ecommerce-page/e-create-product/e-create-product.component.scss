@@ -35,7 +35,7 @@
         /* Annuler = secondaire (soft) */
         .btn-cancel.mat-mdc-button {
           background: transparent;
-          color: #4b5563;              /* gris doux */
+          color: var(--darkColor);              /* gris doux */
           border: 1px solid #d1d5db;   /* contour soft */
           font-weight: 500;
         }
@@ -157,7 +157,7 @@
     margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
-    color: #333;
+    color: var(--darkColor);
   }
 
   

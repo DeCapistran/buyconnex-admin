@@ -49,7 +49,7 @@
                         }
                         &.card-header-dot-btn {
                             margin-right: -5px;
-                            color: #b2b2b2;
+                            color: var(--darkColor);
                             font-size: 20px;
                         }
                         &.default-btn {
@@ -131,7 +131,7 @@
                     border: 0;
     
                     * {
-                        color: #77838f;
+                        color: var(--darkColor);
                         font: {
                             size: 13px !important;
                             family: var(--fontFamily) !important;
@@ -381,7 +381,7 @@
                 .mdc-text-field {
                     &:not(.mdc-text-field--disabled) {
                         .mdc-floating-label {
-                            color: #a9a9c8;
+                            color: var(--darkColor);
                         }
                     }
                 }
@@ -1352,7 +1352,7 @@ blockquote {
 }
 .blockquote-footer {
     font-size: .875em;
-    color: #6c757d;
+    color: var(--darkColor);
     margin: {
         top: -.5rem;
     };
