@@ -41,7 +41,7 @@
                         <td mat-cell *matCellDef="let element">
                             <div class="product-info d-flex align-items-center">
                                 <div class="info">
-                                    <div class="d-block fw-semibold">
+                                    <div class="d-block">
                                         {{element.libelle}}
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                         <td mat-cell *matCellDef="let element">
                             <div class="product-info d-flex align-items-center">
                                 <div class="info">
-                                    <div class="d-block fw-semibold" [innerHTML]="element.description">
+                                    <div class="d-block" [innerHTML]="element.description">
                                         
                                     </div>
                                 </div>
