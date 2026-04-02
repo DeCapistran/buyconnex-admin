@@ -12,6 +12,7 @@ import { Promotions } from '../../../models/achats/promotions-model';
 import { Actions } from '../../../models/utils/actions-model';
 import { PromotionsService } from '../../../services/promotions.service';
 import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
+import { EPromotionDetailDialogComponent } from './e-promotion-detail-dialog.component';
 
 @Component({
     selector: 'app-e-promotion-list',
@@ -93,6 +94,29 @@ export class EPromotionListComponent {
                 this.deleteItem(element);
             }
         });
+    }
+
+    openDetailDialog(element: ColonnePromotion): void {
+        const dialogConfig = {
+            width: '620px',
+            panelClass: 'promotion-detail-panel',
+            data: {
+                libelle: element.libelle,
+                pourcentage: element.pourcentage,
+                dateDebut: element.dateDebut,
+                dateFin: element.dateFin,
+                details: [] as any[]
+            }
+        };
+        this.promotionsService.getArticlesByPromotionId(element.id).subscribe(
+            (details) => {
+                dialogConfig.data.details = details;
+                this.dialog.open(EPromotionDetailDialogComponent, dialogConfig);
+            },
+            () => {
+                this.dialog.open(EPromotionDetailDialogComponent, dialogConfig);
+            }
+        );
     }
 
     deleteItem(element: ColonnePromotion): void {
