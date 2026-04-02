@@ -1,0 +1,93 @@
+<!-- OVERLAY LOADING SPINNER -->
+<div *ngIf="isLoading" class="overlay">
+    <div class="spinner-container">
+        <mat-spinner diameter="200"></mat-spinner>
+        <div class="loading-text">En cours d'enregistrement</div>
+    </div>
+</div>
+
+<mat-card
+    class="trinta-card add-product-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                {{ titre }}
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form *ngIf="imageForm" [formGroup]="imageForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Article
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Sélectionner un article</mat-label>
+                        <input type="text" matInput formControlName="article" [matAutocomplete]="autoArticle">
+                        <mat-autocomplete #autoArticle="matAutocomplete" [displayWith]="displayArticle">
+                            <mat-option *ngFor="let article of filteredArticles | async" [value]="article">
+                                {{ article.title }}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div *ngIf="imageForm.get('article')?.touched && imageForm.get('article')?.invalid" class="error-message">
+                            <small *ngIf="imageForm.get('article')?.errors?.['required']">Article Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Couleur
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="droplet"></i-feather>
+                        <mat-label>Sélectionner une couleur</mat-label>
+                        <input type="text" matInput formControlName="couleur" [matAutocomplete]="autoCouleur">
+                        <mat-autocomplete #autoCouleur="matAutocomplete" [displayWith]="displayCouleur">
+                            <mat-option *ngFor="let couleur of filteredCouleurs | async" [value]="couleur">
+                                <span
+                                    class="color-swatch"
+                                    [style.background-color]="couleur.codeCouleur"
+                                ></span>
+                                {{ couleur.couleur }}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <div *ngIf="imageForm.get('couleur')?.touched && imageForm.get('couleur')?.invalid" class="error-message">
+                            <small *ngIf="imageForm.get('couleur')?.errors?.['required']">Couleur Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Image Article
+                    </label>
+                    <div *ngIf="imagePath" class="mb-3">
+                        <img [src]="imagePath" alt="Aperçu de l'image" style="max-width: 120px; border-radius: 6px;">
+                    </div>
+                    <input
+                        id="img"
+                        type="file"
+                        formControlName="img"
+                        (change)="onImageUpload($event)"
+                        class="form-control"
+                        accept="image/*"
+                    >
+                    <div *ngIf="imageForm.get('img')?.touched && imageForm.get('img')?.invalid" class="error-message">
+                        <small *ngIf="imageForm.get('img')?.errors?.['required']">Image Obligatoire.</small>
+                    </div>
+                </div>
+            </div>
+            <div class="create-product-btn">
+                <button mat-button type="button" class="btn-cancel" (click)="annuler()">
+                    Annuler
+                </button>
+                <button mat-button type="submit" class="btn-submit">
+                    {{ bouton }}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

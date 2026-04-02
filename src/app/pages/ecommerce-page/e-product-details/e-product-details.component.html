@@ -1,0 +1,163 @@
+<!-- Product Details Card -->
+<mat-card class="trinta-card product-details-card mb-25 bg-white border-none d-block">
+    <mat-card-content>
+        <div class="row align-items-center">
+            <div class="col-xxxl-5 col-lg-6 col-md-12">
+                <div class="product-details-image">
+                    <div class="product-gallery__featured">
+                        <owl-carousel-o [options]="{items: 1, dots: false, animateIn: 'fadeIn', animateOut: 'fadeOut'}"
+                            #owlCar>
+                            <ng-container *ngFor="let image of productImages">
+                                <ng-template carouselSlide [id]="image.url">
+                                    <img [src]="image.url" [alt]="article.title || image.url" class="border-radius">
+                                </ng-template>
+                            </ng-container>
+                        </owl-carousel-o>
+                    </div>
+                    <div class="product-gallery__carousel">
+                        <owl-carousel-o [options]="{dots: false, margin: 10, autoWidth: true}">
+                            <ng-container *ngFor="let image of productImages; let i = index">
+                                <ng-template carouselSlide [id]="image.url+i" [width]="100">
+                                    <a (click)="owlCar.to(image.url); changeimage(image.url+i)" class="border-radius">
+                                        <img [src]="image.url" [alt]="article.title || image.url" class="border-radius">
+                                    </a>
+                                </ng-template>
+                            </ng-container>
+                        </owl-carousel-o>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxxl-7 col-lg-6 col-md-12">
+                <div class="product-details-content">
+                    <div class="title d-flex align-items-center justify-content-between">
+                        <h3 class="mb-0">
+                            {{ article.title }}
+                        </h3>
+                        <div class="action d-flex align-items-center">
+                            <a [routerLink]="['/ecommerce-page/create-product', article.id]" class="d-inline-block">
+                                <i-feather name="edit-3"></i-feather>
+                            </a>
+                            <a class="d-inline-block" (click)="openDeleteDialog()">
+                                <i-feather name="trash-2"></i-feather>
+                            </a>
+                        </div>
+                    </div>
+                    <span class="category text-body d-block">
+                        {{ article.categories.libelle }}
+                    </span>
+                    <div class="ratings lh-1 d-flex align-items-center">
+                        <div class="all-ratings d-flex align-items-center justify-content-center">
+                            @for (content of overallStars; track content) {
+                            <i class="{{content.star}}"></i>
+                            }
+                        </div>
+                        <span class="d-block fs-14 text-primary">
+                            {{ totalReviews || 0 }} Commentaires
+                        </span>
+                    </div>
+                    <span class="sub-title d-block fs-14 fw-medium">
+                        Description :
+                    </span>
+                    <p class="fs-15 text-black" [innerHTML]="article.description"></p>
+                    <ul class="list p-0 list-unstyled">
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                Couleur :
+                            </span>
+                            <div class="colors">
+                                <img src="assets/images/colors.png" alt="colors">
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                Quantité :
+                            </span>
+                            <span class="trinta-badge fw-medium" [ngClass]="getArticleStock(article.quantite).class">
+
+                                {{ getArticleStock(article.quantite).label }}
+
+                                <span class="fw-semibold fs-15">
+                                    ({{ article.quantite || 0 }})
+                                </span>
+
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                Catégorie :
+                            </span>
+                            <span class="text-black">
+                                {{ article.categories.libelle }}
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                SKU :
+                            </span>
+                            <span class="d-block text-black">
+                                {{ article.sku }}
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                Vendeur :
+                            </span>
+                            <span class="d-block text-black">
+                                {{ article.boutiques.nom }}
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                Marque :
+                            </span>
+                            <span class="d-block text-black">
+                                {{ article.marques.libelle }}
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center fs-14">
+                            <span class="d-block fw-medium">
+                                Tag :
+                            </span>
+                            <span class="d-block text-black">
+                                {{ article.tags.nom }}
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="d-md-flex align-items-center">
+                        <div class="box d-flex align-items-center">
+                            <div
+                                class="icon d-flex align-items-center justify-content-center rounded-circle text-white">
+                                <i-feather name="dollar-sign"></i-feather>
+                            </div>
+                            <div>
+                                <span class="d-block text-gray">
+                                    Prix
+                                </span>
+                                <h4 class="mb-0 fw-medium">
+                                    {{ article.prix }}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="box d-flex align-items-center">
+                            <div
+                                class="icon d-flex align-items-center justify-content-center rounded-circle text-white">
+                                <i-feather name="check-circle"></i-feather>
+                            </div>
+                            <div>
+                                <span class="d-block text-gray">
+                                    Quantité
+                                </span>
+                                <h4 class="mb-0 fw-medium">
+                                    {{ article.quantite }}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- Reviews -->
+<app-reviews />

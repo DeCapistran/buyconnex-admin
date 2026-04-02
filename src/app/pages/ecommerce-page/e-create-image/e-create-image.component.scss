@@ -1,0 +1,161 @@
+.trinta-card {
+    &.add-product-card {
+        max-width: 850px;
+        margin: {
+            left: auto;
+            right: auto;
+        };
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-text {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--darkColor);
+}
+
+.color-swatch {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+::ng-deep {
+    .trinta-card {
+        &.add-product-card {
+            .create-product-btn {
+                text-align: end;
+                margin-top: 25px;
+
+                .mat-mdc-button {
+                    height: auto;
+                    min-width: auto;
+                    border-radius: 6px;
+                    padding: 18px 25px;
+                    letter-spacing: 0.16px;
+                    color: var(--whiteColor);
+                    background-color: var(--primaryColor);
+                    font: {
+                        size: 16px;
+                        weight: 600;
+                        family: var(--headingFontFamily);
+                    };
+
+                    &.btn-cancel {
+                        background-color: var(--dangerColor, #ee368c);
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 100%;
+        }
+    }
+    ::ng-deep {
+        .trinta-card {
+            &.add-product-card {
+                .create-product-btn {
+                    .mat-mdc-button {
+                        padding: 15px 25px;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 100%;
+        }
+    }
+    ::ng-deep {
+        .trinta-card {
+            &.add-product-card {
+                .create-product-btn {
+                    .mat-mdc-button {
+                        padding: 15px 25px;
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 100%;
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 100%;
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 1064px;
+        }
+    }
+
+}

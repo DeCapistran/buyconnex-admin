@@ -1,0 +1,31 @@
+button {
+    margin-right: 0px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+.title-dialog {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    font-size: 24px;
+    padding-top: 20px; 
+}
+
+.dialog-actions-center {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.name-highlight {
+    color: blue;
+    font-weight: bold;
+}
+
+

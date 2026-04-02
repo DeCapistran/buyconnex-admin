@@ -1,0 +1,112 @@
+<mat-card
+    class="trinta-card add-product-card mb-25 bg-white border-none d-block"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                {{titre}}
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="alert alert-danger" *ngIf="showMessage2">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="alert alert-success" *ngIf="showMessage">
+            <strong>{{err}}</strong>
+        </div>
+        <form [formGroup]="promotionForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Libellé Promotion
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="edit-3"></i-feather>
+                        <mat-label>Entrer le libellé de la promotion</mat-label>
+                        <input id="libelle" type="text" formControlName="libelle" matInput>
+                        <div *ngIf="promotionForm.get('libelle')?.touched && promotionForm.get('libelle')?.invalid" class="error-message">
+                            <small *ngIf="promotionForm.get('libelle')?.errors?.['required']">Libellé Obligatoire.</small>
+                            <small *ngIf="promotionForm.get('libelle')?.errors?.['pattern']">Libellé Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Pourcentage de remise
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="database"></i-feather>
+                        <mat-label>Pourcentage de remise</mat-label>
+                        <input id="pourcentage" type="text" formControlName="pourcentage" matInput>
+                        <div *ngIf="promotionForm.get('pourcentage')?.touched && promotionForm.get('pourcentage')?.invalid" class="error-message">
+                            <small *ngIf="promotionForm.get('pourcentage')?.errors?.['required']">Pourcentage Obligatoire.</small>
+                            <small *ngIf="promotionForm.get('pourcentage')?.errors?.['pattern']">Pourcentage Invalide.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Date de début
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Date de début</mat-label>
+                        <input id="dateDebut" type="text" formControlName="dateDebut" matInput [matDatepicker]="dp1">
+                        <mat-datepicker-toggle matIconSuffix [for]="dp1"></mat-datepicker-toggle>
+                        <mat-datepicker #dp1 disabled="false"></mat-datepicker>
+                        <div *ngIf="promotionForm.get('dateDebut')?.touched && promotionForm.get('dateDebut')?.invalid" class="error-message">
+                            <small *ngIf="promotionForm.get('dateDebut')?.errors?.['required']">Date de début Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <label class="label d-block fw-medium mb-10">
+                        Date de fin
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Date de fin</mat-label>
+                        <input id="dateFin" type="text" formControlName="dateFin" matInput [matDatepicker]="dp2">
+                        <mat-datepicker-toggle matIconSuffix [for]="dp2"></mat-datepicker-toggle>
+                        <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+                        <div *ngIf="promotionForm.get('dateFin')?.touched && promotionForm.get('dateFin')?.invalid" class="error-message">
+                            <small *ngIf="promotionForm.get('dateFin')?.errors?.['required']">Date de fin Obligatoire.</small>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Articles associés
+                    </label>
+                    <mat-form-field>
+                        <i-feather name="list"></i-feather>
+                        <mat-label>Sélectionner les articles de la promotion</mat-label>
+                        <mat-select formControlName="articlesIds" multiple>
+                            @for (article of articles; track article.id) {
+                                <mat-option [value]="article.id">{{article.title}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-12">
+                    <label class="label d-block fw-medium mb-10">
+                        Description Promotion
+                    </label>
+                    <div class="NgxEditor__Wrapper">
+                        <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
+                        <ngx-editor [editor]="editor" formControlName="description" [disabled]="false" [placeholder]="'Aperçu de la forme du texte...'"></ngx-editor>
+                    </div>
+                </div>
+            </div>
+            <div class="create-product-btn">
+                <button mat-button type="button" class="btn-cancel" (click)="annuler()">
+                    Annuler
+                </button>
+                <button mat-button type="submit" class="btn-submit">
+                    {{ bouton }}
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

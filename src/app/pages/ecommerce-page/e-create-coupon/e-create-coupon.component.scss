@@ -1,0 +1,133 @@
+.trinta-card {
+    &.add-product-card {
+        max-width: 850px;
+        margin: {
+            left: auto;
+            right: auto;
+        };
+    }
+}
+::ng-deep {
+  .trinta-card {
+    &.add-product-card {
+      .create-product-btn {
+        margin-top: 25px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+
+        /* Base commune aux 2 boutons */
+        .mat-mdc-button {
+          height: auto;
+          min-width: auto;
+          border-radius: 10px;
+          padding: 12px 22px;
+          letter-spacing: 0.16px;
+
+          font: {
+            size: 16px;
+            weight: 600;
+            family: var(--headingFontFamily);
+          }
+        }
+
+        /* Annuler = secondaire (soft) */
+        .btn-cancel.mat-mdc-button {
+          background: transparent;
+          color: var(--darkColor);              /* gris doux */
+          border: 1px solid #d1d5db;   /* contour soft */
+          font-weight: 500;
+        }
+
+        /* Ajouter = principal */
+        .btn-submit.mat-mdc-button {
+          color: var(--whiteColor);
+          background-color: var(--primaryColor);
+        }
+      }
+    }
+  }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 100%;
+        }
+    }
+    ::ng-deep {
+        .trinta-card {
+            &.add-product-card {
+                .create-product-btn {
+                    .mat-mdc-button {
+                        padding: 15px 25px;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 100%;
+        }
+    }
+    ::ng-deep {
+        .trinta-card {
+            &.add-product-card {
+                .create-product-btn {
+                    .mat-mdc-button {
+                        padding: 15px 25px;
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 100%;
+        }
+    }
+
+}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 100%;
+        }
+    }
+
+}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {
+
+    .trinta-card {
+        &.add-product-card {
+            max-width: 1064px;
+        }
+    }
+
+}

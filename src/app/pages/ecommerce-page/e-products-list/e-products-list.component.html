@@ -1,0 +1,247 @@
+<mat-card class="trinta-card filter-card mb-25 bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="filterForm">
+            <div class="filter-header">
+                <div class="filter-title">
+                    <i class="material-symbols-outlined">tune</i>
+                    <span>Filtres</span>
+                    <span class="filter-count" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
+                </div>
+            </div>
+
+            <div class="filter-body">
+                <!-- Dropdowns + Boutons sur la même ligne -->
+                <div class="filter-dropdowns">
+
+                    <div class="filter-field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>
+                                <i class="material-symbols-outlined">stacks</i>
+                                Catégories
+                            </mat-label>
+                            <mat-select formControlName="categories" multiple>
+                                <mat-option *ngFor="let cat of categoriesList" [value]="cat.id">
+                                    {{ cat.libelle }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="filter-field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>
+                                <i class="material-symbols-outlined">payments</i>
+                                Prix
+                            </mat-label>
+                            <mat-select formControlName="prix">
+                                <mat-option *ngFor="let p of prixList" [value]="p.value">
+                                    {{ p.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="filter-field">
+                        <mat-form-field appearance="outline">
+                            <mat-label>
+                                <i class="material-symbols-outlined">sell</i>
+                                Marques
+                            </mat-label>
+                            <mat-select formControlName="marques" multiple>
+                                <mat-option *ngFor="let m of marquesList" [value]="m.id">
+                                    {{ m.libelle }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Boutons alignés avec les dropdowns -->
+                    <div class="filter-actions">
+                        <button mat-button type="button" class="reset-inline-btn"
+                            *ngIf="activeFilterCount > 0"
+                            (click)="resetFilters()">
+                            <i class="ri-refresh-line"></i>
+                            Réinitialiser
+                        </button>
+                        <button mat-button type="button" class="search-btn" (click)="applyFilters()">
+                            <i class="ri-search-line"></i>
+                            Rechercher
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Chips actifs -->
+                <div class="active-filters" *ngIf="activeFilterCount > 0">
+                    <div class="chips-label">
+                        <i class="material-symbols-outlined">filter_list</i>
+                        Actifs :
+                    </div>
+                    <div class="chips-list">
+                        <ng-container *ngFor="let chip of activeChips">
+                            <span class="filter-chip" [ngClass]="{
+                                'chip-cat':   chip.type === 'categories',
+                                'chip-brand': chip.type === 'marques',
+                                'chip-price': chip.type === 'prix'
+                            }">
+                                <i class="material-symbols-outlined chip-icon">
+                                    {{ chip.type === 'categories' ? 'stacks' : chip.type === 'marques' ? 'category' : 'monetization_on' }}
+                                </i>
+                                {{ chip.label }}
+                                <button type="button" class="chip-remove" (click)="removeFilter(chip.type, chip.value)">
+                                    <i class="ri-close-fill"></i>
+                                </button>
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+<mat-card class="trinta-card products-list-card mb-25 bg-white border-none d-block">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mt-0 mb-0">
+                Articles
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <a routerLink="/ecommerce-page/create-product" class="default-btn" mat-button>
+                <i class="ri-add-line"></i> Ajouter
+            </a>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="alert alert-danger" *ngIf="showMessage2">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="alert alert-success" *ngIf="showMessage">
+            <strong>{{err}}</strong>
+        </div>
+        <div class="products-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- Tracking No Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef class="text-primary pl-0">
+                            No
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index" class="text-primary fw-medium pl-0">
+                            {{(paginator.pageIndex * paginator.pageSize) + i + 1}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="images">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Image
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="image d-block">
+                                <img [src]="element.images.url" alt="article-image"
+                                    style="width: 40px; height: 40px; object-fit: cover;">
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Product Column -->
+                    <ng-container matColumnDef="title">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Article
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="product-info d-flex align-items-center">
+                                <div class="info">
+                                    <div class="d-block">
+                                        {{element.title}}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Marque Column -->
+                    <ng-container matColumnDef="marque">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Marques
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.marque.libelle}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Category Column -->
+                    <ng-container matColumnDef="categorie">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Catégories
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.categorie.libelle}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Price Column -->
+                    <ng-container matColumnDef="prix">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Prix
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.prix}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Ratings Column -->
+                    <ng-container matColumnDef="quantite">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Quantité
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.quantite}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Stock Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="trinta-badge fw-medium d-inline-block" [ngClass]="element.status.class">
+                                {{ element.status.label }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef class="text-end pr-0">
+                            Actions
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-end pr-0">
+                            <div class="action">
+                                <button type="button" [routerLink]="['/ecommerce-page/product-details', element.id]"
+                                    mat-button class="p-0 min-w-auto lh-1 h-auto">
+                                    <i class="{{element.actions.view}}"></i>
+                                </button>
+                                <button type="button" [routerLink]="['/ecommerce-page/create-product', element.id]"
+                                    mat-button class="p-0 min-w-auto lh-1 h-auto">
+                                    <i class="{{element.actions.edit}}"></i>
+                                </button>
+                                <button type="button" mat-button class="p-0 min-w-auto lh-1 h-auto"
+                                    (click)="openDeleteDialog(element)">
+                                    <i class="{{element.actions.delete}}"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 20, 30]"></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>
