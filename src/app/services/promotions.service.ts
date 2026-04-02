@@ -4,6 +4,7 @@ import { AuthService } from "./auth.service";
 import { environment } from "../../environnments/environment";
 import { Observable } from "rxjs";
 import { Promotions } from "../models/achats/promotions-model";
+import { PromotionsDetails } from "../models/achats/promotionsDetails-model";
 
 @Injectable({
     providedIn: 'root'
@@ -54,5 +55,12 @@ export class PromotionsService {
         let httpHeaders = new HttpHeaders({ "Authorization": jwt });
         const url = `${environment.backend_url + '/api/promotions'}/${promotionId}`;
         return this.httpClient.delete(url, { headers: httpHeaders });
+    }
+
+    getArticlesByPromotionId(id: string | number): Observable<PromotionsDetails[]> {
+        let jwt = this.authService.getToken();
+        jwt = "Bearer " + jwt;
+        let httpHeaders = new HttpHeaders({ "Authorization": jwt });
+        return this.httpClient.get<PromotionsDetails[]>(`${environment.backend_url}/api/promotionDetails/promotion/${id}`, { headers: httpHeaders });
     }
 }

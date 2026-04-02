@@ -11,22 +11,39 @@
     .trinta-card {
         &.add-product-card {
             .create-product-btn {
-                text-align: end;
                 margin-top: 25px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 12px;
 
+                /* Base commune aux 2 boutons */
                 .mat-mdc-button {
                     height: auto;
                     min-width: auto;
-                    border-radius: 6px;
-                    padding: 18px 25px;
+                    border-radius: 10px;
+                    padding: 12px 22px;
                     letter-spacing: 0.16px;
-                    color: var(--whiteColor);
-                    background-color: var(--primaryColor);
+
                     font: {
                         size: 16px;
                         weight: 600;
                         family: var(--headingFontFamily);
                     };
+                }
+
+                /* Annuler = secondaire (soft) */
+                .btn-cancel.mat-mdc-button {
+                    background: transparent;
+                    color: var(--darkColor);
+                    border: 1px solid #d1d5db;
+                    font-weight: 500;
+                }
+
+                /* Ajouter / Modifier = principal */
+                .btn-submit.mat-mdc-button {
+                    color: var(--whiteColor);
+                    background-color: var(--primaryColor);
                 }
             }
         }
