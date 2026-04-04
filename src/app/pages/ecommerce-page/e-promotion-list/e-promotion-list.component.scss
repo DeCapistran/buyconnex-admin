@@ -1,6 +1,6 @@
 .trinta-card {
-    &.leads-report-card {
-        .leads-report-table {
+    &.orders-list-card {
+        .orders-list-table {
             .mat-mdc-table {
                 width: 100%;
                 overflow: hidden;
@@ -122,8 +122,8 @@
 @media only screen and (max-width : 767px) {
 
     .trinta-card {
-        &.leads-report-card {
-            .leads-report-table {
+        &.orders-list-card {
+            .orders-list-table {
                 .mat-mdc-table {
                     .mat-mdc-header-row {
                         font-size: 13px;
@@ -162,8 +162,8 @@
 @media only screen and (min-width : 768px) and (max-width : 991px) {
 
     .trinta-card {
-        &.leads-report-card {
-            .leads-report-table {
+        &.orders-list-card {
+            .orders-list-table {
                 .mat-mdc-table {
                     .mat-mdc-cell {
                         .product-info {

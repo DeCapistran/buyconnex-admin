@@ -43,13 +43,13 @@ export interface PromotionDetailData {
             <div *ngIf="data.details && data.details.length > 0; else noArticles" class="articles-list">
                 <div class="article-item" *ngFor="let detail of data.details">
                     <div class="article-left">
-                        <div class="article-name">{{ detail.article.title }}</div>
+                        <div class="article-name">{{ detail.title }}</div>
                         <div class="article-category">
                             <i class="ri-folder-3-line"></i>
-                            {{ detail.article.categories?.libelle || 'Catégorie non définie' }}
+                            {{ detail.categories.libelle || 'Catégorie non définie' }}
                         </div>
                     </div>
-                    <div class="article-price">{{ detail.article.prix | number:'1.2-2' }} €</div>
+                    <div class="article-price">{{ detail.prix | number:'1.2-2' }} €</div>
                 </div>
             </div>
 
