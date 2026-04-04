@@ -383,7 +383,7 @@ export class EPromotionDetailDialogComponent {
     get groupedByCategory(): CategoryGroup[] {
         const map = new Map<string, PromotionsDetails[]>();
         for (const detail of this.data.details) {
-            const key = detail.article.categories?.libelle || 'Non catégorisé';
+            const key = detail.article.categories?.libelle || 'Catégorie non définie';
             if (!map.has(key)) {
                 map.set(key, []);
             }
