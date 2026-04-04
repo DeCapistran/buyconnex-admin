@@ -83,9 +83,9 @@ interface CategoryGroup {
                                 <div class="article-name">{{ detail.title }}</div>
                             </div>
                             <div class="article-price-wrap">
-                                <div class="article-price">{{ detail.prix | number:'1.2-2' }} €</div>
+                                <div class="article-price">{{ detail.prix | number:'1.2-2' }} FCFA</div>
                                 <div class="article-price-promo">
-                                    {{ detail.prix * (1 - data.pourcentage / 100) | number:'1.2-2' }} €
+                                    {{ detail.prix * (1 - data.pourcentage / 100) | number:'1.2-2' }} FCFA
                                 </div>
                             </div>
                         </div>
