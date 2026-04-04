@@ -27,6 +27,7 @@
                         letter-spacing: normal;
                         background: transparent;
                         border-bottom: 2px solid #edeff5;
+                        font-weight: 700;
                     }
                 }
                 .mat-mdc-row, .mdc-data-table__content {
@@ -99,10 +100,27 @@
                         }
                     }
                     .action {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        gap: 4px;
                         .mat-mdc-button {
                             font-size: 18px;
                             color: var(--darkColor);
-                            margin-right: 12px;
+                            min-width: 36px;
+                            width: 36px;
+                            height: 36px;
+                            padding: 0;
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 8px;
+                            transition: background 0.15s, color 0.15s;
+
+                            &:hover {
+                                background: rgba(99, 97, 238, 0.08);
+                                color: var(--primaryColor);
+                            }
 
                             &:last-child {
                                 margin-right: 0;
