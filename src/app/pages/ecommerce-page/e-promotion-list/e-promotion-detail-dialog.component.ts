@@ -63,22 +63,10 @@ interface CategoryGroup {
                 </div>
             </div>
 
-<<<<<<< HEAD
             <div class="section-header">
                 <i class="ri-shopping-bag-line"></i> Articles associés
             </div>
 
-            <div *ngIf="data.details && data.details.length > 0; else noArticles" class="articles-list">
-                <div class="article-item" *ngFor="let detail of data.details">
-                    <div class="article-left">
-                        <div class="article-name">{{ detail.title }}</div>
-                        <div class="article-category">
-                            <i class="ri-folder-3-line"></i>
-                            {{ detail.categories.libelle || 'Catégorie non définie' }}
-                        </div>
-                    </div>
-                    <div class="article-price">{{ detail.prix | number:'1.2-2' }} €</div>
-=======
             <div *ngIf="data.details && data.details.length > 0; else noArticles" class="categories-container">
                 <div class="category-group" *ngFor="let group of groupedByCategory; let gi = index">
                     <div class="category-header">
@@ -105,7 +93,6 @@ interface CategoryGroup {
                             </div>
                         </div>
                     </div>
->>>>>>> 4cf54a813f5b34924db3d2b4f4a5d48b46db6db2
                 </div>
             </div>
 
