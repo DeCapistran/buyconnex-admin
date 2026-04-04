@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Promotions } from '../../../models/achats/promotions-model';
+import { PromotionsDetails } from '../../../models/achats/promotionsDetails-model';
 import { PromotionsService } from '../../../services/promotions.service';
 import { ArticleService } from '../../../services/article.service';
 import { Articles } from '../../../models/articles/articles-model';
@@ -105,6 +106,10 @@ export class ECreatePromotionComponent {
                     dateFin: this.promotion.dateFin,
                     description: this.promotion.description,
                 });
+            });
+            this.promotionsService.getArticlesByPromotionId(this.promotionId).subscribe((details: PromotionsDetails[]) => {
+                const ids = details.map(d => d.article.id);
+                this.promotionForm.patchValue({ articlesIds: ids });
             });
         }
 
