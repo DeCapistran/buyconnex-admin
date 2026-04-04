@@ -76,15 +76,12 @@ interface CategoryGroup {
                                 <i class="ri-box-3-line"></i>
                             </div>
                             <div class="article-left">
-                                <div class="article-name">{{ detail.article.title }}</div>
-                                <div class="article-sku" *ngIf="detail.article.sku">
-                                    <span>SKU : {{ detail.article.sku }}</span>
-                                </div>
+                                <div class="article-name">{{ detail.title }}</div>
                             </div>
                             <div class="article-price-wrap">
-                                <div class="article-price">{{ detail.article.prix | number:'1.2-2' }} €</div>
+                                <div class="article-price">{{ detail.prix | number:'1.2-2' }} €</div>
                                 <div class="article-price-promo">
-                                    {{ detail.article.prix * (1 - data.pourcentage / 100) | number:'1.2-2' }} €
+                                    {{ detail.prix * (1 - data.pourcentage / 100) | number:'1.2-2' }} €
                                 </div>
                             </div>
                         </div>
@@ -383,7 +380,7 @@ export class EPromotionDetailDialogComponent {
     get groupedByCategory(): CategoryGroup[] {
         const map = new Map<string, PromotionsDetails[]>();
         for (const detail of this.data.details) {
-            const key = detail.article.categories?.libelle || 'Catégorie non définie';
+            const key = detail.categories?.libelle || 'Catégorie non définie';
             if (!map.has(key)) {
                 map.set(key, []);
             }
