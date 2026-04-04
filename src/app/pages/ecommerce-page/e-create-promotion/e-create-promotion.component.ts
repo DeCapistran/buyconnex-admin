@@ -107,10 +107,13 @@ export class ECreatePromotionComponent {
                     description: this.promotion.description,
                 });
             });
-            this.promotionsService.getArticlesByPromotionId(this.promotionId).subscribe((details: PromotionsDetails[]) => {
-                const ids = details.map(d => d.article.id);
-                this.promotionForm.patchValue({ articlesIds: ids });
-            });
+            this.promotionsService.getArticlesByPromotionId(this.promotionId).subscribe(
+                (details: PromotionsDetails[]) => {
+                    const ids = details.map(d => d.article.id);
+                    this.promotionForm.patchValue({ articlesIds: ids });
+                },
+                (err: any) => { console.error('Error fetching promotion articles', err); }
+            );
         }
 
         this.editor = new Editor();
