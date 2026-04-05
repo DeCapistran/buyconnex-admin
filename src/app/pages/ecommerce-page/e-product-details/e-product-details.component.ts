@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { Articles } from '../../../models/articles/articles-model';
+import { Images } from '../../../models/articles/images-model';
 import { ArticleService } from '../../../services/article.service';
 import { FeathericonsModule } from '../../../icons/feathericons/feathericons.module';
 import { CarouselModule, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
@@ -36,6 +37,9 @@ export class EProductDetailsComponent {
 
     productImages: { url: string }[] = [];
     selectedImage: string | null = null;
+
+    colorImages: Images[] = [];
+    selectedColorId: number | null = null;
 
     showMessage = false;
     showMessage2 = false;
@@ -98,10 +102,22 @@ export class EProductDetailsComponent {
                     this.selectedImage = null;
                 }
                 this.loadAvisByArticle(id);
+                this.loadColorImages(id);
             },
             error: (error) => {
                 this.err = error;
                 console.error('Erreur lors du chargement du produit :', error);
+            }
+        });
+    }
+
+    loadColorImages(articleId: string): void {
+        this.articleService.getImagesByArticleId(articleId).subscribe({
+            next: (images: Images[]) => {
+                this.colorImages = images || [];
+            },
+            error: () => {
+                this.colorImages = [];
             }
         });
     }
@@ -127,6 +143,28 @@ export class EProductDetailsComponent {
 
     changeimage(image: string): void {
         this.selectedImage = image;
+    }
+
+    selectColor(colorImage: Images): void {
+        this.selectedColorId = colorImage.couleurs?.id ?? null;
+        if (colorImage.url) {
+            const imageUrl = colorImage.url + '?t=' + this.timestamp;
+            this.selectedImage = imageUrl;
+        }
+    }
+
+    selectNoColor(): void {
+        this.selectedColorId = null;
+        if (this.article.images?.url) {
+            this.selectedImage = this.article.images.url + '?t=' + this.timestamp;
+        }
+    }
+
+    scrollToReviews(): void {
+        const el = document.getElementById('reviews-section');
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
     retourListe(): void {
