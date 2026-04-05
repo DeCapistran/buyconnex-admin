@@ -109,7 +109,8 @@ export class ECreatePromotionComponent {
             });
             this.promotionsService.getArticlesByPromotionId(this.promotionId).subscribe(
                 (details: PromotionsDetails[]) => {
-                    const ids = details.map(d => d.article.id);
+                    console.log('Promotion details:', details);
+                    const ids = details.map(d => d.id);
                     this.promotionForm.patchValue({ articlesIds: ids });
                 },
                 (err: any) => { console.error('Error fetching promotion articles', err); }

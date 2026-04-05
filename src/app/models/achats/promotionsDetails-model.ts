@@ -3,6 +3,7 @@ import { Categories } from "../articles/categories-model";
 import { Promotions } from "./promotions-model";
 
 export class PromotionsDetails {
+    id!: number;
     title!: string;
     pourcentage!: number;
     prix!: number;
