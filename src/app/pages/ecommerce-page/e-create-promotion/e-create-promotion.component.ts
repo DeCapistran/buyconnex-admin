@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Promotions } from '../../../models/achats/promotions-model';
+import { PromotionsDetails } from '../../../models/achats/promotionsDetails-model';
 import { PromotionsService } from '../../../services/promotions.service';
 import { ArticleService } from '../../../services/article.service';
 import { Articles } from '../../../models/articles/articles-model';
@@ -22,7 +23,6 @@ import { Articles } from '../../../models/articles/articles-model';
     selector: 'app-e-create-promotion',
     standalone: true,
     imports: [
-        RouterLink,
         MatCardModule,
         MatButtonModule,
         MatMenuModule,
@@ -107,6 +107,14 @@ export class ECreatePromotionComponent {
                     description: this.promotion.description,
                 });
             });
+            this.promotionsService.getArticlesByPromotionId(this.promotionId).subscribe(
+                (details: PromotionsDetails[]) => {
+                    console.log('Promotion details:', details);
+                    const ids = details.map(d => d.id);
+                    this.promotionForm.patchValue({ articlesIds: ids });
+                },
+                (err: any) => { console.error('Error fetching promotion articles', err); }
+            );
         }
 
         this.editor = new Editor();
@@ -131,10 +139,16 @@ export class ECreatePromotionComponent {
             if (this.promotionId) {
                 formData.append('id', this.promotionId);
             }
+            const toYyyyMmDd = (v: any) => {
+            if (!v) return '';
+            if (typeof v === 'string') return v.slice(0, 10);
+            const d = v instanceof Date ? v : new Date(v);
+            return d.toISOString().slice(0, 10);
+            };
             formData.append('libelle', libelleControl);
             formData.append('pourcentage', pourcentageControl);
-            formData.append('dateDebut', dateDebutControl);
-            formData.append('dateFin', dateFinControl);
+            formData.append('dateDebut', toYyyyMmDd(dateDebutControl));
+            formData.append('dateFin', toYyyyMmDd(dateFinControl));
             formData.append('description', descriptionControl);
             articlesIds.forEach(id => formData.append('articlesIds', String(id)));
 

@@ -61,6 +61,6 @@ export class PromotionsService {
         let jwt = this.authService.getToken();
         jwt = "Bearer " + jwt;
         let httpHeaders = new HttpHeaders({ "Authorization": jwt });
-        return this.httpClient.get<PromotionsDetails[]>(`${environment.backend_url}/api/promotionDetails/promotion/${id}`, { headers: httpHeaders });
+        return this.httpClient.get<PromotionsDetails[]>(`${environment.backend_url}/api/articles/promotion/${id}`, { headers: httpHeaders });
     }
 }

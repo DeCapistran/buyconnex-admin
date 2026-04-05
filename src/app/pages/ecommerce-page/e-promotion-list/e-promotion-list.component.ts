@@ -98,7 +98,8 @@ export class EPromotionListComponent {
 
     openDetailDialog(element: ColonnePromotion): void {
         const dialogConfig = {
-            width: '620px',
+            width: '660px',
+            maxWidth: '95vw',
             panelClass: 'promotion-detail-panel',
             data: {
                 libelle: element.libelle,
