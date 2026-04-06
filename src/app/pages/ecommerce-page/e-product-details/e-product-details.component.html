@@ -51,7 +51,7 @@
                             <i class="{{content.star}}"></i>
                             }
                         </div>
-                        <span class="d-block fs-14 text-primary">
+                        <span class="d-block fs-14 text-primary" style="cursor:pointer;" (click)="scrollToReviews()">
                             {{ totalReviews || 0 }} Commentaires
                         </span>
                     </div>
@@ -64,8 +64,25 @@
                             <span class="d-block fw-medium">
                                 Couleur :
                             </span>
-                            <div class="colors">
-                                <img src="assets/images/colors.png" alt="colors">
+                            <div class="colors d-flex align-items-center flex-wrap">
+                                <span
+                                    class="color-swatch color-swatch-none"
+                                    [class.active]="selectedColorId === null"
+                                    title="Aucune couleur"
+                                    (click)="selectNoColor()"
+                                >
+                                    <span class="color-swatch-label">Aucune</span>
+                                </span>
+                                <ng-container *ngFor="let img of colorImages">
+                                    <span
+                                        *ngIf="img.couleurs"
+                                        class="color-swatch"
+                                        [class.active]="selectedColorId === img.couleurs.id"
+                                        [style.background-color]="img.couleurs.codeCouleur"
+                                        [title]="img.couleurs.couleur"
+                                        (click)="selectColor(img)"
+                                    ></span>
+                                </ng-container>
                             </div>
                         </li>
                         <li class="d-flex align-items-center fs-14">
@@ -160,4 +177,6 @@
 </mat-card>
 
 <!-- Reviews -->
-<app-reviews />
+<div id="reviews-section">
+    <app-reviews />
+</div>
