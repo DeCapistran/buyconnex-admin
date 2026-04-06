@@ -92,7 +92,7 @@ export class ArticleService {
         let jwt = this.authService.getToken();
         jwt = "Bearer " + jwt;
         let httpHeaders = new HttpHeaders({ "Authorization": jwt });
-        const url = `${environment.backend_url + '/api/images/article'}/${articleId}`;
+        const url = `${environment.backend_url + '/api/articles/images'}/${articleId}`;
         return this.httpClient.get<any[]>(url, { headers: httpHeaders });
     }
    

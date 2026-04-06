@@ -96,7 +96,6 @@ export class ReviewsComponent {
                     },
                     action: 'ri-more-fill'
                 }));
-                console.log('Mapped Data:', mappedData);
 
                 this.dataSource.data = mappedData;
 
