@@ -81,8 +81,47 @@
                         }
                     }
                     .colors {
-                        img {
-                            margin-bottom: -5px;
+                        gap: 6px;
+
+                        .color-swatch {
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 26px;
+                            height: 26px;
+                            border-radius: 50%;
+                            border: 2px solid transparent;
+                            cursor: pointer;
+                            transition: transform 0.15s, box-shadow 0.15s;
+                            flex-shrink: 0;
+
+                            .color-swatch-label {
+                                font-size: 12px;
+                                font-weight: 600;
+                                color: #666;
+                                line-height: 1;
+                                pointer-events: none;
+                            }
+
+                            &.color-swatch-none {
+                                background: linear-gradient(135deg, #ccc 25%, #fff 25%, #fff 50%, #ccc 50%, #ccc 75%, #fff 75%);
+                                border-color: #aaa;
+                                overflow: hidden;
+
+                                .color-swatch-label {
+                                    display: none;
+                                }
+                            }
+
+                            &:hover {
+                                transform: scale(1.15);
+                                box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+                            }
+
+                            &.active {
+                                border-color: var(--primaryColor);
+                                box-shadow: 0 0 0 2px var(--primaryColor);
+                            }
                         }
                     }
                     .availability {

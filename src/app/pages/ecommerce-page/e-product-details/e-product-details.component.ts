@@ -3,9 +3,11 @@ import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { Articles } from '../../../models/articles/articles-model';
+import { Images } from '../../../models/articles/images-model';
+import { ColorImage } from '../../../models/articles/color-image-model';
 import { ArticleService } from '../../../services/article.service';
 import { FeathericonsModule } from '../../../icons/feathericons/feathericons.module';
-import { CarouselModule, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
+import { CarouselModule, CarouselComponent, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { AvisService } from '../../../services/avis.service';
 import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
@@ -28,6 +30,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class EProductDetailsComponent {
 
+    @ViewChild('owlCar') owlCar!: CarouselComponent;
+
     articleId: string | null = null;
     article: Articles = new Articles();
 
@@ -36,6 +40,9 @@ export class EProductDetailsComponent {
 
     productImages: { url: string }[] = [];
     selectedImage: string | null = null;
+
+    colorImages: ColorImage[] = [];
+    selectedColorId: number | null = null;
 
     showMessage = false;
     showMessage2 = false;
@@ -98,12 +105,37 @@ export class EProductDetailsComponent {
                     this.selectedImage = null;
                 }
                 this.loadAvisByArticle(id);
+                this.loadColorImages(id);
             },
             error: (error) => {
                 this.err = error;
                 console.error('Erreur lors du chargement du produit :', error);
             }
         });
+    }
+
+    loadColorImages(articleId: string): void {
+        this.articleService.getImagesByArticleId(articleId).subscribe({
+            next: (images: ColorImage[]) => {
+                this.colorImages = images || [];
+                this.productImages = this.buildAllImages();
+            },
+            error: () => {
+                this.colorImages = [];
+            }
+        });
+    }
+
+    private buildAllImages(): { url: string }[] {
+        const mainImage = this.article.images?.url
+            ? [{ url: this.article.images.url + '?t=' + this.timestamp }]
+            : [];
+
+        const colorImageUrls = this.colorImages
+            .filter(ci => ci.imagesVo?.url)
+            .map(ci => ({ url: ci.imagesVo.url + '?t=' + this.timestamp }));
+
+        return [...mainImage, ...colorImageUrls];
     }
 
     loadAvisByArticle(articleId: string): void {
@@ -127,6 +159,39 @@ export class EProductDetailsComponent {
 
     changeimage(image: string): void {
         this.selectedImage = image;
+    }
+
+    selectColor(colorImage: ColorImage): void {
+        this.selectedColorId = colorImage.couleursVo?.id ?? null;
+
+        // Keep all images visible; just navigate to the first image for this color
+        this.productImages = this.buildAllImages();
+
+        const firstColorImage = this.colorImages.find(
+            ci => ci.couleursVo?.id === this.selectedColorId && ci.imagesVo?.url
+        );
+
+        if (firstColorImage?.imagesVo?.url) {
+            const targetUrl = firstColorImage.imagesVo.url + '?t=' + this.timestamp;
+            this.selectedImage = targetUrl;
+            setTimeout(() => this.owlCar?.to(targetUrl), 0);
+        }
+    }
+
+    selectNoColor(): void {
+        this.selectedColorId = null;
+        this.productImages = this.buildAllImages();
+
+        if (this.productImages.length > 0) {
+            this.selectedImage = this.productImages[0].url;
+        }
+    }
+
+    scrollToReviews(): void {
+        const el = document.getElementById('reviews-section');
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
     retourListe(): void {
