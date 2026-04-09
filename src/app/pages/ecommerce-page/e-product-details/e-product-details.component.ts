@@ -115,11 +115,24 @@ export class EProductDetailsComponent {
         this.articleService.getImagesByArticleId(articleId).subscribe({
             next: (images: Images[]) => {
                 this.colorImages = images || [];
+                this.productImages = this.buildAllImages();
             },
             error: () => {
                 this.colorImages = [];
             }
         });
+    }
+
+    private buildAllImages(): { url: string }[] {
+        const mainImage = this.article.images?.url
+            ? [{ url: this.article.images.url + '?t=' + this.timestamp }]
+            : [];
+
+        const colorImageUrls = this.colorImages
+            .filter(img => img.url)
+            .map(img => ({ url: img.url + '?t=' + this.timestamp }));
+
+        return [...mainImage, ...colorImageUrls];
     }
 
     loadAvisByArticle(articleId: string): void {
@@ -147,16 +160,27 @@ export class EProductDetailsComponent {
 
     selectColor(colorImage: Images): void {
         this.selectedColorId = colorImage.couleurs?.id ?? null;
-        if (colorImage.url) {
+
+        const imagesForColor = this.colorImages
+            .filter(img => img.couleurs?.id === this.selectedColorId && img.url)
+            .map(img => ({ url: img.url + '?t=' + this.timestamp }));
+
+        if (imagesForColor.length > 0) {
+            this.productImages = imagesForColor;
+            this.selectedImage = imagesForColor[0].url;
+        } else if (colorImage.url) {
             const imageUrl = colorImage.url + '?t=' + this.timestamp;
+            this.productImages = [{ url: imageUrl }];
             this.selectedImage = imageUrl;
         }
     }
 
     selectNoColor(): void {
         this.selectedColorId = null;
-        if (this.article.images?.url) {
-            this.selectedImage = this.article.images.url + '?t=' + this.timestamp;
+        this.productImages = this.buildAllImages();
+
+        if (this.productImages.length > 0) {
+            this.selectedImage = this.productImages[0].url;
         }
     }
 
