@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { Articles } from '../../../models/articles/articles-model';
 import { Images } from '../../../models/articles/images-model';
+import { ColorImage } from '../../../models/articles/color-image-model';
 import { ArticleService } from '../../../services/article.service';
 import { FeathericonsModule } from '../../../icons/feathericons/feathericons.module';
 import { CarouselModule, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
@@ -38,7 +39,7 @@ export class EProductDetailsComponent {
     productImages: { url: string }[] = [];
     selectedImage: string | null = null;
 
-    colorImages: Images[] = [];
+    colorImages: ColorImage[] = [];
     selectedColorId: number | null = null;
 
     showMessage = false;
@@ -113,7 +114,7 @@ export class EProductDetailsComponent {
 
     loadColorImages(articleId: string): void {
         this.articleService.getImagesByArticleId(articleId).subscribe({
-            next: (images: Images[]) => {
+            next: (images: ColorImage[]) => {
                 this.colorImages = images || [];
                 this.productImages = this.buildAllImages();
             },
@@ -129,8 +130,8 @@ export class EProductDetailsComponent {
             : [];
 
         const colorImageUrls = this.colorImages
-            .filter(img => img.url)
-            .map(img => ({ url: img.url + '?t=' + this.timestamp }));
+            .filter(ci => ci.imagesVo?.url)
+            .map(ci => ({ url: ci.imagesVo.url + '?t=' + this.timestamp }));
 
         return [...mainImage, ...colorImageUrls];
     }
@@ -158,18 +159,18 @@ export class EProductDetailsComponent {
         this.selectedImage = image;
     }
 
-    selectColor(colorImage: Images): void {
-        this.selectedColorId = colorImage.couleurs?.id ?? null;
+    selectColor(colorImage: ColorImage): void {
+        this.selectedColorId = colorImage.couleursVo?.id ?? null;
 
         const imagesForColor = this.colorImages
-            .filter(img => img.couleurs?.id === this.selectedColorId && img.url)
-            .map(img => ({ url: img.url + '?t=' + this.timestamp }));
+            .filter(ci => ci.couleursVo?.id === this.selectedColorId && ci.imagesVo?.url)
+            .map(ci => ({ url: ci.imagesVo.url + '?t=' + this.timestamp }));
 
         if (imagesForColor.length > 0) {
             this.productImages = imagesForColor;
             this.selectedImage = imagesForColor[0].url;
-        } else if (colorImage.url) {
-            const imageUrl = colorImage.url + '?t=' + this.timestamp;
+        } else if (colorImage.imagesVo?.url) {
+            const imageUrl = colorImage.imagesVo.url + '?t=' + this.timestamp;
             this.productImages = [{ url: imageUrl }];
             this.selectedImage = imageUrl;
         }
