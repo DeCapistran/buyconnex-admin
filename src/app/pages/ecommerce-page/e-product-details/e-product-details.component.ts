@@ -115,21 +115,24 @@ export class EProductDetailsComponent {
         this.articleService.getImagesByArticleId(articleId).subscribe({
             next: (images: Images[]) => {
                 this.colorImages = images || [];
-
-                const mainImage = this.article.images?.url
-                    ? [{ url: this.article.images.url + '?t=' + this.timestamp }]
-                    : [];
-
-                const colorImageUrls = this.colorImages
-                    .filter(img => img.url)
-                    .map(img => ({ url: img.url + '?t=' + this.timestamp }));
-
-                this.productImages = [...mainImage, ...colorImageUrls];
+                this.productImages = this.buildAllImages();
             },
             error: () => {
                 this.colorImages = [];
             }
         });
+    }
+
+    private buildAllImages(): { url: string }[] {
+        const mainImage = this.article.images?.url
+            ? [{ url: this.article.images.url + '?t=' + this.timestamp }]
+            : [];
+
+        const colorImageUrls = this.colorImages
+            .filter(img => img.url)
+            .map(img => ({ url: img.url + '?t=' + this.timestamp }));
+
+        return [...mainImage, ...colorImageUrls];
     }
 
     loadAvisByArticle(articleId: string): void {
@@ -174,16 +177,7 @@ export class EProductDetailsComponent {
 
     selectNoColor(): void {
         this.selectedColorId = null;
-
-        const mainImage = this.article.images?.url
-            ? [{ url: this.article.images.url + '?t=' + this.timestamp }]
-            : [];
-
-        const colorImageUrls = this.colorImages
-            .filter(img => img.url)
-            .map(img => ({ url: img.url + '?t=' + this.timestamp }));
-
-        this.productImages = [...mainImage, ...colorImageUrls];
+        this.productImages = this.buildAllImages();
 
         if (this.productImages.length > 0) {
             this.selectedImage = this.productImages[0].url;
