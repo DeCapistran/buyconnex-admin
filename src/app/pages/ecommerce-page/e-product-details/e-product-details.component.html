@@ -75,11 +75,11 @@
                                 </span>
                                 <ng-container *ngFor="let img of colorImages">
                                     <span
-                                        *ngIf="img.couleurs"
+                                        *ngIf="img.couleursVo"
                                         class="color-swatch"
-                                        [class.active]="selectedColorId === img.couleurs.id"
-                                        [style.background-color]="img.couleurs.codeCouleur"
-                                        [title]="img.couleurs.couleur"
+                                        [class.active]="selectedColorId === img.couleursVo.id"
+                                        [style.background-color]="img.couleursVo.codeCouleur"
+                                        [title]="img.couleursVo.couleur"
                                         (click)="selectColor(img)"
                                     ></span>
                                 </ng-container>
