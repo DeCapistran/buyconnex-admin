@@ -87,6 +87,18 @@
                             }
                         }
                     }
+                    .image-cell {
+                        gap: 6px;
+
+                        .color-dot {
+                            display: inline-block;
+                            width: 14px;
+                            height: 14px;
+                            border-radius: 50%;
+                            border: 1px solid rgba(0, 0, 0, 0.2);
+                            flex-shrink: 0;
+                        }
+                    }
                     .action {
                         .mat-mdc-button {
                             font-size: 18px;
