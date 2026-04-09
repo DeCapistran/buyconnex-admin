@@ -7,7 +7,7 @@ import { Images } from '../../../models/articles/images-model';
 import { ColorImage } from '../../../models/articles/color-image-model';
 import { ArticleService } from '../../../services/article.service';
 import { FeathericonsModule } from '../../../icons/feathericons/feathericons.module';
-import { CarouselModule, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
+import { CarouselModule, CarouselComponent, OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { AvisService } from '../../../services/avis.service';
 import { DialogAnimationsExampleDialog } from '../../../ui-elements/dialog/dialog-animations/dialog-animations.component';
@@ -29,6 +29,8 @@ import { MatDialog } from '@angular/material/dialog';
     styleUrl: './e-product-details.component.scss'
 })
 export class EProductDetailsComponent {
+
+    @ViewChild('owlCar') owlCar!: CarouselComponent;
 
     articleId: string | null = null;
     article: Articles = new Articles();
@@ -162,17 +164,17 @@ export class EProductDetailsComponent {
     selectColor(colorImage: ColorImage): void {
         this.selectedColorId = colorImage.couleursVo?.id ?? null;
 
-        const imagesForColor = this.colorImages
-            .filter(ci => ci.couleursVo?.id === this.selectedColorId && ci.imagesVo?.url)
-            .map(ci => ({ url: ci.imagesVo.url + '?t=' + this.timestamp }));
+        // Keep all images visible; just navigate to the first image for this color
+        this.productImages = this.buildAllImages();
 
-        if (imagesForColor.length > 0) {
-            this.productImages = imagesForColor;
-            this.selectedImage = imagesForColor[0].url;
-        } else if (colorImage.imagesVo?.url) {
-            const imageUrl = colorImage.imagesVo.url + '?t=' + this.timestamp;
-            this.productImages = [{ url: imageUrl }];
-            this.selectedImage = imageUrl;
+        const firstColorImage = this.colorImages.find(
+            ci => ci.couleursVo?.id === this.selectedColorId && ci.imagesVo?.url
+        );
+
+        if (firstColorImage?.imagesVo?.url) {
+            const targetUrl = firstColorImage.imagesVo.url + '?t=' + this.timestamp;
+            this.selectedImage = targetUrl;
+            setTimeout(() => this.owlCar?.to(targetUrl), 0);
         }
     }
 

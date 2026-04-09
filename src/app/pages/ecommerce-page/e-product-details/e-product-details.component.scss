@@ -106,9 +106,11 @@
                             &.color-swatch-none {
                                 background: linear-gradient(135deg, #ccc 25%, #fff 25%, #fff 50%, #ccc 50%, #ccc 75%, #fff 75%);
                                 border-color: #aaa;
-                                width: auto;
-                                border-radius: 12px;
-                                padding: 0 8px;
+                                overflow: hidden;
+
+                                .color-swatch-label {
+                                    display: none;
+                                }
                             }
 
                             &:hover {
