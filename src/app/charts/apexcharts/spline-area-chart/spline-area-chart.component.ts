@@ -46,7 +46,7 @@ export class SplineAreaChartComponent {
         this.chartOptions = {
             series: [
                 {
-                    name: "Trinta",
+                    name: "BuyConnex",
                     data: [31, 40, 28, 51, 42, 70, 60]
                 },
                 {

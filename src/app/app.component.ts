@@ -25,7 +25,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
 
-    title = 'Trinta -  Angular 17 Material Design Admin Dashboard Template';
+    title = 'BuyConnex - Angular 17 Material Design Admin Dashboard Template';
     routerSubscription: any;
     location: any;
     isLoggedin: boolean | undefined;

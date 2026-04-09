@@ -14,16 +14,16 @@ describe('AppComponent', () => {
         expect(app).toBeTruthy();
     });
 
-    it(`should have the 'trinta' title`, () => {
+    it(`should have the 'BuyConnex - Angular 17 Material Design Admin Dashboard Template' title`, () => {
         const fixture = TestBed.createComponent(AppComponent);
         const app = fixture.componentInstance;
-        expect(app.title).toEqual('trinta');
+        expect(app.title).toEqual('BuyConnex - Angular 17 Material Design Admin Dashboard Template');
     });
 
-    it('should render title', () => {
+    it('should render header component', () => {
         const fixture = TestBed.createComponent(AppComponent);
         fixture.detectChanges();
         const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('h1')?.textContent).toContain('Hello, trinta');
+        expect(compiled.querySelector('app-header')).not.toBeNull();
     });
 });
