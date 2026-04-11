@@ -4,50 +4,38 @@
     <mat-card-header>
         <mat-card-title>
             <h5 class="mt-0 mb-0">
-                Security :
+                Confidentialité et Sécurité
             </h5>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <h6>
-            Two-Factor Authentication
+            Authentification à deux facteurs (MFA)
         </h6>
         <p>
-            Two-factor authentication is an enhanced security meansur. Once enabled, you'll be required to give two types of identification when you log into Google Authentication and SMS are Supported.
+            L'authentification à deux facteurs renforce la sécurité de votre compte. Une fois activée, vous devrez fournir deux types d'identification lors de la connexion. Google Authenticator et les SMS sont supportés.
         </p>
-        <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of.
-        </p>
+        <div class="d-flex align-items-center mb-20">
+            <mat-slide-toggle [(ngModel)]="mfaActive" color="primary">
+                Activer l'authentification à deux facteurs
+            </mat-slide-toggle>
+        </div>
         <h6>
-            Secondary Verification
+            Notifications
         </h6>
         <p>
-            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.
+            Recevez des notifications par email, chat et lors de vos achats pour rester informé de l'activité de votre compte.
         </p>
-        <h6>
-            Backup Codes
-        </h6>
-        <p>
-            Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of lorem ipsum.
-        </p>
-        <h6>
-            Desktop, Email, Chat, Purchase Notifications
-        </h6>
-        <p>
-            It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
-        </p>
-        <h6>
-            Delete This Account :
-        </h6>
-        <p>
-            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-        </p>
+        <div class="d-flex align-items-center mb-20">
+            <mat-slide-toggle [(ngModel)]="notifActive" color="primary">
+                Activer les notifications
+            </mat-slide-toggle>
+        </div>
+        <div *ngIf="successMessage" class="alert alert-success mt-10">{{ successMessage }}</div>
+        <div *ngIf="errorMessage" class="alert alert-danger mt-10">{{ errorMessage }}</div>
         <div class="btn-box">
-            <button mat-button type="button">
-                Close & Delete This Account
-            </button>
-            <button mat-button type="button">
-                Cancel
+            <button mat-button type="button" (click)="onSave()">
+                Enregistrer
             </button>
         </div>
     </mat-card-content>

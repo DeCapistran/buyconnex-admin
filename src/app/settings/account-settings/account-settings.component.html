@@ -9,7 +9,7 @@
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <form>
+        <form [formGroup]="settingsForm" (ngSubmit)="onSave()">
             <div class="row">
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
@@ -18,7 +18,7 @@
                     <mat-form-field>
                         <i-feather name="user"></i-feather>
                         <mat-label>Entrer votre nom</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="lastname">
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
@@ -28,7 +28,7 @@
                     <mat-form-field>
                         <i-feather name="user"></i-feather>
                         <mat-label>Entrer votre prénom</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="firstname">
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
@@ -38,92 +38,24 @@
                     <mat-form-field>
                         <i-feather name="mail"></i-feather>
                         <mat-label>Entrer votre email</mat-label>
-                        <input matInput>
+                        <input matInput formControlName="email">
+                        <mat-error *ngIf="settingsForm.get('email')?.hasError('email')">
+                            Adresse email invalide
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6">
                     <label class="label d-block fw-medium mb-10">
-                        Téléphone
+                        Langue
                     </label>
                     <mat-form-field>
-                        <i-feather name="phone"></i-feather>
-                        <mat-label>Entrer votre numéro</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-6">
-                    <label class="label d-block fw-medium mb-10">
-                        Date de naissance
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="calendar"></i-feather>
-                        <mat-label>Date de naissance</mat-label>
-                        <input matInput [matDatepicker]="dobPicker">
-                        <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
-                        <mat-datepicker #dobPicker></mat-datepicker>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-6">
-                    <label class="label d-block fw-medium mb-10">
-                        Genre
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="meh"></i-feather>
-                        <mat-label>Choisissez</mat-label>
-                        <mat-select>
-                            <mat-option value="Male">Homme</mat-option>
-                            <mat-option value="Female">Femme</mat-option>
-                            <mat-option value="Custom">Autre</mat-option>
+                        <i-feather name="globe"></i-feather>
+                        <mat-label>Choisissez votre langue</mat-label>
+                        <mat-select formControlName="langue">
+                            <mat-option value="fr">Français</mat-option>
+                            <mat-option value="en">English</mat-option>
+                            <mat-option value="es">Español</mat-option>
                         </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-12">
-                    <label class="label d-block fw-medium mb-10">
-                        Addresse
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="map-pin"></i-feather>
-                        <mat-label>Votre adresse</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-12">
-                    <label class="label d-block fw-medium mb-10">
-                        Choisissez votre pays
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="map-pin"></i-feather>
-                        <mat-label>Pays</mat-label>
-                        <mat-select>
-                            <mat-option value="Germany">Germany</mat-option>
-                            <mat-option value="United States of America">United States of America</mat-option>
-                            <mat-option value="Canada">Canada</mat-option>
-                            <mat-option value="United Kingdom">United Kingdom</mat-option>
-                            <mat-option value="Sweden">Sweden</mat-option>
-                            <mat-option value="Netherlands">Netherlands</mat-option>
-                            <mat-option value="Japan">Japan</mat-option>
-                            <mat-option value="Switzerland">Switzerland</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-6">
-                    <label class="label d-block fw-medium mb-10">
-                        Ville
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="map-pin"></i-feather>
-                        <mat-label>Votre ville</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-lg-6">
-                    <label class="label d-block fw-medium mb-10">
-                        Code Postal
-                    </label>
-                    <mat-form-field>
-                        <i-feather name="list"></i-feather>
-                        <mat-label>Code postal</mat-label>
-                        <input matInput>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-12">
@@ -136,11 +68,13 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="successMessage" class="alert alert-success mt-10">{{ successMessage }}</div>
+            <div *ngIf="errorMessage" class="alert alert-danger mt-10">{{ errorMessage }}</div>
             <div class="save-profile-btn">
-                <button mat-button type="button">
+                <button mat-button type="button" (click)="onCancel()">
                     Annuler
                 </button>
-                <button mat-button type="button">
+                <button mat-button type="submit">
                     Mettre à jour
                 </button>
             </div>
