@@ -14,6 +14,7 @@ import { FeathericonsModule } from '../../icons/feathericons/feathericons.module
 import { AuthService } from '../../services/auth.service';
 import { UserSettingsService } from '../../services/user-settings.service';
 import { UserSettingVo } from '../../models/users/userSettingVo-model';
+import { Users } from '../../models/users/users-model';
 
 @Component({
     selector: 'app-account-settings',
@@ -67,10 +68,21 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     }
 
     private loadUserSettings(): void {
-        const loggedUser = this.authService.loggedUser;
-        if (loggedUser) {
-            this.settingsForm.patchValue({ email: loggedUser });
-        }
+        this.userSettingsService.getUserInfo().subscribe({
+            next: (user: Users) => {
+                this.settingsForm.patchValue({
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email
+                });
+            },
+            error: () => {
+                const loggedUser = this.authService.loggedUser;
+                if (loggedUser) {
+                    this.settingsForm.patchValue({ email: loggedUser });
+                }
+            }
+        });
 
         this.userSettingsService.getUserSettings().subscribe({
             next: (settings: UserSettingVo) => {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environnments/environment';
 import { UserSettingVo } from '../models/users/userSettingVo-model';
+import { Users } from '../models/users/users-model';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -20,6 +21,14 @@ export class UserSettingsService {
     getUserSettings(): Observable<UserSettingVo> {
         return this.httpClient.post<UserSettingVo>(
             environment.backend_url + '/user-settings',
+            {},
+            { headers: this.getHeaders() }
+        );
+    }
+
+    getUserInfo(): Observable<Users> {
+        return this.httpClient.post<Users>(
+            environment.backend_url + '/user-info',
             {},
             { headers: this.getHeaders() }
         );

@@ -64,7 +64,7 @@
                     </label>
                     <div class="NgxEditor__Wrapper">
                         <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"></ngx-editor-menu>
-                        <ngx-editor [editor]="editor" [ngModel]="html" name="html" [disabled]="false" [placeholder]="'Entrer votre commentaire ici...'"></ngx-editor>
+                        <ngx-editor [editor]="editor" [ngModel]="html" name="html" [ngModelOptions]="{standalone: true}" [disabled]="false" [placeholder]="'Entrer votre commentaire ici...'"></ngx-editor>
                     </div>
                 </div>
             </div>
