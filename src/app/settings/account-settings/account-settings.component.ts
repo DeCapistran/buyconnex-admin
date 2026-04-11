@@ -42,6 +42,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     settingsForm: FormGroup;
     successMessage: string = '';
     errorMessage: string = '';
+    private currentSettings: UserSettingVo = { langue: 'fr', mfaActive: false, notifActive: false };
 
     constructor(
         private fb: FormBuilder,
@@ -73,6 +74,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
 
         this.userSettingsService.getUserSettings().subscribe({
             next: (settings: UserSettingVo) => {
+                this.currentSettings = settings;
                 this.settingsForm.patchValue({ langue: settings.langue || 'fr' });
             },
             error: () => {}
@@ -82,8 +84,8 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
     onSave(): void {
         const userSettingVo: UserSettingVo = {
             langue: this.settingsForm.value.langue,
-            mfaActive: false,
-            notifActive: false
+            mfaActive: this.currentSettings.mfaActive,
+            notifActive: this.currentSettings.notifActive
         };
 
         this.userSettingsService.updateSetting(userSettingVo).subscribe({
